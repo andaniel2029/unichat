@@ -20,16 +20,18 @@ export interface SignUpProps {
 export default function App() {
 
   const {
-    programs
+    state
   } = useApplicationData();
 
+  console.log('the fucking state', state);
+
   const SignUpData:SignUpProps = {
-    programs: programs
+    programs: state.programs
   }
 
-  console.log(programs.map(program => {
-    console.log(program.id);
-  }));
+  // console.log(programs.map(program => {
+  //   console.log(program.id);
+  // }));
 
   return (
     <Router>

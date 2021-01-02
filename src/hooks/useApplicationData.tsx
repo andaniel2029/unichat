@@ -1,26 +1,38 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Programs from '../components/pages/SignUp/Programs';
 
 export interface Program {
-  id: number,
-  name: string
+  id: number | null,
+  name: string | null,
 }
 
 export default function useApplicationData() {
 
-  const [programs, setPrograms] = useState<Program[]>([]);
+  const programs:Program[] = [];
+
+  const [state, setState] = useState({
+    programs,
+    error: false
+  })
 
   useEffect(() => {
     axios.get<Program[]>('/api/programs')
     .then(response => {
-      setPrograms(response.data);
+      setState({
+        ...state,
+        programs: response.data
+      })
     })
     .catch(error => {
-      console.log(error);
+      setState({
+        ...state,
+        error: true
+      })
     })
   }, [])
 
   return {
-    programs
+    state
   }
 }
