@@ -6,6 +6,7 @@ import Programs from './Programs';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { SignUpProps } from '../../../App';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
+import { Program } from '../../../hooks/useApplicationData';
 import { useHistory } from 'react-router-dom';
 
 
@@ -125,9 +126,6 @@ export default function SignUp(props: SignUpProps) {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
 
-  console.log('inside of signup', props.programs);
-
-
   const submitCredentials = function(e: any, email: string, password: string, passwordConfirm: string):void {
     e.preventDefault();
 
@@ -188,10 +186,10 @@ export default function SignUp(props: SignUpProps) {
         {haveCredentials && (
           <div className={classes.form}>
             <Typography>What program are you in?</Typography>
+            <Programs {...props}/>
             <Button variant="contained" type="submit" className={classes.btn}>Join</Button>
           </div>
         )}
-        <Programs {...props}/>
         <Typography style={{fontFamily: 'halcom'}}>Already have an account?</Typography>
       </Paper>
     </div>

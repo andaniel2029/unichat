@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 export interface SignUpProps {
   programs: Program[]
+  error: boolean
 }
 
 export default function App() {
@@ -26,12 +27,9 @@ export default function App() {
   console.log('the fucking state', state);
 
   const SignUpData:SignUpProps = {
-    programs: state.programs
+    programs: state.programs,
+    error: state.error
   }
-
-  // console.log(programs.map(program => {
-  //   console.log(program.id);
-  // }));
 
   return (
     <Router>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Programs from '../components/pages/SignUp/Programs';
 
 export interface Program {
   id: number | null,
