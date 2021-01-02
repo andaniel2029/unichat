@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: '20px',
     height: '60px',
-    border: '1px solid red'
   },
 
   logo: {
@@ -24,13 +23,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Nav() {
 
+
   const classes = useStyles();
   const [user, setUser] = useState(false);
   return (
     <div className={classes.root}>
       <Typography className={classes.logo}>UniChat</Typography>
-      {!user && <JoinButton />}
-      {user && <SignInButton />}
+      <JoinButton />
     </div>
     
   )

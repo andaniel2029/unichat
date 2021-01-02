@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Nav from './nav/Nav';
+import Nav from './components/nav/Nav';
 import Grid from '@material-ui/core/Grid';
+import SignUp from './components/pages/SignUp';
+import Home from './components/pages/Home';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -17,6 +20,12 @@ export default function App() {
       <Grid container>
         <Grid item xs={12}>
           <Nav />
+        </Grid>
+        <Grid item xs={12}>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/signup" component={SignUp} />
+          </Switch>
         </Grid>
       </Grid>
     </Router>
