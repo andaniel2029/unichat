@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Nav from './components/nav/Nav';
 import Grid from '@material-ui/core/Grid';
-import SignUp from './components/pages/SignUp';
+import SignUp from './components/pages/SignUp/SignUp';
 import Home from './components/pages/Home';
 
 import { makeStyles } from '@material-ui/core/styles';

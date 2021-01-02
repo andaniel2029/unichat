@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import UserCredentials from './UserCredentials';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -73,49 +74,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+export interface submitFunction {
+  function: (e: any, email: string) => void
+}
+
 export default function SignUp() {
 
   const classes = useStyles();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  const formSubmit = function(e: any, email: string) {
+  const formSubmit = function(e: any, email: string):void {
     e.preventDefault();
     console.log(email);
+  }
+
+  const submitFunc:submitFunction = {
+    function: formSubmit
   }
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Typography className={classes.title}>Create an Account</Typography>
-        <form className={classes.form} onSubmit={event => formSubmit(event, email)}>
-          <input
-              className={classes.field}
-              required
-              type="text"
-              placeholder="Email"
-              value={email}
-              onChange={event => setEmail(event.target.value)}
-            />
-          <input
-              className={classes.field}
-              required
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={event => setPassword(event.target.value)}
-            />
-          <input
-              className={classes.field}
-              required
-              type="password"
-              placeholder="confirm password"
-              value={passwordConfirm}
-              onChange={event => setPasswordConfirm(event.target.value)}
-            />
-            <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
-        </form>
+        <UserCredentials {...submitFunc}/>
       </Paper>
     </div>
   );
