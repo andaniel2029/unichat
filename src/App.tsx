@@ -23,8 +23,8 @@ export default function App() {
         </Grid>
         <Grid item xs={12}>
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/signup" component={SignUp} />
+            {/* <Route exact path="/" component={Home} /> */}
+            <Route path="/" component={SignUp} />
           </Switch>
         </Grid>
       </Grid>
