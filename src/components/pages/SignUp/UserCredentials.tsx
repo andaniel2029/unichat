@@ -52,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
+  error: {
+    color: '#FF5A5F'
+  }
+
   
 }));
 
@@ -61,9 +65,20 @@ export default function UserCredentials(props: UserCredentialsProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = function(e: any, email: string, password: string, passwordConfirm: string) {
+    e.preventDefault();
+    if(password !== passwordConfirm) {
+      return setError('Passwords do not match');
+    }
+
+    setError('');
+    props.submit(e, email, password);
+  }
 
   return (
-    <form className={classes.form} onSubmit={event => props.submit(event, email)}>
+    <form className={classes.form} onSubmit={event => handleSubmit(event, email, password, passwordConfirm)}>
       <input
           className={classes.field}
           required
@@ -88,6 +103,7 @@ export default function UserCredentials(props: UserCredentialsProps) {
           value={passwordConfirm}
           onChange={event => setPasswordConfirm(event.target.value)}
         />
+        {error && <Typography className={classes.error}>{error}</Typography>}
       <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
     </form>
   );

@@ -51,7 +51,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 
 
 export interface UserCredentialsProps {
-  submit: (e: any, email: string) => void,
+  submit: (e: any, email: string, password: string) => void,
   setProgress: (value: number) => void
 }
 
@@ -68,9 +68,9 @@ export default function SignUp() {
   const [progress, setProgress] = useState(0);
 
 
-  const submitCredentials = function(e: any, email: string):void {
+  const submitCredentials = function(e: any, email: string, password: string):void {
     e.preventDefault();
-    console.log(email);
+    console.log(email, password);
     setProgress(50);
     newUser.email = email;
     console.log(newUser);
