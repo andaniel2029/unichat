@@ -156,7 +156,7 @@ export default function SignUp() {
                   className={classes.field}
                   required
                   type="text"
-                  placeholder="Email"
+                  placeholder="email"
                   value={email}
                   onChange={event => setEmail(event.target.value)}
                 />
