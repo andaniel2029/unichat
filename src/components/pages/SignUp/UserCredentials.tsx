@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import { myProps } from './SignUp';
+import { UserCredentialsProps } from './SignUp';
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-export default function UserCredentials(props: myProps) {
+export default function UserCredentials(props: UserCredentialsProps) {
 
   const classes = useStyles();
   const [email, setEmail] = useState('');
@@ -63,7 +63,7 @@ export default function UserCredentials(props: myProps) {
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
   return (
-    <form className={classes.form} onSubmit={event => props.formSubmit(event, email)}>
+    <form className={classes.form} onSubmit={event => props.submit(event, email)}>
       <input
           className={classes.field}
           required

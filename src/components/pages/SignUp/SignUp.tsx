@@ -31,12 +31,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface myProps {
-  formSubmit: (e: any, email: string) => void,
-  setProgress: (value: number) => void
-
-}
-
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -55,21 +49,42 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   }),
 )(LinearProgress);
 
+
+export interface UserCredentialsProps {
+  submit: (e: any, email: string) => void,
+  setProgress: (value: number) => void
+}
+
+interface User {
+  email: string | null
+  password: string | null,
+  program: string | null
+}
+
+
 export default function SignUp() {
 
   const classes = useStyles();
   const [progress, setProgress] = useState(0);
 
-  const formSubmit = function(e: any, email: string):void {
+
+  const submitCredentials = function(e: any, email: string):void {
     e.preventDefault();
     console.log(email);
     setProgress(50);
+    newUser.email = email;
+    console.log(newUser);
   }
 
-  const functions:myProps = {
-    formSubmit: formSubmit,
+  const credentialsFunctions:UserCredentialsProps = {
+    submit: submitCredentials,
     setProgress: setProgress
+  }
 
+  const newUser:User = {
+    email: null,
+    password: null,
+    program: null
   }
 
   return (
@@ -77,7 +92,7 @@ export default function SignUp() {
       <Paper className={classes.paper}>
         <Typography className={classes.title}>Create an Account</Typography>
         <BorderLinearProgress variant="determinate" value={progress} />
-        <UserCredentials {...functions}/>
+        <UserCredentials {...credentialsFunctions}/>
       </Paper>
     </div>
   );
