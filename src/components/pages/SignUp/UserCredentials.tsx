@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 
   field: {
     height: '20px',
-    width: '130%',
+    width: '100%',
     margin: '0.5rem 0rem 0.5rem 0rem',
     fontFamily: 'halcom',
     fontSize: '12pt',
@@ -35,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
   form: {
     display: 'flex',
     flexDirection: 'column',
-    width: '200px',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 
   btn: {
@@ -54,9 +54,16 @@ const useStyles = makeStyles((theme) => ({
 
   error: {
     color: '#FF5A5F'
-  }
+  },
 
-  
+  inputContainer: {
+    width: '130%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    height: '200px',
+    // border: '1px solid red',
+  }
 }));
 
 export default function UserCredentials(props: UserCredentialsProps) {
@@ -79,31 +86,33 @@ export default function UserCredentials(props: UserCredentialsProps) {
 
   return (
     <form className={classes.form} onSubmit={event => handleSubmit(event, email, password, passwordConfirm)}>
-      <input
-          className={classes.field}
-          required
-          type="text"
-          placeholder="Email"
-          value={email}
-          onChange={event => setEmail(event.target.value)}
-        />
-      <input
-          className={classes.field}
-          required
-          type="password"
-          placeholder="password"
-          value={password}
-          onChange={event => setPassword(event.target.value)}
-        />
-      <input
-          className={classes.field}
-          required
-          type="password"
-          placeholder="confirm password"
-          value={passwordConfirm}
-          onChange={event => setPasswordConfirm(event.target.value)}
-        />
-        {error && <Typography className={classes.error}>{error}</Typography>}
+      <div className={classes.inputContainer}>
+        <input
+            className={classes.field}
+            required
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={event => setEmail(event.target.value)}
+          />
+        <input
+            className={classes.field}
+            required
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={event => setPassword(event.target.value)}
+          />
+        <input
+            className={classes.field}
+            required
+            type="password"
+            placeholder="confirm password"
+            value={passwordConfirm}
+            onChange={event => setPasswordConfirm(event.target.value)}
+          />
+          {error && <Typography className={classes.error}>{error}</Typography>}
+        </div>
       <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
     </form>
   );

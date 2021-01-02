@@ -29,6 +29,35 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontWeight: 500,
     color: '#FF5A5F'
   },
+
+  btn: {
+    margin: '1rem 0rem 1.5rem 0rem',
+    fontFamily: 'halcom',
+    color: 'white',
+    background: '#FF5A5F',
+    width: '100px',
+    borderRadius: '20px',
+    boxShadow: 'none',
+    '&:hover': {
+      background: '#FF5A5F',
+    },
+  },
+
+  testContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+
+  testContainerInner: {
+    display: 'flex',
+    width: '140%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: '200px',
+    // border: '1px solid red'
+  }
 }));
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
@@ -66,13 +95,15 @@ export default function SignUp() {
 
   const classes = useStyles();
   const [progress, setProgress] = useState(0);
+  const [haveCredentials, setHaveCredentials] = useState(false);
 
 
   const submitCredentials = function(e: any, email: string, password: string):void {
     e.preventDefault();
     console.log(email, password);
-    setProgress(50);
     newUser.email = email;
+    setProgress(50);
+    setHaveCredentials(true);
     console.log(newUser);
   }
 
@@ -92,7 +123,15 @@ export default function SignUp() {
       <Paper className={classes.paper}>
         <Typography className={classes.title}>Create an Account</Typography>
         <BorderLinearProgress variant="determinate" value={progress} />
-        <UserCredentials {...credentialsFunctions}/>
+        {!haveCredentials && <UserCredentials {...credentialsFunctions}/>}
+        {haveCredentials && (
+        <div className={classes.testContainer}>
+          <div className={classes.testContainerInner}>
+            <Typography>What program are you in?</Typography>
+          </div>
+          <Button variant="contained" type="submit" className={classes.btn}>Join</Button>
+        </div>
+        )}
       </Paper>
     </div>
   );
