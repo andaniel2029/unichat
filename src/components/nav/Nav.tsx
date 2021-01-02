@@ -20,15 +20,17 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export interface Text {
-  input: string
+export interface BtnInput {
+  text: string,
+  url: string
 }
 
 export default function Nav() {
 
 
-  const join:Text = {
-    input: 'Join'
+  const join:BtnInput = {
+    text: 'Join',
+    url: '/signup'
   }
 
   const classes = useStyles();
@@ -38,6 +40,5 @@ export default function Nav() {
       <Typography className={classes.logo}>UniChat</Typography>
       <AppButton {...join}/>
     </div>
-    
   )
 }
