@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 // import UserCredentials from './UserCredentials';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { SignUpProps } from '../../../App';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
 
@@ -113,7 +114,7 @@ interface User {
 }
 
 
-export default function SignUp() {
+export default function SignUp(props: SignUpProps) {
 
   const classes = useStyles();
   const [progress, setProgress] = useState(0);
@@ -122,6 +123,8 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
+
+  console.log('inside of signup', props.programs);
 
 
   const submitCredentials = function(e: any, email: string, password: string, passwordConfirm: string):void {
