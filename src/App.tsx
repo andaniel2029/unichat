@@ -6,12 +6,17 @@ import SignUp from './components/pages/SignUp/SignUp';
 import Home from './components/pages/Home';
 
 import { makeStyles } from '@material-ui/core/styles';
+import useApplicationData from './hooks/useApplicationData';
 
 const useStyles = makeStyles((theme) => ({
 
 }));
 
 export default function App() {
+
+  const {
+    programs
+  } = useApplicationData();
 
   const classes = useStyles();
 

@@ -1,15 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function useApplicationData() {
 
-  // Application level data
-    // Programs for users to choose from
-    // Courses linking to chat rooms
+  const [programs, setPrograms] = useState([]);
 
+  useEffect(() => {
+    axios.get('/api/programs').then(response => {
+      console.log(response.data);
+    })
+  })
 
-  return (
-    <div>
-      
-    </div>
-  )
+  return {
+    programs
+  }
 }
