@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import { submitFunction } from './SignUp';
-
+import { myProps } from './SignUp';
 import { makeStyles } from '@material-ui/core/styles';
+
+
 
 const useStyles = makeStyles((theme) => ({
 
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   btn: {
-    marginTop: '1rem',
+    margin: '1rem 0rem 1.5rem 0rem',
     fontFamily: 'halcom',
     color: 'white',
     background: '#FF5A5F',
@@ -50,9 +51,11 @@ const useStyles = makeStyles((theme) => ({
       background: '#FF5A5F',
     },
   },
+
+  
 }));
 
-export default function UserCredentials(props: submitFunction) {
+export default function UserCredentials(props: myProps) {
 
   const classes = useStyles();
   const [email, setEmail] = useState('');
@@ -60,7 +63,7 @@ export default function UserCredentials(props: submitFunction) {
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
   return (
-    <form className={classes.form} onSubmit={event => props.function(event, email)}>
+    <form className={classes.form} onSubmit={event => props.formSubmit(event, email)}>
       <input
           className={classes.field}
           required

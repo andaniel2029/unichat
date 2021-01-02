@@ -3,10 +3,11 @@ import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import UserCredentials from './UserCredentials';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'center'
@@ -23,79 +24,60 @@ const useStyles = makeStyles((theme) => ({
   },
 
   title: {
-    marginBottom: '1rem',
     fontFamily: 'halcom',
     fontSize: '20pt',
     fontWeight: 500,
     color: '#FF5A5F'
   },
-
-  field: {
-    height: '20px',
-    width: '130%',
-    margin: '0.5rem 0rem 0.5rem 0rem',
-    fontFamily: 'halcom',
-    fontSize: '12pt',
-    border: '1px solid #E8E8E8',
-    padding: '10px',
-    borderRadius: '10px',
-    transition: '0.2s ease-in-out',
-    '&:focus': {
-      outline: 'none',
-      border: '1px solid #FF5A5F',
-      borderRadius: '10px',
-
-    },
-    '&::placeholder': {
-      fontSize: '12pt',
-      fontFamily: 'halcom',
-      color: '#838383'
-    }
-  },
-
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '200px',
-    alignItems: 'center'
-  },
-
-  btn: {
-    marginTop: '1rem',
-    fontFamily: 'halcom',
-    color: 'white',
-    background: '#FF5A5F',
-    width: '100px',
-    borderRadius: '20px',
-    boxShadow: 'none',
-    '&:hover': {
-      background: '#FF5A5F',
-    },
-  },
 }));
 
-export interface submitFunction {
-  function: (e: any, email: string) => void
+export interface myProps {
+  formSubmit: (e: any, email: string) => void,
+  setProgress: (value: number) => void
+
 }
+
+const BorderLinearProgress = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '70%',
+      height: 5,
+      borderRadius: 5,
+      marginBottom: '1rem',
+    },
+    colorPrimary: {
+      backgroundColor: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+    },
+    bar: {
+      borderRadius: 5,
+      backgroundColor: '#FF5A5F',
+    },
+  }),
+)(LinearProgress);
 
 export default function SignUp() {
 
   const classes = useStyles();
+  const [progress, setProgress] = useState(0);
 
   const formSubmit = function(e: any, email: string):void {
     e.preventDefault();
     console.log(email);
+    setProgress(50);
   }
 
-  const submitFunc:submitFunction = {
-    function: formSubmit
+  const functions:myProps = {
+    formSubmit: formSubmit,
+    setProgress: setProgress
+
   }
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Typography className={classes.title}>Create an Account</Typography>
-        <UserCredentials {...submitFunc}/>
+        <BorderLinearProgress variant="determinate" value={progress} />
+        <UserCredentials {...functions}/>
       </Paper>
     </div>
   );
