@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import JoinButton from './JoinButton';
-import SignInButton from './SignInButton';
+import AppButton from '../AppButton';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,15 +20,23 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+export interface Text {
+  input: string
+}
+
 export default function Nav() {
 
+
+  const join:Text = {
+    input: 'Join'
+  }
 
   const classes = useStyles();
   const [user, setUser] = useState(false);
   return (
     <div className={classes.root}>
       <Typography className={classes.logo}>UniChat</Typography>
-      <JoinButton />
+      <AppButton {...join}/>
     </div>
     
   )

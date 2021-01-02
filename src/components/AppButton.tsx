@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import { Text } from './nav/Nav';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,14 +23,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function JoinButton() {
+export default function AppButton(props: Text) {
 
   const classes = useStyles();
 
   return (
     <Link to="/signup" className={classes.link}>
-      <Button variant="contained" className={classes.root}>Join</Button>  
+      <Button variant="contained" className={classes.root}>{props.input}</Button>  
     </Link>
-    
   )
 }
