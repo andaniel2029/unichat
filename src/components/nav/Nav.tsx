@@ -34,7 +34,6 @@ export default function Nav() {
   }
 
   const classes = useStyles();
-  const [user, setUser] = useState(false);
   return (
     <div className={classes.root}>
       <Typography className={classes.logo}>UniChat</Typography>

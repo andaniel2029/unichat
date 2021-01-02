@@ -1,6 +1,7 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -15,9 +16,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     borderRadius: '20px',
-    boxShadow: "1px 4px 5px 2px #ededed",
+    boxShadow: "1px 4px 5px 2px #EDEDED",
     padding: '1rem 4rem 1rem 4rem',
-    width: '40%',
+    width: '30%',
   },
 
   title: {
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
   field: {
     height: '20px',
+    width: '130%',
     margin: '0.5rem 0rem 0.5rem 0rem',
     fontFamily: 'halcom',
     fontSize: '12pt',
@@ -53,41 +55,66 @@ const useStyles = makeStyles((theme) => ({
   form: {
     display: 'flex',
     flexDirection: 'column',
-    width: '50%'
-  }
+    width: '200px',
+    alignItems: 'center'
+  },
+
+  btn: {
+    marginTop: '1rem',
+    fontFamily: 'halcom',
+    color: 'white',
+    background: '#FF5A5F',
+    width: '100px',
+    borderRadius: '20px',
+    boxShadow: 'none',
+    '&:hover': {
+      background: '#FF5A5F',
+    },
+  },
 }));
 
 export default function SignUp() {
 
   const classes = useStyles();
-  const emailRef = useRef();
-  // const passwordRef = useRef<HTMLDivElement>(null);
-  const passwordRef = useRef();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+
+  const formSubmit = function(e: any, email: string) {
+    e.preventDefault();
+    console.log(email);
+  }
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Typography className={classes.title}>Create an Account</Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={event => formSubmit(event, email)}>
           <input
               className={classes.field}
               required
               type="text"
               placeholder="Email"
-              ref={emailRef.current}
+              value={email}
+              onChange={event => setEmail(event.target.value)}
             />
           <input
               className={classes.field}
               required
               type="password"
               placeholder="password"
+              value={password}
+              onChange={event => setPassword(event.target.value)}
             />
           <input
               className={classes.field}
               required
               type="password"
               placeholder="confirm password"
+              value={passwordConfirm}
+              onChange={event => setPasswordConfirm(event.target.value)}
             />
+            <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
         </form>
       </Paper>
     </div>
