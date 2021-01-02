@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 
   btn: {
-    margin: '1rem 0rem 1rem 0rem',
+    margin: '0.5rem 0rem 1rem 0rem',
     fontFamily: 'halcom',
     color: 'white',
     background: '#FF5A5F',
@@ -187,6 +187,7 @@ export default function SignUp() {
             <Button variant="contained" type="submit" className={classes.btn}>Join</Button>
           </div>
         )}
+        <Typography style={{fontFamily: 'halcom'}}>Already have an account?</Typography>
       </Paper>
     </div>
   );
