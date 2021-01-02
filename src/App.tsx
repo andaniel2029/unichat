@@ -4,6 +4,7 @@ import Nav from './components/nav/Nav';
 import Grid from '@material-ui/core/Grid';
 import SignUp from './components/pages/SignUp/SignUp';
 import Home from './components/pages/Home';
+import { Program } from './hooks/useApplicationData';
 
 import { makeStyles } from '@material-ui/core/styles';
 import useApplicationData from './hooks/useApplicationData';
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export interface SignUpProps {
-  programs: Object
+  programs: Program[]
 }
 
 export default function App() {
@@ -22,11 +23,13 @@ export default function App() {
     programs
   } = useApplicationData();
 
-  console.log('programs', typeof programs);
-
   const SignUpData:SignUpProps = {
     programs: programs
   }
+
+  console.log(programs.map(program => {
+    console.log(program.id);
+  }));
 
   return (
     <Router>
@@ -36,7 +39,6 @@ export default function App() {
         </Grid>
         <Grid item xs={12}>
           <Switch>
-            {/* <Route exact path="/" component={Home} /> */}
             <Route path="/" component={() => <SignUp {...SignUpData}/>} />
           </Switch>
         </Grid>

@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-// import UserCredentials from './UserCredentials';
+import Programs from './Programs';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { SignUpProps } from '../../../App';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -190,6 +191,7 @@ export default function SignUp(props: SignUpProps) {
             <Button variant="contained" type="submit" className={classes.btn}>Join</Button>
           </div>
         )}
+        <Programs {...props}/>
         <Typography style={{fontFamily: 'halcom'}}>Already have an account?</Typography>
       </Paper>
     </div>
