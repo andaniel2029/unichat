@@ -44,17 +44,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
   },
 
-  typography: {
-    fontFamily: 'halcom'
+  programTitle: {
+    fontFamily: 'halcom',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '13pt'
+    }
   },
 
   title: {
+    fontFamily: 'halcom',
     fontSize: '20pt',
     fontWeight: 500,
     color: '#FF5A5F',
-    [theme.breakpoints.down('sm')]: {
-      // fontSize: '18pt',
-    }
   },
 
   field: {
@@ -159,7 +160,7 @@ export default function SignUp(props: SignUpProps) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <Typography className={`${classes.title} ${classes.typography}`}>Create an Account</Typography>
+        <Typography className={classes.title}>Create an Account</Typography>
         <BorderLinearProgress variant="determinate" value={progress} />
         {!haveCredentials && 
           (<form className={classes.form} onSubmit={event => submitCredentials(event, email, password, passwordConfirm)}>
@@ -195,7 +196,7 @@ export default function SignUp(props: SignUpProps) {
         )}
         {haveCredentials && (
           <div className={classes.form}>
-            <Typography className={classes.typography}>What program are you in?</Typography>
+            <Typography className={classes.programTitle}>What program are you in?</Typography>
             <Programs {...props}/>
             <Button variant="contained" type="submit" className={classes.btn}>Join</Button>
           </div>

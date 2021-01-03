@@ -6,7 +6,7 @@ export default function Programs(props: SignUpProps) {
 
   console.log('inside of programs', props);
   return (
-    <Grid container justify="center" spacing={0} style={{ padding: '10px'}}>
+    <Grid container justify="center" spacing={0} style={{ padding: '0px'}}>
       {props.programs.map(program => {
         return <ProgramItem key={program.id} {...program}/>
       })}

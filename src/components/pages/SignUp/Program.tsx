@@ -21,16 +21,14 @@ const useStyles = makeStyles((theme: Theme) => ({
       cursor: 'pointer'
     },
     [theme.breakpoints.up('xs')]: {
-      height: '60px',
+      height: '65px',
       margin: '0.2rem',
     },
     [theme.breakpoints.up('md')]: {
       height: '65px',
-      // margin: '0.1rem',
     },
     [theme.breakpoints.up('lg')]: {
-      height: '85px',
-      margin: '0.2rem',
+      height: '90px',
     }
   },
 
