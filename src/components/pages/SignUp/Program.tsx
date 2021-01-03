@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function ProgramItem(props: any) {
 
   const classes = useStyles(props);
-  console.log('program', props.selected);
+  // console.log('program', props);
 
 
 

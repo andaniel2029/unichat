@@ -131,7 +131,9 @@ interface User {
 
 export interface ProgramsProps {
   programs: Program[],
-  setProgram: (program: string) => void
+  // getProgram: (programTitle: string) => void,
+  setSelected: (selected: string) => void,
+  selected: string
 }
 
 
@@ -143,7 +145,7 @@ export default function SignUp(props: SignUpProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [program, setProgram] = useState('');
+  const [selected, setSelected] = useState('');
   const [error, setError] = useState('');
 
   const submitCredentials = function(e: any, email: string, password: string, passwordConfirm: string):void {
@@ -166,12 +168,13 @@ export default function SignUp(props: SignUpProps) {
     program: null
   }
 
-  console.log('in sign up', props);
-
   const propsPrograms:ProgramsProps = {
     programs: props.programs,
-    setProgram: setProgram
+    setSelected: setSelected,
+    selected: selected
   }
+
+  console.log(selected);
 
   return (
     <div className={classes.root}>
