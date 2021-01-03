@@ -156,6 +156,7 @@ export default function SignUp(props: SignUpProps) {
   const [selected, setSelected] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   const submitCredentials = function(e: any, email: string, password: string, passwordConfirm: string):void {
     e.preventDefault();
@@ -175,7 +176,20 @@ export default function SignUp(props: SignUpProps) {
     setProgress(100);
     setTimeout(() => {
       setLoading(true);
-    }, 500)
+    }, 500);
+
+    signup(email, password)
+    .then(() => {
+      console.log('after user sign up')
+      setTimeout(() => {
+        setLoading(false);
+        history.push('/');
+      }, 1000);
+    })
+    .catch(() => {
+      setLoading(false);
+      setError('Failed to create an account');
+    })
   }
 
   const newUser:User = {
@@ -190,7 +204,6 @@ export default function SignUp(props: SignUpProps) {
     selected: selected
   }
 
-  console.log(selected);
 
   return (
     <div className={classes.root}>

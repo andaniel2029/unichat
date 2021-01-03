@@ -1,18 +1,32 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, ReactChild, ReactNode } from 'react';
 import { auth } from '../firebase';
 
-const AuthContext = React.createContext({});
+const AuthContext = React.createContext<AppContextInterface>({
+  currentUser: null, 
+  signup: null, 
+  logout: null
+});
 
 export function useAuth() {
   return useContext(AuthContext);
 }
 
-export default function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState();
+interface AppContextInterface {
+  currentUser: any,
+  signup: any,
+  logout: any
+}
+
+interface AuthProps {
+  children: ReactNode
+}
+
+export default function AuthProvider({ children }: AuthProps) {
+  const [currentUser, setCurrentUser] = useState<any>();
   const [loading, setLoading] = useState(true);
 
 
-  const signup = function(email:t, password) {
+  const signup = function(email:string, password:string) {
     return auth.createUserWithEmailAndPassword(email, password);
   }
 
@@ -29,7 +43,7 @@ export default function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  const value = {
+  const value:AppContextInterface = {
     currentUser,
     signup,
     logout
