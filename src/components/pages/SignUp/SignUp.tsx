@@ -1,13 +1,16 @@
-import { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Fragment, useState } from 'react';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Programs from './Programs';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { SignUpProps } from '../../../App';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import { Program } from '../../../hooks/useApplicationData';
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../../hooks/useAuthContext';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -25,8 +28,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '1rem 0rem 1rem',
     width: '320px',
     height: '450px',
-    // minWidth: '300px',
-    // maxWidth: '500px',
     [theme.breakpoints.up('sm')]: {
       width: '500px'
     }
@@ -102,6 +103,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   error: {
     color: '#FF5A5F'
   },
+
+  spinner: {
+    marginTop: '4rem',
+    fontSize: '4rem',
+    color: '#FF5A5F'
+  }
 }));
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
@@ -131,7 +138,6 @@ interface User {
 
 export interface ProgramsProps {
   programs: Program[],
-  // getProgram: (programTitle: string) => void,
   setSelected: (selected: string) => void,
   selected: string
 }
@@ -140,6 +146,8 @@ export interface ProgramsProps {
 export default function SignUp(props: SignUpProps) {
 
   const classes = useStyles();
+
+  const { signup } = useAuth();
   const [progress, setProgress] = useState(0);
   const [haveCredentials, setHaveCredentials] = useState(false);
   const [email, setEmail] = useState('');
@@ -147,6 +155,7 @@ export default function SignUp(props: SignUpProps) {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [selected, setSelected] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const submitCredentials = function(e: any, email: string, password: string, passwordConfirm: string):void {
     e.preventDefault();
@@ -155,11 +164,18 @@ export default function SignUp(props: SignUpProps) {
       return setError('Passwords do not match');
     }
 
-    console.log(email, password);
     newUser.email = email;
     setProgress(50);
     setHaveCredentials(true);
     console.log(newUser);
+  }
+
+  const submitUser = function() {
+    console.log(email, password, selected);
+    setProgress(100);
+    setTimeout(() => {
+      setLoading(true);
+    }, 500)
   }
 
   const newUser:User = {
@@ -181,7 +197,7 @@ export default function SignUp(props: SignUpProps) {
       <Paper className={classes.paper}>
         <Typography className={classes.title}>Create an Account</Typography>
         <BorderLinearProgress variant="determinate" value={progress} />
-        {!haveCredentials && 
+        {!haveCredentials &&
           (<form className={classes.form} onSubmit={event => submitCredentials(event, email, password, passwordConfirm)}>
             <div className={classes.formInner}>
               <input
@@ -216,9 +232,14 @@ export default function SignUp(props: SignUpProps) {
         )}
         {haveCredentials && (
           <div className={classes.form}>
-            <Typography className={classes.programTitle}>What program are you in?</Typography>
-            <Programs {...propsPrograms}/>
-            <Button variant="contained" type="submit" className={classes.btn}>Join</Button>
+            {!loading && (
+              <Fragment>
+                <Typography className={classes.programTitle}>What program are you in?</Typography>
+                <Programs {...propsPrograms}/>
+              </Fragment>
+            )}
+            {loading && <CircularProgress className={classes.spinner} size={200}/>}
+            <Button variant="contained" type="submit" className={classes.btn} onClick={() => submitUser()}>Join</Button>
           </div>
         )}
       </Paper>
