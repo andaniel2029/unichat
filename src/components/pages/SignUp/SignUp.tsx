@@ -189,6 +189,7 @@ export default function SignUp(props: SignUpProps) {
                   value={passwordConfirm}
                   onChange={event => setPasswordConfirm(event.target.value)}
                 />
+                <Typography style={{fontFamily: 'halcom'}}>Already have an account?</Typography>
                 {error && <Typography className={classes.error}>{error}</Typography>}
             </div>
             <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
@@ -201,12 +202,6 @@ export default function SignUp(props: SignUpProps) {
             <Button variant="contained" type="submit" className={classes.btn}>Join</Button>
           </div>
         )}
-        {/* {!haveCredentials && <div className={classes.form}>
-          <Typography>OR</Typography>
-          <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
-          <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
-          <Typography style={{fontFamily: 'halcom'}}>Already have an account?</Typography>
-        </div>} */}
       </Paper>
     </div>
   );
