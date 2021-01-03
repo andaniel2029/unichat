@@ -24,8 +24,6 @@ export default function App() {
     state
   } = useApplicationData();
 
-  console.log('the fucking state', state);
-
   const SignUpData:SignUpProps = {
     programs: state.programs,
     error: state.error

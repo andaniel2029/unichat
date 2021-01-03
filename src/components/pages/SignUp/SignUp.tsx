@@ -126,6 +126,11 @@ interface User {
   program: string | null
 }
 
+export interface ProgramsProps {
+  programs: Program[],
+  setProgram: (program: string) => void
+}
+
 
 export default function SignUp(props: SignUpProps) {
 
@@ -135,6 +140,7 @@ export default function SignUp(props: SignUpProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [program, setProgram] = useState('');
   const [error, setError] = useState('');
 
   const submitCredentials = function(e: any, email: string, password: string, passwordConfirm: string):void {
@@ -155,6 +161,13 @@ export default function SignUp(props: SignUpProps) {
     email: null,
     password: null,
     program: null
+  }
+
+  console.log('in sign up', props);
+
+  const propsPrograms:ProgramsProps = {
+    programs: props.programs,
+    setProgram: setProgram
   }
 
   return (
@@ -198,7 +211,7 @@ export default function SignUp(props: SignUpProps) {
         {haveCredentials && (
           <div className={classes.form}>
             <Typography className={classes.programTitle}>What program are you in?</Typography>
-            <Programs {...props}/>
+            <Programs {...propsPrograms}/>
             <Button variant="contained" type="submit" className={classes.btn}>Join</Button>
           </div>
         )}

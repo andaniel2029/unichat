@@ -13,12 +13,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100px',
     boxShadow: "1px 4px 5px 2px #EDEDED",
     borderRadius: '10px',
-    color: '#lightgrey',
     transition: '0.2s ease-in-out',
+    // background: props => props.selected ? '#FF5A5F' : 'white',
     '&:hover': {
-      background: '#FF5A5F',
-      color: 'white',
-      cursor: 'pointer'
+      color: 'white !important',
+      cursor: 'pointer',
+      background: '#FF5A5F !important',
     },
     [theme.breakpoints.up('xs')]: {
       height: '65px',
@@ -37,12 +37,21 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-export default function ProgramItem(props: Program) {
+export default function ProgramItem(props: any) {
 
-  const classes = useStyles();
+  const classes = useStyles(props);
+  console.log('program', props.selected);
+
+
 
   return (
-    <Grid item className={classes.root}>
+    <Grid 
+      item 
+      className={classes.root} 
+      onClick={() => props.setSelected(props.name)} 
+      style={{background: props.selected ? '#FF5A5F' : 'white',
+              color: props.selected ? 'white' : 'black'}}
+    >
       <Typography className={classes.typography}>{props.name}</Typography> 
     </Grid>
   )
