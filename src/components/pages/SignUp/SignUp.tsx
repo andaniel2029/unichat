@@ -22,8 +22,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     borderRadius: '20px',
     boxShadow: "1px 4px 5px 2px #EDEDED",
-    padding: '1rem 4rem 1rem 4rem',
+    padding: '1rem 0rem 1rem',
     width: '30%',
+    height: '450px',
+    minWidth: '300px',
+    maxWidth: '500px',
   },
 
   form: {
@@ -31,8 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '270px',
-    width: '100%',
+    height: '400px',
   },
 
   formInner: {
@@ -42,16 +44,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
   },
 
+  typography: {
+    fontFamily: 'halcom'
+  },
+
   title: {
-    fontFamily: 'halcom',
     fontSize: '20pt',
     fontWeight: 500,
-    color: '#FF5A5F'
+    color: '#FF5A5F',
+    [theme.breakpoints.down('sm')]: {
+      // fontSize: '18pt',
+    }
   },
 
   field: {
     height: '20px',
-    width: '70%',
     margin: '0.5rem 0rem 0.5rem 0rem',
     fontFamily: 'halcom',
     fontSize: '12pt',
@@ -69,6 +76,9 @@ const useStyles = makeStyles((theme: Theme) => ({
       fontSize: '12pt',
       fontFamily: 'halcom',
       color: '#838383'
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '120%'
     }
   },
 
@@ -149,7 +159,7 @@ export default function SignUp(props: SignUpProps) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <Typography className={classes.title}>Create an Account</Typography>
+        <Typography className={`${classes.title} ${classes.typography}`}>Create an Account</Typography>
         <BorderLinearProgress variant="determinate" value={progress} />
         {!haveCredentials && 
           (<form className={classes.form} onSubmit={event => submitCredentials(event, email, password, passwordConfirm)}>
@@ -185,12 +195,17 @@ export default function SignUp(props: SignUpProps) {
         )}
         {haveCredentials && (
           <div className={classes.form}>
-            <Typography>What program are you in?</Typography>
+            <Typography className={classes.typography}>What program are you in?</Typography>
             <Programs {...props}/>
             <Button variant="contained" type="submit" className={classes.btn}>Join</Button>
           </div>
         )}
-        <Typography style={{fontFamily: 'halcom'}}>Already have an account?</Typography>
+        {/* {!haveCredentials && <div className={classes.form}>
+          <Typography>OR</Typography>
+          <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
+          <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
+          <Typography style={{fontFamily: 'halcom'}}>Already have an account?</Typography>
+        </div>} */}
       </Paper>
     </div>
   );
