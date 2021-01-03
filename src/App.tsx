@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import AuthProvider from './hooks/useAuthContext';
 import Nav from './components/nav/Nav';
 import Grid from '@material-ui/core/Grid';
 import SignUp from './components/pages/SignUp/SignUp';
@@ -31,6 +31,7 @@ export default function App() {
 
   return (
     <Router>
+      <AuthProvider>
       <Grid container>
         <Grid item xs={12}>
           <Nav />
@@ -41,6 +42,7 @@ export default function App() {
           </Switch>
         </Grid>
       </Grid>
+      </AuthProvider>
     </Router>
   );
 }
