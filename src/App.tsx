@@ -4,16 +4,30 @@ import Nav from './components/nav/Nav';
 import Grid from '@material-ui/core/Grid';
 import SignUp from './components/pages/SignUp/SignUp';
 import Home from './components/pages/Home';
+import { Program } from './hooks/useApplicationData';
 
 import { makeStyles } from '@material-ui/core/styles';
+import useApplicationData from './hooks/useApplicationData';
 
 const useStyles = makeStyles((theme) => ({
 
 }));
 
+export interface SignUpProps {
+  programs: Program[]
+  error: boolean
+}
+
 export default function App() {
 
-  const classes = useStyles();
+  const {
+    state
+  } = useApplicationData();
+
+  const SignUpData:SignUpProps = {
+    programs: state.programs,
+    error: state.error
+  }
 
   return (
     <Router>
@@ -23,8 +37,7 @@ export default function App() {
         </Grid>
         <Grid item xs={12}>
           <Switch>
-            {/* <Route exact path="/" component={Home} /> */}
-            <Route path="/" component={SignUp} />
+            <Route path="/" component={() => <SignUp {...SignUpData}/>} />
           </Switch>
         </Grid>
       </Grid>
