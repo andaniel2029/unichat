@@ -23,10 +23,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderRadius: '20px',
     boxShadow: "1px 4px 5px 2px #EDEDED",
     padding: '1rem 0rem 1rem',
-    width: '30%',
+    width: '320px',
     height: '450px',
-    minWidth: '300px',
-    maxWidth: '500px',
+    // minWidth: '300px',
+    // maxWidth: '500px',
+    [theme.breakpoints.up('sm')]: {
+      width: '500px'
+    }
   },
 
   form: {
