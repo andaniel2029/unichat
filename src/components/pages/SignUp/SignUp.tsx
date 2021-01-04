@@ -156,6 +156,8 @@ export default function SignUp(props: SignUpProps) {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [selected, setSelected] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -267,6 +269,22 @@ export default function SignUp(props: SignUpProps) {
         {!haveCredentials && !loading && 
           (<form className={classes.form} onSubmit={event => submitCredentials(event, email, password, passwordConfirm)}>
             <div className={classes.formInner}>
+              <input
+                  className={classes.field}
+                  required
+                  type="text"
+                  placeholder="first name"
+                  value={passwordConfirm}
+                  onChange={event => setPasswordConfirm(event.target.value)}
+                />
+              <input
+                  className={classes.field}
+                  required
+                  type="text"
+                  placeholder="last name"
+                  value={passwordConfirm}
+                  onChange={event => setPasswordConfirm(event.target.value)}
+                />
               <input
                   className={classes.field}
                   required
