@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
   formInner: {
     display: 'flex',
-    width: '100%',
+    // width: '100%',
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       color: '#838383'
     },
     [theme.breakpoints.up('sm')]: {
-      width: '120%'
+      width: '300px'
     }
   },
 
@@ -165,31 +165,40 @@ export default function SignUp(props: SignUpProps) {
       return setError('Passwords do not match');
     }
 
-    newUser.email = email;
-    setProgress(50);
-    setHaveCredentials(true);
-    console.log(newUser);
-  }
+    if(password.length < 6) {
+      return setError('Password must be at least 6 characters');
+    }
 
-  const submitUser = function() {
-    console.log(email, password, selected);
-    setProgress(100);
-    setTimeout(() => {
-      setLoading(true);
-    }, 500);
+    setLoading(true);
 
     signup(email, password)
     .then(() => {
       console.log('after user sign up')
       setTimeout(() => {
         setLoading(false);
-        history.push('/');
+        setHaveCredentials(true);
+        setProgress(50);
       }, 1000);
     })
-    .catch(() => {
+    .catch((error: any) => {
+      console.log(error.message);
       setLoading(false);
-      setError('Failed to create an account');
-    })
+      return setError(error.message);
+    });
+
+    newUser.email = email;
+    console.log(newUser);
+  }
+
+  // Hitting our own backend and database
+  const submitUser = function() {
+
+    // Need to wait until we get back from own backend before history.push('/')
+    console.log(email, password, selected);
+    setProgress(100);
+    setTimeout(() => {
+      setLoading(true);
+    }, 500);
   }
 
   const newUser:User = {
@@ -210,7 +219,7 @@ export default function SignUp(props: SignUpProps) {
       <Paper className={classes.paper}>
         <Typography className={classes.title}>Create an Account</Typography>
         <BorderLinearProgress variant="determinate" value={progress} />
-        {!haveCredentials &&
+        {!haveCredentials && !loading && 
           (<form className={classes.form} onSubmit={event => submitCredentials(event, email, password, passwordConfirm)}>
             <div className={classes.formInner}>
               <input
@@ -243,6 +252,7 @@ export default function SignUp(props: SignUpProps) {
             <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
           </form>
         )}
+        {loading && <CircularProgress className={classes.spinner} size={200}/>}
         {haveCredentials && (
           <div className={classes.form}>
             {!loading && (
@@ -251,7 +261,6 @@ export default function SignUp(props: SignUpProps) {
                 <Programs {...propsPrograms}/>
               </Fragment>
             )}
-            {loading && <CircularProgress className={classes.spinner} size={200}/>}
             <Button variant="contained" type="submit" className={classes.btn} onClick={() => submitUser()}>Join</Button>
           </div>
         )}
