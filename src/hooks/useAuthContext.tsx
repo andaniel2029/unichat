@@ -29,9 +29,9 @@ interface AuthProps {
 export default function AuthProvider({ children }: AuthProps) {
   const [currentUser, setCurrentUser] = useState<any>();
   const [loading, setLoading] = useState(true);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [program, setProgram] = useState('');
+  const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || '');
+  const [lastName, setLastName] = useState(localStorage.getItem('lastName') || '');
+  const [program, setProgram] = useState(localStorage.getItem('program') || '');
 
   const getUserByEmail = async function(email: string) {
 
@@ -45,49 +45,22 @@ export default function AuthProvider({ children }: AuthProps) {
     return userExists;
   }
 
-  const signup = async function(firstname:string, lastname:string, email:string, password:string, program:string) {
-
-    // return auth.createUserWithEmailAndPassword(email, password);
+  const signup = function(firstname:string, lastname:string, email:string, password:string) {
 
     setFirstName(firstname);
     setLastName(lastname);
-    setProgram(program);
-    // console.log('current', currentUser);
+    localStorage.setItem('firstName', firstname);
+    localStorage.setItem('lastName', lastname);
     console.log(firstname, lastname, email, password);
 
     return auth.createUserWithEmailAndPassword(email, password);
-    // .then(() => {
-    //   console.log('after creation', currentUser)
-    //   axios.post('/api/users', {
-    //     user: currentUser,
-    //     program
-    //   })
-    // })
-
-    // const promises:any = [
-    //   axios.post('/api/users', {
-    //     user: currentUser,
-    //     program
-    //   }),
-    //   auth.createUserWithEmailAndPassword(email, password)
-    // ];
-
-    // return Promise.all(promises).then(() => {
-    //   setCurrentUser({
-    //     ...currentUser,
-    //     program
-    //   })
-    // })
   }
 
   const submitUser = function(program:string) {
 
-    setCurrentUser({
-      ...currentUser,
-      program
-    })
-
     console.log('before the api call', currentUser);
+    setProgram(program);
+    localStorage.setItem('program', program);
 
     // Call our API
     return axios.post('/api/users', {
@@ -95,10 +68,6 @@ export default function AuthProvider({ children }: AuthProps) {
       program
     }).then(response => {
       console.log(response);
-      setCurrentUser({
-        ...currentUser,
-        program
-      })
     })
     // .catch(error => {
     //   console.log('lolerror', error);
@@ -114,7 +83,7 @@ export default function AuthProvider({ children }: AuthProps) {
     console.log('in the useEffect', firstName, lastName, program);
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser({
-        ...user,
+        user,
         firstName,
         lastName,
         program
@@ -123,7 +92,7 @@ export default function AuthProvider({ children }: AuthProps) {
     });
 
     return unsubscribe;
-  }, [firstName]);
+  }, [firstName, lastName, program]);
 
   const value:AppContextInterface = {
     currentUser,

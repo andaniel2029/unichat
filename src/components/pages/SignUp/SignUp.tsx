@@ -190,7 +190,7 @@ export default function SignUp(props: SignUpProps) {
 
     console.log('lololol');
 
-    signup(firstName, lastName, email, password, selected)
+    signup(firstName, lastName, email, password)
     .then(() => {
       console.log('after user sign up');
       setLoading(false);
@@ -207,20 +207,15 @@ export default function SignUp(props: SignUpProps) {
 
   // Hitting our own backend and database
   const createUser = function() {
+
     setLoading(true);
 
-    // Need to wait until we get back from own backend before history.push('/')
-    newUser.program = selected;
-    newUser.email = email;
-    console.log('the new user', newUser);
-
-    console.log('checking', password);
-
-
-    signup(firstName, lastName, email, password, selected)
+    submitUser(selected)
     .then((data: any) => {
+      console.log('back in signup', data);
       setTimeout(() => {
         setLoading(false);
+        setProgress(100);
         history.push('/');
       }, 500)
     })
@@ -231,22 +226,6 @@ export default function SignUp(props: SignUpProps) {
         setError('Whoops! Something went wrong on our end. Please try again')
       }, 500)
     })
-
-    // submitUser(selected)
-    // .then((data: any) => {
-    //   console.log('back in signup', data);
-    //   setTimeout(() => {
-    //     setLoading(false);
-    //     history.push('/');
-    //   }, 500)
-    // })
-    // .catch((error: any) => {
-    //   console.log(error);
-    //   setTimeout(() => {
-    //     setLoading(false);
-    //     setError('Whoops! Something went wrong on our end. Please try again')
-    //   }, 500)
-    // })
 
   }
 
@@ -262,7 +241,7 @@ export default function SignUp(props: SignUpProps) {
     selected: selected
   }
 
-  console.log(currentUser);
+  // console.log(currentUser);
 
 
   return (
