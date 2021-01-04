@@ -62,9 +62,9 @@ export default function AuthProvider({ children }: AuthProps) {
         program
       })
     })
-    .catch(error => {
-      console.log(error);
-    });
+    // .catch(error => {
+    //   console.log('lolerror', error);
+    // });
 
   }
 

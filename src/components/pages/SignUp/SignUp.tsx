@@ -178,6 +178,7 @@ export default function SignUp(props: SignUpProps) {
       console.log('after user sign up');
       setLoading(false);
       setHaveCredentials(true);
+      setError('');
       setProgress(50);
     })
     .catch((error: any) => {
@@ -196,12 +197,19 @@ export default function SignUp(props: SignUpProps) {
     newUser.email = email;
     console.log('the new user', newUser);
     submitUser(selected)
-    .then(() => {
-      setLoading(false);
-      history.push('/');
+    .then((data: any) => {
+      console.log('back in signup', data);
+      setTimeout(() => {
+        setLoading(false);
+        history.push('/');
+      }, 500)
     })
     .catch((error: any) => {
       console.log(error);
+      setTimeout(() => {
+        setLoading(false);
+        setError('Whoops! Something went wrong on our end. Please try again')
+      }, 500)
     })
 
   }
@@ -266,6 +274,7 @@ export default function SignUp(props: SignUpProps) {
                 <Programs {...propsPrograms}/>
               </Fragment>
             )}
+            {error && <Typography className={classes.error}>{error}</Typography>}
             {!loading && <Button variant="contained" type="submit" className={classes.btn} onClick={() => createUser()}>Join</Button>}
           </div>
         )}
