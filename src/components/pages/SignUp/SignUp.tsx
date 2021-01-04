@@ -101,6 +101,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 
   error: {
+    fontFamily: 'halcom',
+    textAlign: 'center',
     color: '#FF5A5F'
   },
 
@@ -173,12 +175,10 @@ export default function SignUp(props: SignUpProps) {
 
     signup(email, password)
     .then(() => {
-      console.log('after user sign up')
-      setTimeout(() => {
-        setLoading(false);
-        setHaveCredentials(true);
-        setProgress(50);
-      }, 1000);
+      console.log('after user sign up');
+      setLoading(false);
+      setHaveCredentials(true);
+      setProgress(50);
     })
     .catch((error: any) => {
       console.log(error.message);
