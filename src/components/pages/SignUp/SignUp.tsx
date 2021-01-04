@@ -1,13 +1,16 @@
-import { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Fragment, useState } from 'react';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Programs from './Programs';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { SignUpProps } from '../../../App';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import { Program } from '../../../hooks/useApplicationData';
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../../hooks/useAuthContext';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -25,8 +28,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '1rem 0rem 1rem',
     width: '320px',
     height: '450px',
-    // minWidth: '300px',
-    // maxWidth: '500px',
     [theme.breakpoints.up('sm')]: {
       width: '500px'
     }
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
   formInner: {
     display: 'flex',
-    width: '100%',
+    // width: '100%',
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -82,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       color: '#838383'
     },
     [theme.breakpoints.up('sm')]: {
-      width: '120%'
+      width: '300px'
     }
   },
 
@@ -100,8 +101,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 
   error: {
+    fontFamily: 'halcom',
+    textAlign: 'center',
     color: '#FF5A5F'
   },
+
+  spinner: {
+    marginTop: '4rem',
+    fontSize: '4rem',
+    color: '#FF5A5F'
+  }
 }));
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
@@ -131,7 +140,6 @@ interface User {
 
 export interface ProgramsProps {
   programs: Program[],
-  // getProgram: (programTitle: string) => void,
   setSelected: (selected: string) => void,
   selected: string
 }
@@ -140,26 +148,85 @@ export interface ProgramsProps {
 export default function SignUp(props: SignUpProps) {
 
   const classes = useStyles();
+
+  const { signup, submitUser, getUserByEmail, currentUser } = useAuth();
   const [progress, setProgress] = useState(0);
   const [haveCredentials, setHaveCredentials] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [selected, setSelected] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
-  const submitCredentials = function(e: any, email: string, password: string, passwordConfirm: string):void {
+  const submitCredentials = async function(e: any) {
     e.preventDefault();
 
     if(password !== passwordConfirm) {
       return setError('Passwords do not match');
     }
 
-    console.log(email, password);
-    newUser.email = email;
-    setProgress(50);
-    setHaveCredentials(true);
-    console.log(newUser);
+    if(password.length < 6) {
+      return setError('Password must be at least 6 characters');
+    }
+
+    setLoading(true);
+
+    // const exists = await getUserByEmail(email);
+    // console.log('do they exist', exists);
+
+    // if(exists) {
+    //   setLoading(false);
+    //   return setError('Email already in use with another account');
+    // }
+
+    // setLoading(false);
+    // setProgress(50);
+    // setHaveCredentials(true);
+    // setError('');
+
+    console.log('lololol');
+
+    signup(firstName, lastName, email, password)
+    .then(() => {
+      console.log('after user sign up');
+      setLoading(false);
+      setHaveCredentials(true);
+      setError('');
+      setProgress(50);
+    })
+    .catch((error: any) => {
+      console.log(error.message);
+      setLoading(false);
+      return setError(error.message);
+    });
+  }
+
+  // Hitting our own backend and database
+  const createUser = function() {
+
+    setLoading(true);
+
+    submitUser(selected)
+    .then((data: any) => {
+      console.log('back in signup', data);
+      setTimeout(() => {
+        setLoading(false);
+        setProgress(100);
+        history.push('/');
+      }, 500)
+    })
+    .catch((error: any) => {
+      console.log(error);
+      setTimeout(() => {
+        setLoading(false);
+        setError('Whoops! Something went wrong on our end. Please try again')
+      }, 500)
+    })
+
   }
 
   const newUser:User = {
@@ -174,16 +241,33 @@ export default function SignUp(props: SignUpProps) {
     selected: selected
   }
 
-  console.log(selected);
+  // console.log(currentUser);
+
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Typography className={classes.title}>Create an Account</Typography>
         <BorderLinearProgress variant="determinate" value={progress} />
-        {!haveCredentials && 
-          (<form className={classes.form} onSubmit={event => submitCredentials(event, email, password, passwordConfirm)}>
+        {!haveCredentials && !loading && 
+          (<form className={classes.form} onSubmit={event => submitCredentials(event)}>
             <div className={classes.formInner}>
+              <input
+                  className={classes.field}
+                  required
+                  type="text"
+                  placeholder="first name"
+                  value={firstName}
+                  onChange={event => setFirstName(event.target.value)}
+                />
+              <input
+                  className={classes.field}
+                  required
+                  type="text"
+                  placeholder="last name"
+                  value={lastName}
+                  onChange={event => setLastName(event.target.value)}
+                />
               <input
                   className={classes.field}
                   required
@@ -214,11 +298,17 @@ export default function SignUp(props: SignUpProps) {
             <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
           </form>
         )}
+        {loading && <CircularProgress className={classes.spinner} size={200}/>}
         {haveCredentials && (
           <div className={classes.form}>
-            <Typography className={classes.programTitle}>What program are you in?</Typography>
-            <Programs {...propsPrograms}/>
-            <Button variant="contained" type="submit" className={classes.btn}>Join</Button>
+            {!loading && (
+              <Fragment>
+                <Typography className={classes.programTitle}>Welcome, {firstName}! What program are you in?</Typography>
+                <Programs {...propsPrograms}/>
+              </Fragment>
+            )}
+            {error && <Typography className={classes.error}>{error}</Typography>}
+            {!loading && <Button variant="contained" type="submit" className={classes.btn} onClick={() => createUser()}>Join</Button>}
           </div>
         )}
       </Paper>

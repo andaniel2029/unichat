@@ -1,9 +1,10 @@
-import { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import AuthProvider from './hooks/useAuthContext';
 import Nav from './components/nav/Nav';
 import Grid from '@material-ui/core/Grid';
 import SignUp from './components/pages/SignUp/SignUp';
 import Home from './components/pages/Home';
+import PrivateRoute from './components/PrivateRoute';
 import { Program } from './hooks/useApplicationData';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,16 +32,19 @@ export default function App() {
 
   return (
     <Router>
+      <AuthProvider>
       <Grid container>
         <Grid item xs={12}>
           <Nav />
         </Grid>
         <Grid item xs={12}>
           <Switch>
+            <PrivateRoute exact path="/" component={Home} />
             <Route path="/" component={() => <SignUp {...SignUpData}/>} />
           </Switch>
         </Grid>
       </Grid>
+      </AuthProvider>
     </Router>
   );
 }
