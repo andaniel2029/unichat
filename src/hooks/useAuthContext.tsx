@@ -1,9 +1,11 @@
-import React, { useContext, useState, useEffect, ReactChild, ReactNode } from 'react';
+import React, { useContext, useState, useEffect, ReactNode } from 'react';
 import { auth } from '../firebase';
+import axios from 'axios';
 
 const AuthContext = React.createContext<AppContextInterface>({
   currentUser: null, 
   signup: null, 
+  submitUser: null,
   logout: null
 });
 
@@ -14,6 +16,7 @@ export function useAuth() {
 interface AppContextInterface {
   currentUser: any,
   signup: any,
+  submitUser: any
   logout: any
 }
 
@@ -28,6 +31,41 @@ export default function AuthProvider({ children }: AuthProps) {
 
   const signup = function(email:string, password:string) {
     return auth.createUserWithEmailAndPassword(email, password);
+  }
+
+  const submitUser = function(program:string) {
+
+    console.log(program);
+    console.log({
+      ...currentUser,
+      program
+    })
+
+
+    // console.log('user before api call', currentUser);
+
+    setCurrentUser({
+      ...currentUser,
+      program
+    })
+
+    console.log('before the api call', currentUser);
+
+    // Call our API
+    return axios.post('/api/users', {
+      user: currentUser,
+      program
+    }).then(response => {
+      console.log(response);
+      setCurrentUser({
+        ...currentUser,
+        program
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
   }
 
   const logout = function() {
@@ -46,6 +84,7 @@ export default function AuthProvider({ children }: AuthProps) {
   const value:AppContextInterface = {
     currentUser,
     signup,
+    submitUser,
     logout
   }
 

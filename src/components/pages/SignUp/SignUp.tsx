@@ -149,7 +149,7 @@ export default function SignUp(props: SignUpProps) {
 
   const classes = useStyles();
 
-  const { signup } = useAuth();
+  const { signup, submitUser } = useAuth();
   const [progress, setProgress] = useState(0);
   const [haveCredentials, setHaveCredentials] = useState(false);
   const [email, setEmail] = useState('');
@@ -185,20 +185,25 @@ export default function SignUp(props: SignUpProps) {
       setLoading(false);
       return setError(error.message);
     });
-
-    newUser.email = email;
-    console.log(newUser);
   }
 
   // Hitting our own backend and database
-  const submitUser = function() {
+  const createUser = function() {
+    setLoading(true);
 
     // Need to wait until we get back from own backend before history.push('/')
-    console.log(email, password, selected);
-    setProgress(100);
-    setTimeout(() => {
-      setLoading(true);
-    }, 500);
+    newUser.program = selected;
+    newUser.email = email;
+    console.log('the new user', newUser);
+    submitUser(selected)
+    .then(() => {
+      setLoading(false);
+      history.push('/');
+    })
+    .catch((error: any) => {
+      console.log(error);
+    })
+
   }
 
   const newUser:User = {
@@ -261,7 +266,7 @@ export default function SignUp(props: SignUpProps) {
                 <Programs {...propsPrograms}/>
               </Fragment>
             )}
-            <Button variant="contained" type="submit" className={classes.btn} onClick={() => submitUser()}>Join</Button>
+            {!loading && <Button variant="contained" type="submit" className={classes.btn} onClick={() => createUser()}>Join</Button>}
           </div>
         )}
       </Paper>
