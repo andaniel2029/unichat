@@ -162,7 +162,7 @@ export default function SignUp(props: SignUpProps) {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  const submitCredentials = async function(e: any, email: string, password: string, passwordConfirm: string) {
+  const submitCredentials = async function(e: any) {
     e.preventDefault();
 
     if(password !== passwordConfirm) {
@@ -175,34 +175,34 @@ export default function SignUp(props: SignUpProps) {
 
     setLoading(true);
 
-    const exists = await getUserByEmail(email);
-    console.log('do they exist', exists);
+    // const exists = await getUserByEmail(email);
+    // console.log('do they exist', exists);
 
-    if(exists) {
-      setLoading(false);
-      return setError('Email already in use with another account');
-    }
+    // if(exists) {
+    //   setLoading(false);
+    //   return setError('Email already in use with another account');
+    // }
 
-    setLoading(false);
-    setProgress(50);
-    setHaveCredentials(true);
-    setError('');
+    // setLoading(false);
+    // setProgress(50);
+    // setHaveCredentials(true);
+    // setError('');
 
     console.log('lololol');
 
-    // signup(email, password)
-    // .then(() => {
-    //   console.log('after user sign up');
-    //   setLoading(false);
-    //   setHaveCredentials(true);
-    //   setError('');
-    //   setProgress(50);
-    // })
-    // .catch((error: any) => {
-    //   console.log(error.message);
-    //   setLoading(false);
-    //   return setError(error.message);
-    // });
+    signup(firstName, lastName, email, password, selected)
+    .then(() => {
+      console.log('after user sign up');
+      setLoading(false);
+      setHaveCredentials(true);
+      setError('');
+      setProgress(50);
+    })
+    .catch((error: any) => {
+      console.log(error.message);
+      setLoading(false);
+      return setError(error.message);
+    });
   }
 
   // Hitting our own backend and database
@@ -214,8 +214,10 @@ export default function SignUp(props: SignUpProps) {
     newUser.email = email;
     console.log('the new user', newUser);
 
+    console.log('checking', password);
 
-    signup(email, password, selected)
+
+    signup(firstName, lastName, email, password, selected)
     .then((data: any) => {
       setTimeout(() => {
         setLoading(false);
@@ -260,6 +262,8 @@ export default function SignUp(props: SignUpProps) {
     selected: selected
   }
 
+  console.log(currentUser);
+
 
   return (
     <div className={classes.root}>
@@ -267,23 +271,23 @@ export default function SignUp(props: SignUpProps) {
         <Typography className={classes.title}>Create an Account</Typography>
         <BorderLinearProgress variant="determinate" value={progress} />
         {!haveCredentials && !loading && 
-          (<form className={classes.form} onSubmit={event => submitCredentials(event, email, password, passwordConfirm)}>
+          (<form className={classes.form} onSubmit={event => submitCredentials(event)}>
             <div className={classes.formInner}>
               <input
                   className={classes.field}
                   required
                   type="text"
                   placeholder="first name"
-                  value={passwordConfirm}
-                  onChange={event => setPasswordConfirm(event.target.value)}
+                  value={firstName}
+                  onChange={event => setFirstName(event.target.value)}
                 />
               <input
                   className={classes.field}
                   required
                   type="text"
                   placeholder="last name"
-                  value={passwordConfirm}
-                  onChange={event => setPasswordConfirm(event.target.value)}
+                  value={lastName}
+                  onChange={event => setLastName(event.target.value)}
                 />
               <input
                   className={classes.field}
@@ -320,7 +324,7 @@ export default function SignUp(props: SignUpProps) {
           <div className={classes.form}>
             {!loading && (
               <Fragment>
-                <Typography className={classes.programTitle}>What program are you in?</Typography>
+                <Typography className={classes.programTitle}>Welcome, {firstName}! What program are you in?</Typography>
                 <Programs {...propsPrograms}/>
               </Fragment>
             )}

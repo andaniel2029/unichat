@@ -1,9 +1,6 @@
 import React, { useContext, useState, useEffect, ReactNode } from 'react';
 import { auth } from '../firebase';
 import axios from 'axios';
-import { truncateSync } from 'fs';
-import { RepeatOneSharp } from '@material-ui/icons';
-import { StepConnector } from '@material-ui/core';
 
 const AuthContext = React.createContext<AppContextInterface>({
   currentUser: null, 
@@ -32,6 +29,9 @@ interface AuthProps {
 export default function AuthProvider({ children }: AuthProps) {
   const [currentUser, setCurrentUser] = useState<any>();
   const [loading, setLoading] = useState(true);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [program, setProgram] = useState('');
 
   const getUserByEmail = async function(email: string) {
 
@@ -45,21 +45,24 @@ export default function AuthProvider({ children }: AuthProps) {
     return userExists;
   }
 
-  const signup = async function(email:string, password:string, program:string) {
+  const signup = async function(firstname:string, lastname:string, email:string, password:string, program:string) {
 
     // return auth.createUserWithEmailAndPassword(email, password);
 
+    setFirstName(firstname);
+    setLastName(lastname);
+    setProgram(program);
     // console.log('current', currentUser);
-    console.log(email, program);
+    console.log(firstname, lastname, email, password);
 
-    return auth.createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      console.log('after creation', currentUser)
-      axios.post('/api/users', {
-        user: currentUser,
-        program
-      })
-    })
+    return auth.createUserWithEmailAndPassword(email, password);
+    // .then(() => {
+    //   console.log('after creation', currentUser)
+    //   axios.post('/api/users', {
+    //     user: currentUser,
+    //     program
+    //   })
+    // })
 
     // const promises:any = [
     //   axios.post('/api/users', {
@@ -108,13 +111,19 @@ export default function AuthProvider({ children }: AuthProps) {
   }
 
   useEffect(() => {
+    console.log('in the useEffect', firstName, lastName, program);
     const unsubscribe = auth.onAuthStateChanged(user => {
-      setCurrentUser(user);
+      setCurrentUser({
+        ...user,
+        firstName,
+        lastName,
+        program
+      });
       setLoading(false);
     });
 
     return unsubscribe;
-  }, []);
+  }, [firstName]);
 
   const value:AppContextInterface = {
     currentUser,

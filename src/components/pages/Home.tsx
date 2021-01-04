@@ -12,11 +12,12 @@ export default function Home() {
 
   const classes = useStyles();
   const { currentUser } = useAuth();
+  console.log(currentUser);
 
   return (
     <div>
       <Typography>Home Page</Typography>
-      <Typography>{currentUser.email}</Typography>
+      <Typography>{currentUser.firstName}</Typography>
     </div>
   );
 }
