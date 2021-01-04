@@ -117,7 +117,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
     root: {
       width: '70%',
-      height: 5,
+      minHeight: 5,
       borderRadius: 5,
       marginBottom: '1rem',
     },
@@ -175,21 +175,6 @@ export default function SignUp(props: SignUpProps) {
 
     setLoading(true);
 
-    // const exists = await getUserByEmail(email);
-    // console.log('do they exist', exists);
-
-    // if(exists) {
-    //   setLoading(false);
-    //   return setError('Email already in use with another account');
-    // }
-
-    // setLoading(false);
-    // setProgress(50);
-    // setHaveCredentials(true);
-    // setError('');
-
-    console.log('lololol');
-
     signup(firstName, lastName, email, password)
     .then(() => {
       console.log('after user sign up');
@@ -208,16 +193,19 @@ export default function SignUp(props: SignUpProps) {
   // Hitting our own backend and database
   const createUser = function() {
 
-    setLoading(true);
+    if(!selected) return setError('Please select a program');
 
+    setLoading(true);
+    setError('');
+    
     submitUser(selected)
     .then((data: any) => {
+      setProgress(100);
       console.log('back in signup', data);
       setTimeout(() => {
         setLoading(false);
-        setProgress(100);
         history.push('/');
-      }, 500)
+      }, 1500)
     })
     .catch((error: any) => {
       console.log(error);
@@ -226,7 +214,6 @@ export default function SignUp(props: SignUpProps) {
         setError('Whoops! Something went wrong on our end. Please try again')
       }, 500)
     })
-
   }
 
   const newUser:User = {
@@ -240,9 +227,6 @@ export default function SignUp(props: SignUpProps) {
     setSelected: setSelected,
     selected: selected
   }
-
-  // console.log(currentUser);
-
 
   return (
     <div className={classes.root}>

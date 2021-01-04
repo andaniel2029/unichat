@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <div>
       <Typography>Home Page</Typography>
-      <Typography>{currentUser.firstName}</Typography>
+      <Typography>Welcome, {currentUser.firstName}!</Typography>
       <Typography>{currentUser.program}</Typography>
     </div>
   );
