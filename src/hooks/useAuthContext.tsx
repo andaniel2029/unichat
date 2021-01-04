@@ -1,9 +1,12 @@
 import React, { useContext, useState, useEffect, ReactNode } from 'react';
 import { auth } from '../firebase';
 import axios from 'axios';
+import { truncateSync } from 'fs';
+import { RepeatOneSharp } from '@material-ui/icons';
 
 const AuthContext = React.createContext<AppContextInterface>({
   currentUser: null, 
+  getUserByEmail: null,
   signup: null, 
   submitUser: null,
   logout: null
@@ -15,6 +18,7 @@ export function useAuth() {
 
 interface AppContextInterface {
   currentUser: any,
+  getUserByEmail: any,
   signup: any,
   submitUser: any
   logout: any
@@ -28,21 +32,23 @@ export default function AuthProvider({ children }: AuthProps) {
   const [currentUser, setCurrentUser] = useState<any>();
   const [loading, setLoading] = useState(true);
 
+  const getUserByEmail = async function(email: string) {
+
+    let userExists:boolean = false;
+
+    await axios.get(`/api/users/${email}`).then(response => {
+      console.log(response.data);
+      response.data[0] ? userExists = true : userExists = false
+    })
+
+    return userExists;
+  }
 
   const signup = function(email:string, password:string) {
     return auth.createUserWithEmailAndPassword(email, password);
   }
 
   const submitUser = function(program:string) {
-
-    console.log(program);
-    console.log({
-      ...currentUser,
-      program
-    })
-
-
-    // console.log('user before api call', currentUser);
 
     setCurrentUser({
       ...currentUser,
@@ -83,6 +89,7 @@ export default function AuthProvider({ children }: AuthProps) {
 
   const value:AppContextInterface = {
     currentUser,
+    getUserByEmail,
     signup,
     submitUser,
     logout

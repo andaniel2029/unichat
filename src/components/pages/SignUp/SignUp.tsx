@@ -149,7 +149,7 @@ export default function SignUp(props: SignUpProps) {
 
   const classes = useStyles();
 
-  const { signup, submitUser } = useAuth();
+  const { signup, submitUser, getUserByEmail } = useAuth();
   const [progress, setProgress] = useState(0);
   const [haveCredentials, setHaveCredentials] = useState(false);
   const [email, setEmail] = useState('');
@@ -160,7 +160,7 @@ export default function SignUp(props: SignUpProps) {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  const submitCredentials = function(e: any, email: string, password: string, passwordConfirm: string):void {
+  const submitCredentials = async function(e: any, email: string, password: string, passwordConfirm: string) {
     e.preventDefault();
 
     if(password !== passwordConfirm) {
@@ -173,19 +173,29 @@ export default function SignUp(props: SignUpProps) {
 
     setLoading(true);
 
-    signup(email, password)
-    .then(() => {
-      console.log('after user sign up');
+    const exists = await getUserByEmail(email);
+    console.log('do they exist', exists);
+
+    if(exists) {
       setLoading(false);
-      setHaveCredentials(true);
-      setError('');
-      setProgress(50);
-    })
-    .catch((error: any) => {
-      console.log(error.message);
-      setLoading(false);
-      return setError(error.message);
-    });
+      return setError('Email already in use with another account');
+    }
+
+    console.log('lololol');
+
+    // signup(email, password)
+    // .then(() => {
+    //   console.log('after user sign up');
+    //   setLoading(false);
+    //   setHaveCredentials(true);
+    //   setError('');
+    //   setProgress(50);
+    // })
+    // .catch((error: any) => {
+    //   console.log(error.message);
+    //   setLoading(false);
+    //   return setError(error.message);
+    // });
   }
 
   // Hitting our own backend and database
