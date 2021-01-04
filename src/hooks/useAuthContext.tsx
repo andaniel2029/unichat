@@ -3,6 +3,7 @@ import { auth } from '../firebase';
 import axios from 'axios';
 import { truncateSync } from 'fs';
 import { RepeatOneSharp } from '@material-ui/icons';
+import { StepConnector } from '@material-ui/core';
 
 const AuthContext = React.createContext<AppContextInterface>({
   currentUser: null, 
@@ -44,8 +45,36 @@ export default function AuthProvider({ children }: AuthProps) {
     return userExists;
   }
 
-  const signup = function(email:string, password:string) {
-    return auth.createUserWithEmailAndPassword(email, password);
+  const signup = async function(email:string, password:string, program:string) {
+
+    // return auth.createUserWithEmailAndPassword(email, password);
+
+    // console.log('current', currentUser);
+    console.log(email, program);
+
+    return auth.createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      console.log('after creation', currentUser)
+      axios.post('/api/users', {
+        user: currentUser,
+        program
+      })
+    })
+
+    // const promises:any = [
+    //   axios.post('/api/users', {
+    //     user: currentUser,
+    //     program
+    //   }),
+    //   auth.createUserWithEmailAndPassword(email, password)
+    // ];
+
+    // return Promise.all(promises).then(() => {
+    //   setCurrentUser({
+    //     ...currentUser,
+    //     program
+    //   })
+    // })
   }
 
   const submitUser = function(program:string) {

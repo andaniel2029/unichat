@@ -149,7 +149,7 @@ export default function SignUp(props: SignUpProps) {
 
   const classes = useStyles();
 
-  const { signup, submitUser, getUserByEmail } = useAuth();
+  const { signup, submitUser, getUserByEmail, currentUser } = useAuth();
   const [progress, setProgress] = useState(0);
   const [haveCredentials, setHaveCredentials] = useState(false);
   const [email, setEmail] = useState('');
@@ -181,6 +181,11 @@ export default function SignUp(props: SignUpProps) {
       return setError('Email already in use with another account');
     }
 
+    setLoading(false);
+    setProgress(50);
+    setHaveCredentials(true);
+    setError('');
+
     console.log('lololol');
 
     // signup(email, password)
@@ -206,9 +211,10 @@ export default function SignUp(props: SignUpProps) {
     newUser.program = selected;
     newUser.email = email;
     console.log('the new user', newUser);
-    submitUser(selected)
+
+
+    signup(email, password, selected)
     .then((data: any) => {
-      console.log('back in signup', data);
       setTimeout(() => {
         setLoading(false);
         history.push('/');
@@ -221,6 +227,22 @@ export default function SignUp(props: SignUpProps) {
         setError('Whoops! Something went wrong on our end. Please try again')
       }, 500)
     })
+
+    // submitUser(selected)
+    // .then((data: any) => {
+    //   console.log('back in signup', data);
+    //   setTimeout(() => {
+    //     setLoading(false);
+    //     history.push('/');
+    //   }, 500)
+    // })
+    // .catch((error: any) => {
+    //   console.log(error);
+    //   setTimeout(() => {
+    //     setLoading(false);
+    //     setError('Whoops! Something went wrong on our end. Please try again')
+    //   }, 500)
+    // })
 
   }
 
