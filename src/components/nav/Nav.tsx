@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
     height: '60px',
   },
 
+  buttonContainer: {
+  },
+
   logo: {
     fontFamily: 'halcom',
     fontSize: '28pt',
@@ -25,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     background: '#FF5A5F',
     width: '100px',
+    margin: '0rem 0.5rem 0rem 0.5rem',
     borderRadius: '20px',
     boxShadow: 'none',
     '&:hover': {
@@ -63,10 +67,15 @@ export default function Nav() {
   return (
     <div className={classes.root}>
       <Typography className={classes.logo}>UniChat</Typography>
-      {<Link to="/signup" className={classes.link}>
-        <Button variant="contained" className={classes.button}>Join</Button>
-      </Link>}
-      <Button variant="contained" className={classes.button} onClick={handleLogout}>Logout</Button>
+      <div className={classes.buttonContainer}>
+        {!currentUser.user && <Link to="/login" className={classes.link}>
+          <Button variant="contained" className={classes.button}>Login</Button>
+        </Link>}
+        {!currentUser.user && <Link to="/signup" className={classes.link}>
+          <Button variant="contained" className={classes.button}>Join</Button>
+        </Link>}
+        {currentUser.user && <Button variant="contained" className={classes.button} onClick={handleLogout}>Logout</Button>}
+      </div>
     </div>
   )
 }
