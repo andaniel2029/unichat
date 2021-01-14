@@ -8,7 +8,7 @@ import Programs from './Programs';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { SignUpProps } from '../../../App';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
-import { Program } from '../../../hooks/useApplicationData';
+// import { Program } from '../../../hooks/useApplicationData';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuthContext';
 
@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
   formInner: {
     display: 'flex',
-    // width: '100%',
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -117,7 +116,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
     root: {
       width: '70%',
-      height: 5,
+      minHeight: 5,
       borderRadius: 5,
       marginBottom: '1rem',
     },
@@ -137,13 +136,6 @@ interface User {
   password: string | null,
   program: string | null
 }
-
-export interface ProgramsProps {
-  programs: Program[],
-  setSelected: (selected: string) => void,
-  selected: string
-}
-
 
 export default function SignUp(props: SignUpProps) {
 
@@ -175,21 +167,6 @@ export default function SignUp(props: SignUpProps) {
 
     setLoading(true);
 
-    // const exists = await getUserByEmail(email);
-    // console.log('do they exist', exists);
-
-    // if(exists) {
-    //   setLoading(false);
-    //   return setError('Email already in use with another account');
-    // }
-
-    // setLoading(false);
-    // setProgress(50);
-    // setHaveCredentials(true);
-    // setError('');
-
-    console.log('lololol');
-
     signup(firstName, lastName, email, password)
     .then(() => {
       console.log('after user sign up');
@@ -208,16 +185,19 @@ export default function SignUp(props: SignUpProps) {
   // Hitting our own backend and database
   const createUser = function() {
 
-    setLoading(true);
+    if(!selected) return setError('Please select a program');
 
+    setLoading(true);
+    setError('');
+    
     submitUser(selected)
     .then((data: any) => {
+      setProgress(100);
       console.log('back in signup', data);
       setTimeout(() => {
         setLoading(false);
-        setProgress(100);
         history.push('/');
-      }, 500)
+      }, 1500)
     })
     .catch((error: any) => {
       console.log(error);
@@ -226,22 +206,7 @@ export default function SignUp(props: SignUpProps) {
         setError('Whoops! Something went wrong on our end. Please try again')
       }, 500)
     })
-
   }
-
-  const newUser:User = {
-    email: null,
-    password: null,
-    program: null
-  }
-
-  const propsPrograms:ProgramsProps = {
-    programs: props.programs,
-    setSelected: setSelected,
-    selected: selected
-  }
-
-  // console.log(currentUser);
 
 
   return (
@@ -304,7 +269,11 @@ export default function SignUp(props: SignUpProps) {
             {!loading && (
               <Fragment>
                 <Typography className={classes.programTitle}>Welcome, {firstName}! What program are you in?</Typography>
-                <Programs {...propsPrograms}/>
+                <Programs 
+                  programs={props.programs}
+                  setSelected={setSelected}
+                  selected={selected}
+                />
               </Fragment>
             )}
             {error && <Typography className={classes.error}>{error}</Typography>}
