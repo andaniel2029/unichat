@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Programs from './Programs';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import UserCredentials from './UserCredentials';
+import { UserCredentials } from './UserCredentials';
 import { SignUpProps } from '../../../App';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 // import { Program } from '../../../hooks/useApplicationData';
@@ -115,19 +115,16 @@ export default function SignUp(props: SignUpProps) {
   const classes = useStyles();
 
   const { signup, submitUser, getUserByEmail, currentUser } = useAuth();
+  const [firstName, setFirstName] = useState('');
   const [progress, setProgress] = useState(0);
   const [haveCredentials, setHaveCredentials] = useState(false);
-  const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [passwordConfirm, setPasswordConfirm] = useState('');
   const [selected, setSelected] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
   const submitCredentials = async function(e: any, newUser: newUser) {
+    setFirstName(newUser.firstName);
     console.log('in the submit function', newUser);
     e.preventDefault();
 
@@ -141,19 +138,19 @@ export default function SignUp(props: SignUpProps) {
 
     setLoading(true);
 
-    // signup(firstName, lastName, email, password)
-    // .then(() => {
-    //   console.log('after user sign up');
-    //   setLoading(false);
-    //   setHaveCredentials(true);
-    //   setError('');
-    //   setProgress(50);
-    // })
-    // .catch((error: any) => {
-    //   console.log(error.message);
-    //   setLoading(false);
-    //   return setError(error.message);
-    // });
+    signup(newUser.firstName, newUser.lastName, newUser.email, newUser.password)
+    .then(() => {
+      console.log('after user sign up');
+      setLoading(false);
+      setHaveCredentials(true);
+      setError('');
+      setProgress(50);
+    })
+    .catch((error: any) => {
+      console.log(error.message);
+      setLoading(false);
+      return setError(error.message);
+    });
   }
 
   // Hitting our own backend and database

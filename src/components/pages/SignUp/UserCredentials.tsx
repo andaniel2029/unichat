@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -6,7 +6,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
-  
+
   form: {
     display: 'flex',
     flexDirection: 'column',
@@ -72,9 +72,10 @@ interface Props {
   error: string
 }
 
-export default function UserCredentials(props: Props) {
+export const UserCredentials = (props: Props) => {
 
   const classes = useStyles();
+  console.log('rerender');
   const [newUser, setNewUser] = useState({
     email: '',
     firstName: '',
