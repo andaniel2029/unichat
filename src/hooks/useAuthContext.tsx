@@ -29,9 +29,9 @@ interface AuthProps {
 export default function AuthProvider({ children }: AuthProps) {
   const [currentUser, setCurrentUser] = useState<any>();
   const [loading, setLoading] = useState(true);
-  const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || '');
-  const [lastName, setLastName] = useState(localStorage.getItem('lastName') || '');
-  const [program, setProgram] = useState(localStorage.getItem('program') || '');
+  const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || null);
+  const [lastName, setLastName] = useState(localStorage.getItem('lastName') || null);
+  const [program, setProgram] = useState(localStorage.getItem('program') || null);
 
   const getUserByEmail = async function(email: string) {
 
@@ -76,6 +76,10 @@ export default function AuthProvider({ children }: AuthProps) {
   }
 
   const logout = function() {
+    setFirstName(null);
+    setLastName(null);
+    setProgram(null);
+    localStorage.clear();
     return auth.signOut();
   }
 
