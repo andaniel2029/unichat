@@ -29,9 +29,9 @@ interface AuthProps {
 export default function AuthProvider({ children }: AuthProps) {
   const [currentUser, setCurrentUser] = useState<any>();
   const [loading, setLoading] = useState(true);
-  const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || null);
-  const [lastName, setLastName] = useState(localStorage.getItem('lastName') || null);
-  const [program, setProgram] = useState(localStorage.getItem('program') || null);
+  const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || '');
+  const [lastName, setLastName] = useState(localStorage.getItem('lastName') || '');
+  const [program, setProgram] = useState(localStorage.getItem('program') || '');
 
   const getUserByEmail = async function(email: string) {
 
@@ -58,14 +58,14 @@ export default function AuthProvider({ children }: AuthProps) {
 
   const submitUser = function(program:string) {
 
+
     console.log('before the api call', currentUser);
     setProgram(program);
     localStorage.setItem('program', program);
 
     // Call our API
     return axios.post('/api/users', {
-      user: currentUser,
-      program
+      currentUser
     }).then(response => {
       console.log(response);
     })
@@ -76,9 +76,9 @@ export default function AuthProvider({ children }: AuthProps) {
   }
 
   const logout = function() {
-    setFirstName(null);
-    setLastName(null);
-    setProgram(null);
+    setFirstName('');
+    setLastName('');
+    setProgram('');
     localStorage.clear();
     return auth.signOut();
   }
