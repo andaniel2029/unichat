@@ -13,7 +13,7 @@ export default function Home() {
 
   useEffect(() => {
     currentUser.user.getIdToken().then((token: any) => {
-      console.log(token);
+      // console.log(token);
     })
     
   }, [])
