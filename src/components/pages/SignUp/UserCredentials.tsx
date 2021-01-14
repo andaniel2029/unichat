@@ -105,11 +105,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface Props {
-  setEmail: (email: string) => void,
-  setFirstName: (firstName: string) => void,
-  setLastName: (lastName: string) => void,
-  setPassword: (password: string) => void,
-  setPasswordConfirm: (passwordConfirm: string) => void,
   submitCredentials: any,
   error: string
 }
@@ -123,23 +118,30 @@ export default function UserCredentials(props: Props) {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  // const handleSubmit = function(e: any, email: string, password: string, passwordConfirm: string) {
-  //   e.preventDefault();
-  //   if(password !== passwordConfirm) {
-  //     return setError('Passwords do not match');
-  //   }
-
-  //   setError('');
-  // }
-
   return (
-    <form className={classes.form} onSubmit={props.submitCredentials(firstName, lastName, email, password, passwordConfirm)}>
-      <div className={classes.inputContainer}>
+    <form className={classes.form} onSubmit={event => props.submitCredentials(event)}>
+      <div className={classes.formInner}>
         <input
             className={classes.field}
             required
             type="text"
-            placeholder="Email"
+            placeholder="first name"
+            value={firstName}
+            onChange={event => setFirstName(event.target.value)}
+          />
+        <input
+            className={classes.field}
+            required
+            type="text"
+            placeholder="last name"
+            value={lastName}
+            onChange={event => setLastName(event.target.value)}
+          />
+        <input
+            className={classes.field}
+            required
+            type="text"
+            placeholder="email"
             value={email}
             onChange={event => setEmail(event.target.value)}
           />
@@ -159,8 +161,9 @@ export default function UserCredentials(props: Props) {
             value={passwordConfirm}
             onChange={event => setPasswordConfirm(event.target.value)}
           />
+          <Typography style={{fontFamily: 'halcom'}}>Already have an account?</Typography>
           {props.error && <Typography className={classes.error}>{props.error}</Typography>}
-        </div>
+      </div>
       <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
     </form>
   );

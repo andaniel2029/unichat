@@ -216,54 +216,11 @@ export default function SignUp(props: SignUpProps) {
         <Typography className={classes.title}>Create an Account</Typography>
         <BorderLinearProgress variant="determinate" value={progress} />
         {!haveCredentials && !loading && 
-          (<form className={classes.form} onSubmit={event => submitCredentials(event)}>
-            <div className={classes.formInner}>
-              <input
-                  className={classes.field}
-                  required
-                  type="text"
-                  placeholder="first name"
-                  value={firstName}
-                  onChange={event => setFirstName(event.target.value)}
-                />
-              <input
-                  className={classes.field}
-                  required
-                  type="text"
-                  placeholder="last name"
-                  value={lastName}
-                  onChange={event => setLastName(event.target.value)}
-                />
-              <input
-                  className={classes.field}
-                  required
-                  type="text"
-                  placeholder="email"
-                  value={email}
-                  onChange={event => setEmail(event.target.value)}
-                />
-              <input
-                  className={classes.field}
-                  required
-                  type="password"
-                  placeholder="password"
-                  value={password}
-                  onChange={event => setPassword(event.target.value)}
-                />
-              <input
-                  className={classes.field}
-                  required
-                  type="password"
-                  placeholder="confirm password"
-                  value={passwordConfirm}
-                  onChange={event => setPasswordConfirm(event.target.value)}
-                />
-                <Typography style={{fontFamily: 'halcom'}}>Already have an account?</Typography>
-                {error && <Typography className={classes.error}>{error}</Typography>}
-            </div>
-            <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
-          </form>
-        )}
+          (<UserCredentials 
+            submitCredentials={submitCredentials}
+            error={error}
+          />)
+        }
         {loading && <CircularProgress className={classes.spinner} size={200}/>}
         {haveCredentials && (
           <div className={classes.form}>
