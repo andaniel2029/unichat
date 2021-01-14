@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
 
-
   btn: {
     margin: '0.5rem 0rem 1rem 0rem',
     fontFamily: 'halcom',
@@ -76,7 +75,7 @@ export default function SelectProgram(props: Props) {
         </Fragment>
       )}
       {props.error && <Typography className={classes.error}>{props.error}</Typography>}
-      {!props.loading && <Button variant="contained" type="submit" className={classes.btn} onClick={() => props.createUser()}>Join</Button>}
+      {!props.loading && <Button variant="contained" type="submit" className={classes.btn} onClick={() => props.createUser(selected)}>Join</Button>}
     </div>
   );
 }

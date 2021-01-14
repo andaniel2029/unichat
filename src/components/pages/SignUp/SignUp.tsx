@@ -159,6 +159,7 @@ export default function SignUp(props: SignUpProps) {
   const createUser = function(selected: string) {
 
     if(!selected) return setError('Please select a program');
+    console.log('selected program in signup', selected);
 
     setLoading(true);
     setError('');
