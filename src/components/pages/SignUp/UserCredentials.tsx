@@ -72,7 +72,7 @@ interface Props {
   error: string
 }
 
-export const UserCredentials = (props: Props) => {
+export default function UserCredentials (props: Props) {
 
   const classes = useStyles();
   console.log('rerender');

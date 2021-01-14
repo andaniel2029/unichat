@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Programs from './Programs';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { UserCredentials } from './UserCredentials';
+import UserCredentials from './UserCredentials';
 import { SignUpProps } from '../../../App';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 // import { Program } from '../../../hooks/useApplicationData';
