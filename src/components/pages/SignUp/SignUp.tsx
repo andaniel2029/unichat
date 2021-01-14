@@ -6,7 +6,10 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Programs from './Programs';
 import LinearProgress from '@material-ui/core/LinearProgress';
+
 import UserCredentials from './UserCredentials';
+import SelectProgram from './SelectProgram';
+
 import { SignUpProps } from '../../../App';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 // import { Program } from '../../../hooks/useApplicationData';
@@ -118,7 +121,6 @@ export default function SignUp(props: SignUpProps) {
   const [firstName, setFirstName] = useState('');
   const [progress, setProgress] = useState(0);
   const [haveCredentials, setHaveCredentials] = useState(false);
-  const [selected, setSelected] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -154,7 +156,7 @@ export default function SignUp(props: SignUpProps) {
   }
 
   // Hitting our own backend and database
-  const createUser = function() {
+  const createUser = function(selected: string) {
 
     if(!selected) return setError('Please select a program');
 
@@ -193,20 +195,13 @@ export default function SignUp(props: SignUpProps) {
         }
         {loading && <CircularProgress className={classes.spinner} size={200}/>}
         {haveCredentials && (
-          <div className={classes.form}>
-            {!loading && (
-              <Fragment>
-                <Typography className={classes.programTitle}>Welcome, {firstName}! What program are you in?</Typography>
-                <Programs 
-                  programs={props.programs}
-                  setSelected={setSelected}
-                  selected={selected}
-                />
-              </Fragment>
-            )}
-            {error && <Typography className={classes.error}>{error}</Typography>}
-            {!loading && <Button variant="contained" type="submit" className={classes.btn} onClick={() => createUser()}>Join</Button>}
-          </div>
+          <SelectProgram 
+            programs={props.programs}
+            firstName={firstName}
+            createUser={createUser}
+            error={error}
+            loading={loading}
+          />
         )}
       </Paper>
     </div>

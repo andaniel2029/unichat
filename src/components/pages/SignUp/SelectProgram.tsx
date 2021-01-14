@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Programs from './Programs';
 import { SignUpProps } from '../../../App';
+import { Program } from '../../../hooks/useApplicationData';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
 
@@ -49,26 +50,24 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 
 interface Props {
-
+  programs: Program[];
+  firstName: string;
+  createUser: any;
+  error: string;
+  loading: boolean;
 }
 
 
 export default function SelectProgram(props: Props) {
 
   const classes = useStyles();
-  
-  const [firstName, setFirstName] = useState('');
-  const [progress, setProgress] = useState(0);
-  const [haveCredentials, setHaveCredentials] = useState(false);
   const [selected, setSelected] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
   return (
     <div className={classes.form}>
-      {!loading && (
+      {!props.loading && (
         <Fragment>
-          <Typography className={classes.programTitle}>Welcome, {firstName}! What program are you in?</Typography>
+          <Typography className={classes.programTitle}>Welcome, {props.firstName}! What program are you in?</Typography>
           <Programs 
             programs={props.programs}
             setSelected={setSelected}
@@ -76,8 +75,8 @@ export default function SelectProgram(props: Props) {
           />
         </Fragment>
       )}
-      {error && <Typography className={classes.error}>{error}</Typography>}
-      {!loading && <Button variant="contained" type="submit" className={classes.btn} onClick={() => createUser()}>Join</Button>}
+      {props.error && <Typography className={classes.error}>{props.error}</Typography>}
+      {!props.loading && <Button variant="contained" type="submit" className={classes.btn} onClick={() => props.createUser()}>Join</Button>}
     </div>
   );
 }
