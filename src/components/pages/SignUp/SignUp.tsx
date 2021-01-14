@@ -42,12 +42,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '400px',
   },
 
-  formInner: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-
   programTitle: {
     fontFamily: 'halcom',
     [theme.breakpoints.up('sm')]: {
@@ -60,31 +54,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: '20pt',
     fontWeight: 500,
     color: '#FF5A5F',
-  },
-
-  field: {
-    height: '20px',
-    margin: '0.5rem 0rem 0.5rem 0rem',
-    fontFamily: 'halcom',
-    fontSize: '12pt',
-    border: '1px solid #E8E8E8',
-    padding: '10px',
-    borderRadius: '10px',
-    transition: '0.2s ease-in-out',
-    '&:focus': {
-      outline: 'none',
-      border: '1px solid #FF5A5F',
-      borderRadius: '10px',
-
-    },
-    '&::placeholder': {
-      fontSize: '12pt',
-      fontFamily: 'halcom',
-      color: '#838383'
-    },
-    [theme.breakpoints.up('sm')]: {
-      width: '300px'
-    }
   },
 
   btn: {
@@ -170,7 +139,7 @@ export default function SignUp(props: SignUpProps) {
       return setError('Password must be at least 6 characters');
     }
 
-    // setLoading(true);
+    setLoading(true);
 
     // signup(firstName, lastName, email, password)
     // .then(() => {

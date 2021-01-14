@@ -6,25 +6,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-
-  paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    borderRadius: '20px',
-    boxShadow: "1px 4px 5px 2px #EDEDED",
-    padding: '1rem 0rem 1rem',
-    width: '320px',
-    height: '450px',
-    [theme.breakpoints.up('sm')]: {
-      width: '500px'
-    }
-  },
-
+  
   form: {
     display: 'flex',
     flexDirection: 'column',
@@ -39,19 +21,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
   },
 
-  programTitle: {
-    fontFamily: 'halcom',
-    [theme.breakpoints.up('sm')]: {
-      fontSize: '13pt'
-    }
-  },
-
-  title: {
-    fontFamily: 'halcom',
-    fontSize: '20pt',
-    fontWeight: 500,
-    color: '#FF5A5F',
-  },
 
   field: {
     height: '20px',
@@ -94,12 +63,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   error: {
     fontFamily: 'halcom',
     textAlign: 'center',
-    color: '#FF5A5F'
-  },
-
-  spinner: {
-    marginTop: '4rem',
-    fontSize: '4rem',
     color: '#FF5A5F'
   }
 }));
