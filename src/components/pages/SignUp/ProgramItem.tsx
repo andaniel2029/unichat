@@ -1,7 +1,7 @@
-import { Program } from '../../../hooks/useApplicationData';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { Typography } from '@material-ui/core';
+import { Program } from '../../../hooks/useApplicationData';
 
 const useStyles = makeStyles((theme: Theme) => ({
 
@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     boxShadow: "1px 4px 5px 2px #EDEDED",
     borderRadius: '10px',
     transition: '0.2s ease-in-out',
-    // background: props => props.selected ? '#FF5A5F' : 'white',
     '&:hover': {
       color: 'white !important',
       cursor: 'pointer',
@@ -37,22 +36,26 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-export default function ProgramItem(props: any) {
+interface Props {
+  key: number | null;
+  program: Program;
+  selected: boolean;
+  setSelected: any;
+}
+
+export default function ProgramItem(props: Props) {
 
   const classes = useStyles(props);
-  // console.log('program', props);
-
-
 
   return (
     <Grid 
       item 
       className={classes.root} 
-      onClick={() => props.setSelected(props.name)} 
+      onClick={() => props.setSelected(props.program.name)} 
       style={{background: props.selected ? '#FF5A5F' : 'white',
               color: props.selected ? 'white' : 'black'}}
     >
-      <Typography className={classes.typography}>{props.name}</Typography> 
+      <Typography className={classes.typography}>{props.program.name}</Typography> 
     </Grid>
   )
 }

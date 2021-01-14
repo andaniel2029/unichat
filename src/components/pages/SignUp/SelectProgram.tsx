@@ -1,11 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Fragment, useState } from 'react';
 import { Typography } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Programs from './Programs';
-import { SignUpProps } from '../../../App';
 import { Program } from '../../../hooks/useApplicationData';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 

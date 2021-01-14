@@ -1,5 +1,4 @@
-import ProgramItem from './Program';
-// import { ProgramsProps } from '../SignUp/SignUp';
+import ProgramItem from './ProgramItem';
 import { Program } from '../../../hooks/useApplicationData';
 import Grid from '@material-ui/core/Grid';
 
@@ -17,7 +16,7 @@ export default function Programs(props: Props) {
         return (
           <ProgramItem 
             key={program.id} 
-            {...program}
+            program={program}
             selected={props.selected === program.name} 
             setSelected={props.setSelected} 
             />
