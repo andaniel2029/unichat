@@ -4,6 +4,7 @@ import Nav from './components/nav/Nav';
 import Grid from '@material-ui/core/Grid';
 import SignUp from './components/pages/SignUp/SignUp';
 import Home from './components/pages/Home';
+import Login from './components/pages/Login';
 import PrivateRoute from './components/PrivateRoute';
 import { Program } from './hooks/useApplicationData';
 
@@ -40,7 +41,8 @@ export default function App() {
         <Grid item xs={12}>
           <Switch>
             <PrivateRoute exact path="/" component={Home} />
-            <Route path="/" component={() => <SignUp {...SignUpData}/>} />
+            <Route path="/signup" component={() => <SignUp {...SignUpData}/>} />
+            <Route path="/login" component={Login}/>
           </Switch>
         </Grid>
       </Grid>
