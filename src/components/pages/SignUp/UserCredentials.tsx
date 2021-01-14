@@ -112,56 +112,84 @@ interface Props {
 export default function UserCredentials(props: Props) {
 
   const classes = useStyles();
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [newUser, setNewUser] = useState({
+    email: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    passwordConfirm: ''
+  });
+
+  // console.log('firstname in new thing', newUser);
 
   return (
-    <form className={classes.form} onSubmit={event => props.submitCredentials(event)}>
+    <form className={classes.form} onSubmit={event => props.submitCredentials(event, newUser)}>
       <div className={classes.formInner}>
         <input
             className={classes.field}
             required
             type="text"
             placeholder="first name"
-            value={firstName}
-            onChange={event => setFirstName(event.target.value)}
+            value={newUser.firstName}
+            onChange={event => {
+              setNewUser({
+                ...newUser,
+                firstName: event.target.value
+              })
+            }}
           />
         <input
             className={classes.field}
             required
             type="text"
             placeholder="last name"
-            value={lastName}
-            onChange={event => setLastName(event.target.value)}
+            value={newUser.lastName}
+            onChange={event => {
+              setNewUser({
+                ...newUser,
+                lastName: event.target.value
+              })
+            }}
           />
         <input
             className={classes.field}
             required
             type="text"
             placeholder="email"
-            value={email}
-            onChange={event => setEmail(event.target.value)}
+            value={newUser.email}
+            onChange={event => {
+              setNewUser({
+                ...newUser,
+                email: event.target.value
+              })
+            }}
           />
         <input
             className={classes.field}
             required
             type="password"
             placeholder="password"
-            value={password}
-            onChange={event => setPassword(event.target.value)}
+            value={newUser.password}
+            onChange={event => {
+              setNewUser({
+                ...newUser,
+                password: event.target.value
+              })
+            }}
           />
         <input
             className={classes.field}
             required
             type="password"
             placeholder="confirm password"
-            value={passwordConfirm}
-            onChange={event => setPasswordConfirm(event.target.value)}
+            value={newUser.passwordConfirm}
+            onChange={event => {
+              setNewUser({
+                ...newUser,
+                passwordConfirm: event.target.value
+              })
+            }}
           />
-          <Typography style={{fontFamily: 'halcom'}}>Already have an account?</Typography>
           {props.error && <Typography className={classes.error}>{props.error}</Typography>}
       </div>
       <Button variant="contained" type="submit" className={classes.btn}>Next</Button>

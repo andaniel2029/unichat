@@ -132,10 +132,13 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 
-interface User {
-  email: string | null
-  password: string | null,
-  program: string | null
+interface newUser {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  passwordConfirm: string;
+
 }
 
 export default function SignUp(props: SignUpProps) {
@@ -146,8 +149,8 @@ export default function SignUp(props: SignUpProps) {
   const [progress, setProgress] = useState(0);
   const [haveCredentials, setHaveCredentials] = useState(false);
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [passwordConfirm, setPasswordConfirm] = useState('');
   const [selected, setSelected] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -155,32 +158,33 @@ export default function SignUp(props: SignUpProps) {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  const submitCredentials = async function(e: any) {
+  const submitCredentials = async function(e: any, newUser: newUser) {
+    console.log('in the submit function', newUser);
     e.preventDefault();
 
-    if(password !== passwordConfirm) {
+    if(newUser.password !== newUser.passwordConfirm) {
       return setError('Passwords do not match');
     }
 
-    if(password.length < 6) {
+    if(newUser.password.length < 6) {
       return setError('Password must be at least 6 characters');
     }
 
-    setLoading(true);
+    // setLoading(true);
 
-    signup(firstName, lastName, email, password)
-    .then(() => {
-      console.log('after user sign up');
-      setLoading(false);
-      setHaveCredentials(true);
-      setError('');
-      setProgress(50);
-    })
-    .catch((error: any) => {
-      console.log(error.message);
-      setLoading(false);
-      return setError(error.message);
-    });
+    // signup(firstName, lastName, email, password)
+    // .then(() => {
+    //   console.log('after user sign up');
+    //   setLoading(false);
+    //   setHaveCredentials(true);
+    //   setError('');
+    //   setProgress(50);
+    // })
+    // .catch((error: any) => {
+    //   console.log(error.message);
+    //   setLoading(false);
+    //   return setError(error.message);
+    // });
   }
 
   // Hitting our own backend and database
