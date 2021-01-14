@@ -58,14 +58,14 @@ export default function AuthProvider({ children }: AuthProps) {
 
   const submitUser = function(program:string) {
 
+
     console.log('before the api call', currentUser);
     setProgram(program);
     localStorage.setItem('program', program);
 
     // Call our API
     return axios.post('/api/users', {
-      user: currentUser,
-      program
+      currentUser
     }).then(response => {
       console.log(response);
     })
@@ -76,6 +76,10 @@ export default function AuthProvider({ children }: AuthProps) {
   }
 
   const logout = function() {
+    setFirstName('');
+    setLastName('');
+    setProgram('');
+    localStorage.clear();
     return auth.signOut();
   }
 

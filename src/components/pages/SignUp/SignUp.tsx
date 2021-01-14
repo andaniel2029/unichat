@@ -1,18 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Programs from './Programs';
 import LinearProgress from '@material-ui/core/LinearProgress';
-
 import UserCredentials from './UserCredentials';
 import SelectProgram from './SelectProgram';
-
 import { SignUpProps } from '../../../App';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
-// import { Program } from '../../../hooks/useApplicationData';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuthContext';
 
@@ -20,7 +15,8 @@ import { useAuth } from '../../../hooks/useAuthContext';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
-    justifyContent: 'center'
+    flexDirection: 'column',
+    alignItems: 'center'
   },
 
   paper: {
@@ -52,8 +48,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
 
+  typography: {
+    fontFamily: 'halcom'
+  },
+
   title: {
-    fontFamily: 'halcom',
     fontSize: '20pt',
     fontWeight: 500,
     color: '#FF5A5F',
@@ -72,6 +71,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
 
+  link: {
+    color: '#FF5A5F',
+    textDecoration: 'none',
+    '&:visited': {
+      // color: 'black',
+      textDecoration: 'none',
+    },
+  },
+
   error: {
     fontFamily: 'halcom',
     textAlign: 'center',
@@ -82,6 +90,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: '4rem',
     fontSize: '4rem',
     color: '#FF5A5F'
+  },
+
+  redirectContainer: {
+    marginTop: '1rem',
   }
 }));
 
@@ -186,7 +198,7 @@ export default function SignUp(props: SignUpProps) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <Typography className={classes.title}>Create an Account</Typography>
+        <Typography className={`${classes.typography} ${classes.title}`}>Create an Account</Typography>
         <BorderLinearProgress variant="determinate" value={progress} />
         {!haveCredentials && !loading && 
           (<UserCredentials 
@@ -203,8 +215,13 @@ export default function SignUp(props: SignUpProps) {
             error={error}
             loading={loading}
           />
-        )}
+          )}
       </Paper>
+      <div className={classes.redirectContainer}>
+        <Typography className={classes.typography}>
+          Already have an account? <Link to="/login" className={classes.link}>Login</Link>
+        </Typography>
+      </div>
     </div>
   );
 }
