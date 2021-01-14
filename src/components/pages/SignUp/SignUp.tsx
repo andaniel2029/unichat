@@ -8,7 +8,7 @@ import Programs from './Programs';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { SignUpProps } from '../../../App';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
-import { Program } from '../../../hooks/useApplicationData';
+// import { Program } from '../../../hooks/useApplicationData';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuthContext';
 
@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
   formInner: {
     display: 'flex',
-    // width: '100%',
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -138,13 +137,6 @@ interface User {
   program: string | null
 }
 
-export interface ProgramsProps {
-  programs: Program[],
-  setSelected: (selected: string) => void,
-  selected: string
-}
-
-
 export default function SignUp(props: SignUpProps) {
 
   const classes = useStyles();
@@ -216,17 +208,6 @@ export default function SignUp(props: SignUpProps) {
     })
   }
 
-  const newUser:User = {
-    email: null,
-    password: null,
-    program: null
-  }
-
-  const propsPrograms:ProgramsProps = {
-    programs: props.programs,
-    setSelected: setSelected,
-    selected: selected
-  }
 
   return (
     <div className={classes.root}>
@@ -288,7 +269,11 @@ export default function SignUp(props: SignUpProps) {
             {!loading && (
               <Fragment>
                 <Typography className={classes.programTitle}>Welcome, {firstName}! What program are you in?</Typography>
-                <Programs {...propsPrograms}/>
+                <Programs 
+                  programs={props.programs}
+                  setSelected={setSelected}
+                  selected={selected}
+                />
               </Fragment>
             )}
             {error && <Typography className={classes.error}>{error}</Typography>}
