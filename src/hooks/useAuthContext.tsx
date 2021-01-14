@@ -7,6 +7,7 @@ const AuthContext = React.createContext<AppContextInterface>({
   getUserByEmail: null,
   signup: null, 
   submitUser: null,
+  login: null,
   logout: null
 });
 
@@ -15,11 +16,12 @@ export function useAuth() {
 }
 
 interface AppContextInterface {
-  currentUser: any,
-  getUserByEmail: any,
-  signup: any,
-  submitUser: any
-  logout: any
+  currentUser: any;
+  getUserByEmail: any;
+  signup: any;
+  submitUser: any;
+  login: any;
+  logout: any;
 }
 
 interface AuthProps {
@@ -75,6 +77,10 @@ export default function AuthProvider({ children }: AuthProps) {
 
   }
 
+  const login = function(email:string, password:string) {
+    return auth.signInWithEmailAndPassword(email, password);
+  }
+
   const logout = function() {
     setFirstName('');
     setLastName('');
@@ -103,6 +109,7 @@ export default function AuthProvider({ children }: AuthProps) {
     getUserByEmail,
     signup,
     submitUser,
+    login,
     logout
   }
 
