@@ -3,7 +3,7 @@ import AuthProvider from './hooks/useAuthContext';
 import Nav from './components/nav/Nav';
 import Grid from '@material-ui/core/Grid';
 import SignUp from './components/pages/SignUp/SignUp';
-import Home from './components/pages/Home';
+import Home from './components/pages/Home/Home';
 import Login from './components/pages/Login';
 import PrivateRoute from './components/PrivateRoute';
 
