@@ -24,18 +24,12 @@ export default function Home(props: Props) {
     
   }, [])
 
-  useEffect(() => {
-    currentUser.firstName = localStorage.getItem('firstName');
-    currentUser.lastName = localStorage.getItem('lastName');
-    currentUser.program = localStorage.getItem('program');
-  }, []);
 
   const classes = useStyles();
   console.log(currentUser);
 
   return (
     <div>
-      <Typography>Home Page</Typography>
       <Typography>Welcome, {currentUser.firstName}!</Typography>
       <Typography>{currentUser.program}</Typography>
       {props.courses.map(course => {
