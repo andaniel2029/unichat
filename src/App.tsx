@@ -6,7 +6,6 @@ import SignUp from './components/pages/SignUp/SignUp';
 import Home from './components/pages/Home';
 import Login from './components/pages/Login';
 import PrivateRoute from './components/PrivateRoute';
-import { Program } from './hooks/useApplicationData';
 
 import { makeStyles } from '@material-ui/core/styles';
 import useApplicationData from './hooks/useApplicationData';
