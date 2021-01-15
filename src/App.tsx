@@ -40,7 +40,7 @@ export default function App() {
         </Grid>
         <Grid item xs={12}>
           <Switch>
-            <PrivateRoute exact path="/" component={Home} />
+            <PrivateRoute exact path="/" component={() => <Home courses={state.courses} error={state.error}/>} />
             <Route path="/signup" component={() => <SignUp {...SignUpData}/>} />
             <Route path="/login" component={Login}/>
           </Switch>

@@ -2,12 +2,18 @@ import { useEffect } from 'react';
 import { Typography } from '@material-ui/core';
 import { useAuth } from '../../hooks/useAuthContext';
 import { makeStyles } from '@material-ui/core/styles';
+import { Course } from '../../hooks/useApplicationData';
 
 const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Home() {
+interface Props {
+  courses: Course[];
+  error: boolean
+}
+
+export default function Home(props: Props) {
 
   const { currentUser } = useAuth();
 
@@ -32,6 +38,9 @@ export default function Home() {
       <Typography>Home Page</Typography>
       <Typography>Welcome, {currentUser.firstName}!</Typography>
       <Typography>{currentUser.program}</Typography>
+      {props.courses.map(course => {
+        return <p>{course.name}</p>
+      })}
     </div>
   );
 }
