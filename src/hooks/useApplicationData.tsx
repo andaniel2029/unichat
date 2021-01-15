@@ -2,25 +2,37 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export interface Program {
-  id: number | null,
-  name: string | null,
+  id: number | null;
+  name: string | null;
+}
+
+export interface Course {
+  id: number;
+  name: string;
+  color_main: string;
+  color_gradient: string;
 }
 
 export default function useApplicationData() {
 
   const programs:Program[] = [];
+  const courses:Course[] = [];
 
   const [state, setState] = useState({
     programs,
+    courses,
     error: false
-  })
+  });
 
   useEffect(() => {
-    axios.get<Program[]>('/api/programs')
-    .then(response => {
+    Promise.all([
+      axios.get<Program[]>('/api/programs'),
+      axios.get<Course[]>('/api/courses'),
+    ]).then((all) => {
       setState({
         ...state,
-        programs: response.data
+        programs: all[0].data,
+        courses: all[1].data
       })
     })
     .catch(error => {

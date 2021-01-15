@@ -88,6 +88,7 @@ export default function AuthProvider({ children }: AuthProps) {
         setFirstName(first_name);
         setLastName(last_name);
         setProgram(program);
+        console.log(first_name, last_name, program)
       })
     });
   }

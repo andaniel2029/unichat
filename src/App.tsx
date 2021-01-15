@@ -3,10 +3,9 @@ import AuthProvider from './hooks/useAuthContext';
 import Nav from './components/nav/Nav';
 import Grid from '@material-ui/core/Grid';
 import SignUp from './components/pages/SignUp/SignUp';
-import Home from './components/pages/Home';
+import Home from './components/pages/Home/Home';
 import Login from './components/pages/Login';
 import PrivateRoute from './components/PrivateRoute';
-import { Program } from './hooks/useApplicationData';
 
 import { makeStyles } from '@material-ui/core/styles';
 import useApplicationData from './hooks/useApplicationData';
@@ -15,21 +14,11 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export interface SignUpProps {
-  programs: Program[]
-  error: boolean
-}
-
 export default function App() {
 
   const {
     state
   } = useApplicationData();
-
-  const SignUpData:SignUpProps = {
-    programs: state.programs,
-    error: state.error
-  }
 
   return (
     <Router>
@@ -40,8 +29,8 @@ export default function App() {
         </Grid>
         <Grid item xs={12}>
           <Switch>
-            <PrivateRoute exact path="/" component={Home} />
-            <Route path="/signup" component={() => <SignUp {...SignUpData}/>} />
+            <PrivateRoute exact path="/" component={() => <Home courses={state.courses} error={state.error}/>} />
+            <Route path="/signup" component={() => <SignUp programs={state.programs} error={state.error}/>} />
             <Route path="/login" component={Login}/>
           </Switch>
         </Grid>
