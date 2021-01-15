@@ -6,10 +6,13 @@ import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
   course: {
-    height: '150px',
+    height: '80px',
     borderRadius: '20px',
     boxShadow: "1px 4px 5px 2px #EDEDED",
     margin: '1rem',
+    [theme.breakpoints.up('sm')]: {
+      height: '150px',
+    }
   },
 
   text: {
@@ -32,10 +35,10 @@ interface Props {
 }
 
 export default function CourseItem(props: Props) {
-  console.log(props);
+
   const classes = useStyles();
   return (
-    <Grid item xs={12} sm={3} md={2} 
+    <Grid item xs={8} sm={3} md={2} 
       className={classes.course} 
       style={{background: `linear-gradient(${props.course.color_gradient}, ${props.course.color_main})`}}
     >

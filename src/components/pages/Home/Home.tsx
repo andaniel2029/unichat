@@ -18,11 +18,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   text: {
-    fontFamily: 'halcom'
   },
 
   courseTitle: {
     fontSize: '20pt',
+    fontFamily: 'montserrat',
     borderBottom: '2px solid #FF5A5F'
   }
 }));
