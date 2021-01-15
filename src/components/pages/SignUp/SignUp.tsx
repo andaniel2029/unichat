@@ -129,7 +129,7 @@ export default function SignUp(props: SignUpProps) {
 
   const classes = useStyles();
 
-  const { signup, submitUser, getUserByEmail, currentUser } = useAuth();
+  const { signup, submitUser } = useAuth();
   const [firstName, setFirstName] = useState('');
   const [progress, setProgress] = useState(0);
   const [haveCredentials, setHaveCredentials] = useState(false);
@@ -139,7 +139,6 @@ export default function SignUp(props: SignUpProps) {
 
   const submitCredentials = async function(e: any, newUser: newUser) {
     setFirstName(newUser.firstName);
-    console.log('in the submit function', newUser);
     e.preventDefault();
 
     if(newUser.password !== newUser.passwordConfirm) {
@@ -154,7 +153,6 @@ export default function SignUp(props: SignUpProps) {
 
     signup(newUser.firstName, newUser.lastName, newUser.email, newUser.password)
     .then(() => {
-      console.log('after user sign up');
       setLoading(false);
       setHaveCredentials(true);
       setError('');
@@ -171,7 +169,6 @@ export default function SignUp(props: SignUpProps) {
   const createUser = function(selected: string) {
 
     if(!selected) return setError('Please select a program');
-    console.log('selected program in signup', selected);
 
     setLoading(true);
     setError('');
@@ -179,14 +176,12 @@ export default function SignUp(props: SignUpProps) {
     submitUser(selected)
     .then((data: any) => {
       setProgress(100);
-      console.log('back in signup', data);
       setTimeout(() => {
         setLoading(false);
         history.push('/');
       }, 1500)
     })
     .catch((error: any) => {
-      console.log(error);
       setTimeout(() => {
         setLoading(false);
         setError('Whoops! Something went wrong on our end. Please try again')

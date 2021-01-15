@@ -161,7 +161,6 @@ export default function Login() {
   const handleLogin = function(e: any) {
     e.preventDefault();
     setLoading(true);
-    console.log('going to logout!');
     login(email, password)
     .then(() => {
       setProgress(100);
@@ -169,8 +168,6 @@ export default function Login() {
         setLoading(false);
         history.push('/');
       }, 1000);
-      
-      console.log('back from auth')
     })
     .catch((error: any) => {
       setLoading(false);

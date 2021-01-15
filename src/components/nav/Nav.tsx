@@ -48,7 +48,6 @@ export default function Nav() {
 
   const { currentUser, logout } = useAuth();
   const [error, setError] = useState('');
-  console.log('nav user', currentUser);
   const history = useHistory();
 
   const handleLogout = function() {
