@@ -6,10 +6,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import UserCredentials from './UserCredentials';
 import SelectProgram from './SelectProgram';
-import { SignUpProps } from '../../../App';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuthContext';
+import { Program } from '../../../hooks/useApplicationData';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -75,7 +75,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: '#FF5A5F',
     textDecoration: 'none',
     '&:visited': {
-      // color: 'black',
       textDecoration: 'none',
     },
   },
@@ -97,6 +96,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
+interface Props {
+  programs: Program[];
+  error: boolean;
+}
+
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -115,17 +119,15 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   }),
 )(LinearProgress);
 
-
 interface newUser {
   email: string;
   firstName: string;
   lastName: string;
   password: string;
   passwordConfirm: string;
-
 }
 
-export default function SignUp(props: SignUpProps) {
+export default function SignUp(props: Props) {
 
   const classes = useStyles();
 
