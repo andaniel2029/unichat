@@ -1,7 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 import { Course } from '../../../hooks/useApplicationData';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Typography, useScrollTrigger } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -37,7 +37,7 @@ export default function CourseItem(props: Props) {
   return (
     <Grid item xs={12} sm={3} md={2} 
       className={classes.course} 
-      style={{background: `linear-gradient(#A2F2BF, ${props.course.color_code})`}}
+      style={{background: `linear-gradient(${props.course.color_gradient}, ${props.course.color_main})`}}
     >
       <Typography className={`${classes.text} ${classes.name}`}>{props.course.name}</Typography>
     </Grid>

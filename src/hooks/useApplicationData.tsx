@@ -9,7 +9,8 @@ export interface Program {
 export interface Course {
   id: number;
   name: string;
-  color_code: string;
+  color_main: string;
+  color_gradient: string;
 }
 
 export default function useApplicationData() {

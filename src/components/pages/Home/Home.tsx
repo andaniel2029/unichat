@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   container: {
-    border: '1px solid red',
     width: '80%',
   },
 
