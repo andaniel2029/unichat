@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
@@ -15,16 +15,28 @@ const useStyles = makeStyles((theme) => ({
   },
 
   buttonContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  font: {
+    fontFamily: 'halcom',
+  },
+
+  name: {
+    fontFamily: 'halcom',
+    color: '#FF5A5F',
+    fontSize: '14pt',
+    marginRight: '2rem',
   },
 
   logo: {
-    fontFamily: 'halcom',
     fontSize: '28pt',
     color: '#FF5A5F'
   },
 
   button: {
-    fontFamily: 'halcom',
     color: 'white',
     background: '#FF5A5F',
     width: '100px',
@@ -65,7 +77,7 @@ export default function Nav() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Typography className={classes.logo}>UniChat</Typography>
+      <Typography className={`${classes.font} ${classes.logo}`}>UniChat</Typography>
       <div className={classes.buttonContainer}>
         {!currentUser.user && <Link to="/login" className={classes.link}>
           <Button variant="contained" className={classes.button}>Login</Button>
@@ -73,7 +85,12 @@ export default function Nav() {
         {!currentUser.user && <Link to="/signup" className={classes.link}>
           <Button variant="contained" className={classes.button}>Join</Button>
         </Link>}
-        {currentUser.user && <Button variant="contained" className={classes.button} onClick={handleLogout}>Logout</Button>}
+        {currentUser.user && 
+          <Fragment>
+            <Typography className={classes.name}>{currentUser.firstName}</Typography>
+            <Button variant="contained" className={classes.button} onClick={handleLogout}>Logout</Button> 
+          </Fragment>
+        }
       </div>
     </div>
   )
