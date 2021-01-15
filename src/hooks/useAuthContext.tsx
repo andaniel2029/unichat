@@ -64,7 +64,8 @@ export default function AuthProvider({ children }: AuthProps) {
     localStorage.setItem('program', program);
     // Call our API
     return axios.post('/api/users', {
-      currentUser
+      currentUser,
+      program
     }).then(response => {
       console.log(response);
     })
@@ -80,10 +81,13 @@ export default function AuthProvider({ children }: AuthProps) {
       console.log('user from firebase', firebaseObj.user.uid);
       return axios.get(`/api/users/${uid}`)
       .then((response: any) => {
-        const user = response.data;
-        setFirstName(user.first_name);
-        setLastName(user.last_name);
-        setProgram(user.program);
+        const { first_name, last_name, program } = response.data;
+        localStorage.setItem('firstName', first_name);
+        localStorage.setItem('lastName', last_name);
+        localStorage.setItem('program', program);
+        setFirstName(first_name);
+        setLastName(last_name);
+        setProgram(program);
       })
     });
   }

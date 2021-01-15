@@ -168,7 +168,7 @@ export default function Login() {
       setTimeout(() => {
         setLoading(false);
         history.push('/');
-      }, 1500)
+      }, 1000);
       
       console.log('back from auth')
     })
