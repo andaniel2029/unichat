@@ -7,6 +7,7 @@ const AuthContext = React.createContext<AppContextInterface>({
   getUserByEmail: null,
   signup: null, 
   submitUser: null,
+  login: null,
   logout: null
 });
 
@@ -15,11 +16,12 @@ export function useAuth() {
 }
 
 interface AppContextInterface {
-  currentUser: any,
-  getUserByEmail: any,
-  signup: any,
-  submitUser: any
-  logout: any
+  currentUser: any;
+  getUserByEmail: any;
+  signup: any;
+  submitUser: any;
+  login: any;
+  logout: any;
 }
 
 interface AuthProps {
@@ -58,14 +60,12 @@ export default function AuthProvider({ children }: AuthProps) {
 
   const submitUser = function(program:string) {
 
-
-    console.log('before the api call', currentUser);
     setProgram(program);
     localStorage.setItem('program', program);
-
     // Call our API
     return axios.post('/api/users', {
-      currentUser
+      currentUser,
+      program
     }).then(response => {
       console.log(response);
     })
@@ -73,6 +73,23 @@ export default function AuthProvider({ children }: AuthProps) {
     //   console.log('lolerror', error);
     // });
 
+  }
+
+  const login = function(email:string, password:string) {
+    return auth.signInWithEmailAndPassword(email, password).then((firebaseObj: any) => {
+      const uid = firebaseObj.user.uid;
+      console.log('user from firebase', firebaseObj.user.uid);
+      return axios.get(`/api/users/${uid}`)
+      .then((response: any) => {
+        const { first_name, last_name, program } = response.data;
+        localStorage.setItem('firstName', first_name);
+        localStorage.setItem('lastName', last_name);
+        localStorage.setItem('program', program);
+        setFirstName(first_name);
+        setLastName(last_name);
+        setProgram(program);
+      })
+    });
   }
 
   const logout = function() {
@@ -103,6 +120,7 @@ export default function AuthProvider({ children }: AuthProps) {
     getUserByEmail,
     signup,
     submitUser,
+    login,
     logout
   }
 

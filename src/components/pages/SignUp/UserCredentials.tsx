@@ -75,7 +75,6 @@ interface Props {
 export default function UserCredentials (props: Props) {
 
   const classes = useStyles();
-  console.log('rerender');
   const [newUser, setNewUser] = useState({
     email: '',
     firstName: '',
@@ -83,8 +82,6 @@ export default function UserCredentials (props: Props) {
     password: '',
     passwordConfirm: ''
   });
-
-  // console.log('firstname in new thing', newUser);
 
   return (
     <form className={classes.form} onSubmit={event => props.submitCredentials(event, newUser)}>
