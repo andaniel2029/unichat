@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuthContext';
+import { LocalFloristTwoTone } from '@material-ui/icons';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -150,44 +151,55 @@ export default function Login() {
   const classes = useStyles();
 
   const { login } = useAuth();
-  const [firstName, setFirstName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [progress, setProgress] = useState(0);
-  const [haveCredentials, setHaveCredentials] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
   const handleLogin = function(e: any) {
     e.preventDefault();
+    setLoading(true);
     console.log('going to logout!');
-    return;
+    login(email, password)
+    .then(() => {
+      console.log('back from auth')
+    })
+    .catch((error: any) => {
+      setLoading(false);
+      return setError('email or password is incorrect');
+    })
   }
-
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Typography className={`${classes.typography} ${classes.title}`}>Login</Typography>
         <BorderLinearProgress variant="determinate" value={progress} />
-        <form className={classes.form} onSubmit={event => handleLogin(event)}>
-      <div className={classes.formInner}>
-        <input
-            className={classes.field}
-            required
-            type="email"
-            placeholder="email"
-          
-          />
-        <input
-            className={classes.field}
-            required
-            type="password"
-            placeholder="password"
-          />
-          {error && <Typography className={classes.error}>{error}</Typography>}
-      </div>
-      <Button variant="contained" type="submit" className={classes.btn}>Login</Button>
-    </form>
+        {loading && <CircularProgress className={classes.spinner} size={100}/>}
+        {!loading && <form className={classes.form} onSubmit={event => handleLogin(event)}>
+          <div className={classes.formInner}>
+            <input
+                className={classes.field}
+                required
+                type="email"
+                placeholder="email"
+                value={email}
+                onChange={event => setEmail(event.target.value)}
+              />
+            <input
+                className={classes.field}
+                required
+                type="password"
+                placeholder="password"
+                value={password}
+                onChange={event => setPassword(event.target.value)}
+              />
+              {error && <Typography className={classes.error}>{error}</Typography>}
+          </div>
+          <Button variant="contained" type="submit" className={classes.btn}>Login</Button>
+        </form>}
       </Paper>
       <div className={classes.redirectContainer}>
         <Typography className={classes.typography}>

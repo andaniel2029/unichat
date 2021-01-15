@@ -60,11 +60,8 @@ export default function AuthProvider({ children }: AuthProps) {
 
   const submitUser = function(program:string) {
 
-
-    console.log('before the api call', currentUser);
     setProgram(program);
     localStorage.setItem('program', program);
-
     // Call our API
     return axios.post('/api/users', {
       currentUser
@@ -78,7 +75,11 @@ export default function AuthProvider({ children }: AuthProps) {
   }
 
   const login = function(email:string, password:string) {
-    return auth.signInWithEmailAndPassword(email, password);
+    return auth.signInWithEmailAndPassword(email, password).then(user => {
+      console.log('user from firebase', user);
+    })
+    
+
   }
 
   const logout = function() {
