@@ -15,21 +15,11 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export interface SignUpProps {
-  programs: Program[]
-  error: boolean
-}
-
 export default function App() {
 
   const {
     state
   } = useApplicationData();
-
-  const SignUpData:SignUpProps = {
-    programs: state.programs,
-    error: state.error
-  }
 
   return (
     <Router>
@@ -41,7 +31,7 @@ export default function App() {
         <Grid item xs={12}>
           <Switch>
             <PrivateRoute exact path="/" component={() => <Home courses={state.courses} error={state.error}/>} />
-            <Route path="/signup" component={() => <SignUp {...SignUpData}/>} />
+            <Route path="/signup" component={() => <SignUp programs={state.programs} error={state.error}/>} />
             <Route path="/login" component={Login}/>
           </Switch>
         </Grid>
