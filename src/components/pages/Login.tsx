@@ -164,6 +164,12 @@ export default function Login() {
     console.log('going to logout!');
     login(email, password)
     .then(() => {
+      setProgress(100);
+      setTimeout(() => {
+        setLoading(false);
+        history.push('/');
+      }, 1500)
+      
       console.log('back from auth')
     })
     .catch((error: any) => {

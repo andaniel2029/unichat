@@ -75,11 +75,17 @@ export default function AuthProvider({ children }: AuthProps) {
   }
 
   const login = function(email:string, password:string) {
-    return auth.signInWithEmailAndPassword(email, password).then(user => {
-      console.log('user from firebase', user);
-    })
-    
-
+    return auth.signInWithEmailAndPassword(email, password).then((firebaseObj: any) => {
+      const uid = firebaseObj.user.uid;
+      console.log('user from firebase', firebaseObj.user.uid);
+      return axios.get(`/api/users/${uid}`)
+      .then((response: any) => {
+        const user = response.data;
+        setFirstName(user.first_name);
+        setLastName(user.last_name);
+        setProgram(user.program);
+      })
+    });
   }
 
   const logout = function() {
