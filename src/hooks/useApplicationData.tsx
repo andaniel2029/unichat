@@ -21,16 +21,16 @@ export default function useApplicationData() {
     programs,
     courses,
     error: false
-  })
+  });
 
   useEffect(() => {
-    axios.get<Program[]>('/api/programs')
-    .then(response => {
-      setState({
-        ...state,
-        programs: response.data
-      })
+    Promise.all([
+      axios.get<Program[]>('/api/programs'),
+      axios.get<Course[]>('/api/courses'),
+    ]).then((all) => {
+      // SET THE APP STATE
     })
+    .then()
     .catch(error => {
       setState({
         ...state,
