@@ -52,7 +52,7 @@ export default function Home(props: Props) {
       <Typography className={`${classes.text} ${classes.courseTitle}`}>Chat Rooms</Typography>
       <Grid container justify="center" className={classes.container}>
         {props.courses.map((course: Course) => {
-          return <CourseItem course={course}/>
+          return <CourseItem key={course.id} course={course}/>
         })}
       </Grid>
     </div>
