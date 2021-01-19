@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import { setSourceMapRange } from 'typescript';
-
 
 const SocketContext = React.createContext();
 
@@ -12,7 +10,7 @@ export function useSocket() {
   return useContext(SocketContext);
 }
 
-export function SocketProvider({ id, children }) {
+export function SocketProvider({ children }) {
 
   const [socket, setSocket] = useState();
 
@@ -25,7 +23,7 @@ export function SocketProvider({ id, children }) {
       if(!socket) return;
       socket.off();
     }
-  }, [id]);
+  }, []);
 
   console.log(socket);
 

@@ -9,6 +9,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 import { makeStyles } from '@material-ui/core/styles';
 import useApplicationData from './hooks/useApplicationData';
+import { SocketProvider } from './contexts/SocketProvider';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -16,9 +17,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
 
-  const {
-    state
-  } = useApplicationData();
+  const { state } = useApplicationData();
+  // const { socket } = useSocket();
 
   return (
     <Router>
@@ -29,7 +29,9 @@ export default function App() {
         </Grid>
         <Grid item xs={12}>
           <Switch>
-            <PrivateRoute exact path="/" component={() => <Home courses={state.courses} error={state.error}/>} />
+            <SocketProvider>
+              <PrivateRoute exact path="/" component={() => <Home courses={state.courses} error={state.error}/>} />
+            </SocketProvider>
             <Route path="/signup" component={() => <SignUp programs={state.programs} error={state.error}/>} />
             <Route path="/login" component={Login}/>
           </Switch>
