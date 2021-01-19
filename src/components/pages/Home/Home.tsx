@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Course } from '../../../hooks/useApplicationData';
 import Grid from '@material-ui/core/Grid';
 import CourseItem from './CourseItem';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,6 +57,9 @@ export default function Home(props: Props) {
           return <CourseItem key={course.id} course={course}/>
         })}
       </Grid>
+      <Link to='/chat'>
+        <Button variant="outlined">Chat</Button>
+      </Link>
     </div>
   );
 }

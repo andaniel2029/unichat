@@ -9,7 +9,7 @@ export default function Chat() {
   useEffect(() => {
     if(!socket) return;
     socket.emit('sendMessage', ('hello there'))
-  })
+  }, [])
 
 
   return (
