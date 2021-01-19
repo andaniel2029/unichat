@@ -30,6 +30,7 @@ interface AuthProps {
 
 export default function AuthProvider({ children }: AuthProps) {
   const [currentUser, setCurrentUser] = useState<any>();
+  const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || '');
   const [lastName, setLastName] = useState(localStorage.getItem('lastName') || '');
@@ -62,6 +63,7 @@ export default function AuthProvider({ children }: AuthProps) {
 
     setProgram(program);
     localStorage.setItem('program', program);
+    setLoggedIn(true);
     // Call our API
     return axios.post('/api/users', {
       currentUser,
@@ -81,6 +83,7 @@ export default function AuthProvider({ children }: AuthProps) {
       console.log('user from firebase', firebaseObj.user.uid);
       return axios.get(`/api/users/${uid}`)
       .then((response: any) => {
+        setLoggedIn(true);
         const { first_name, last_name, program } = response.data;
         localStorage.setItem('firstName', first_name);
         localStorage.setItem('lastName', last_name);
@@ -94,6 +97,7 @@ export default function AuthProvider({ children }: AuthProps) {
   }
 
   const logout = function() {
+    setLoggedIn(false);
     setFirstName('');
     setLastName('');
     setProgram('');

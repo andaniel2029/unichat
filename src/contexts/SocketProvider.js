@@ -15,22 +15,18 @@ export function SocketProvider({ children }) {
 
   const [socket, setSocket] = useState();
   const { currentUser } = useAuth();
-  console.log('from socket', currentUser)
-
+  console.log('from socket', currentUser);
+  
   useEffect(() => {
-
-    if(!currentUser.user) return;
-
+    
     if(currentUser.user) {
       const id = currentUser.user.uid;
       console.log('the id', id);
       const newSocket = io(ENDPOINT, 
         { query: { id } });
-        
         setSocket(newSocket);
-        
       }
-      
+
       return () => {
       if(!socket) return;
       socket.off();
