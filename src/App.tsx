@@ -31,9 +31,9 @@ export default function App() {
           <Switch>
             <SocketProvider>
               <PrivateRoute exact path="/" component={() => <Home courses={state.courses} error={state.error}/>} />
+              <Route path="/signup" component={() => <SignUp programs={state.programs} error={state.error}/>} />
+              <Route path="/login" component={Login}/>
             </SocketProvider>
-            <Route path="/signup" component={() => <SignUp programs={state.programs} error={state.error}/>} />
-            <Route path="/login" component={Login}/>
           </Switch>
         </Grid>
       </Grid>

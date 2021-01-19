@@ -45,7 +45,7 @@ export default function Home(props: Props) {
 
 
   const classes = useStyles();
-  console.log(currentUser);
+  // console.log(currentUser);
 
   return (
     <div className={classes.root}>
