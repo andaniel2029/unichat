@@ -15,7 +15,6 @@ export function SocketProvider({ children }) {
 
   const [socket, setSocket] = useState();
   const { currentUser } = useAuth();
-  // console.log('from socket', currentUser);
   
   useEffect(() => {
     
@@ -31,8 +30,6 @@ export function SocketProvider({ children }) {
       socket.off();
     }
   }, [currentUser.user]);
-
-  // console.log(socket);
 
   return (
     <SocketContext.Provider value={{ socket }}>
