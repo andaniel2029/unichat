@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Programs from './Programs';
-import { Program } from '../../../hooks/useApplicationData';
+// import { Program } from '../../../hooks/useApplicationData';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
 
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 
 interface Props {
-  programs: Program[];
+  programs: any;
   firstName: string;
   createUser: any;
   error: string;

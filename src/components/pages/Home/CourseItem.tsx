@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import { Course } from '../../../hooks/useApplicationData';
+// import { Course } from '../../../hooks/useApplicationData';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface Props {
-  course: Course
+  course: any
 }
 
 export default function CourseItem(props: Props) {

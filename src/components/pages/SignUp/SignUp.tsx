@@ -9,6 +9,7 @@ import SelectProgram from './SelectProgram';
 import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuthContext';
+import { useAppData } from '../../../contexts/AppDataProvider';
 import { Program } from '../../../hooks/useApplicationData';
 
 
@@ -96,27 +97,23 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface Props {
-  programs: Program[];
-  error: boolean;
-}
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '70%',
-      minHeight: 5,
-      borderRadius: 5,
-      marginBottom: '1rem',
-    },
-    colorPrimary: {
-      backgroundColor: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
-    },
-    bar: {
-      borderRadius: 5,
-      backgroundColor: '#FF5A5F',
-    },
-  }),
+createStyles({
+  root: {
+    width: '70%',
+    minHeight: 5,
+    borderRadius: 5,
+    marginBottom: '1rem',
+  },
+  colorPrimary: {
+    backgroundColor: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+  },
+  bar: {
+    borderRadius: 5,
+    backgroundColor: '#FF5A5F',
+  },
+}),
 )(LinearProgress);
 
 interface newUser {
@@ -127,11 +124,13 @@ interface newUser {
   passwordConfirm: string;
 }
 
-export default function SignUp(props: Props) {
+
+export default function SignUp() {
 
   const classes = useStyles();
 
   const { signup, submitUser } = useAuth();
+  const { programs } = useAppData();
   const [firstName, setFirstName] = useState('');
   const [progress, setProgress] = useState(0);
   const [haveCredentials, setHaveCredentials] = useState(false);
@@ -206,7 +205,7 @@ export default function SignUp(props: Props) {
         {loading && <CircularProgress className={classes.spinner} size={200}/>}
         {haveCredentials && (
           <SelectProgram 
-            programs={props.programs}
+            programs={programs}
             firstName={firstName}
             createUser={createUser}
             error={error}

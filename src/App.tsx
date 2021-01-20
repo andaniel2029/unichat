@@ -34,7 +34,7 @@ export default function App() {
               <Switch>
                   <PrivateRoute exact path="/" component={Home} />
                   <PrivateRoute path="/chat" component={Chat}/>
-                  <Route path="/signup" component={() => <SignUp programs={state.programs} error={state.error}/>} />
+                  <Route path="/signup" component={SignUp} />
                   <Route path="/login" component={Login}/>
               </Switch>
             </Grid>

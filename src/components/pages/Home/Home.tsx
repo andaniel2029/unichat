@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import { useAuth } from '../../../hooks/useAuthContext';
 import { useAppData } from '../../../contexts/AppDataProvider';
 import { makeStyles } from '@material-ui/core/styles';
-import { Course } from '../../../hooks/useApplicationData';
+// import { Course } from '../../../hooks/useApplicationData';
 import Grid from '@material-ui/core/Grid';
 import CourseItem from './CourseItem';
 import { Link } from 'react-router-dom';
@@ -49,7 +49,7 @@ export default function Home() {
     <div className={classes.root}>
       <Typography className={`${classes.text} ${classes.courseTitle}`}>Chat Rooms</Typography>
       <Grid container justify="center" className={classes.container}>
-        {courses.map((course: Course) => {
+        {courses.map((course:any) => {
           return <CourseItem key={course.id} course={course}/>
         })}
       </Grid>
