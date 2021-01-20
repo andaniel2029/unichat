@@ -9,14 +9,19 @@ export default function Chat() {
 
   const { socket } = useSocket();
   const { currentUser } = useAuth();
-  console.log('the socket from the chat', socket);
+  // console.log('the socket from the chat', socket);
 
   useEffect(() => {
     if(!socket) return;
+    console.log('going to emit the message event');
     socket.emit('sendMessage', ('hello there'));
 
+    socket.on('sendNotification', () => {
+      console.log('thing received');
+    })
+
     return () => socket.off();
-  }, [socket]);
+  }, []);
 
 
   return (
