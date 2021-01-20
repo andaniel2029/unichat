@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Typography } from '@material-ui/core';
 import { useAuth } from '../../../hooks/useAuthContext';
+import { useAppData } from '../../../contexts/AppDataProvider';
 import { makeStyles } from '@material-ui/core/styles';
 import { Course } from '../../../hooks/useApplicationData';
 import Grid from '@material-ui/core/Grid';
@@ -29,14 +30,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-interface Props {
-  courses: Course[];
-  error: boolean
-}
 
-export default function Home(props: Props) {
+export default function Home() {
 
+  const classes = useStyles();
   const { currentUser } = useAuth();
+  const { courses } = useAppData();
 
   useEffect(() => {
     currentUser.user.getIdToken().then((token: any) => {
@@ -46,14 +45,11 @@ export default function Home(props: Props) {
   }, [])
 
 
-  const classes = useStyles();
-  // console.log(currentUser);
-
   return (
     <div className={classes.root}>
       <Typography className={`${classes.text} ${classes.courseTitle}`}>Chat Rooms</Typography>
       <Grid container justify="center" className={classes.container}>
-        {props.courses.map((course: Course) => {
+        {courses.map((course: Course) => {
           return <CourseItem key={course.id} course={course}/>
         })}
       </Grid>

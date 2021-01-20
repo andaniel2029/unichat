@@ -35,8 +35,13 @@ export function AppDataProvider({ children }) {
     })
   }, []);
 
+  const value = {
+    programs: state.programs,
+    courses: state.courses
+  }
+
   return (
-    <AppDataContext.Provider value={{ state }}>
+    <AppDataContext.Provider value={value}>
       {children}
     </AppDataContext.Provider>
   )

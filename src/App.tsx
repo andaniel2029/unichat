@@ -32,7 +32,7 @@ export default function App() {
             </Grid>
             <Grid item xs={12}>
               <Switch>
-                  <PrivateRoute exact path="/" component={() => <Home courses={state.courses} error={state.error}/>} />
+                  <PrivateRoute exact path="/" component={Home} />
                   <PrivateRoute path="/chat" component={Chat}/>
                   <Route path="/signup" component={() => <SignUp programs={state.programs} error={state.error}/>} />
                   <Route path="/login" component={Login}/>
