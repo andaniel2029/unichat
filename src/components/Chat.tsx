@@ -13,6 +13,7 @@ interface User {
   program: string
 }
 
+
 export default function Chat({ location }: RouteComponentProps) {
 
   const { socket } = useSocket();
@@ -23,15 +24,10 @@ export default function Chat({ location }: RouteComponentProps) {
 
   useEffect(() => {
     if(!socket) return;
-    console.log('going to emit the message event');
-    socket.emit('join-room', { room, currentUser }, (usersInRoom:any) => {
-      console.log('callback', usersInRoom);
-      setUsersInRoom(usersInRoom);
-    });
+    socket.emit('join-room', { room, currentUser }, () => {});
 
     return () => {
-      socket.emit('leave-room', { currentUser }, (roomUsers: Array<Object>) => {
-        // console.log('users on frontend', roomUsers);
+      socket.emit('leave-room', { currentUser }, () => {
       });
       socket.off();
     };
