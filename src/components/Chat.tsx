@@ -17,13 +17,13 @@ export default function Chat({ location }: RouteComponentProps) {
   useEffect(() => {
     if(!socket) return;
     console.log('going to emit the message event');
-    socket.emit('sendMessage', ('hello there'));
+    socket.emit('join-room', { room, currentUser }, () => {});
 
-    socket.on('sendNotification', () => {
-      console.log('thing received');
-    })
+    return () => {
+      socket.emit('leave-room');
+      socket.off();
+    };
 
-    return () => socket.off();
   }, []);
 
 
