@@ -17,14 +17,21 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
 
-  chat: {
+  main: {
     display: 'flex',
     width: '80%',
     justifyContent: 'space-between',
     border: '1px solid blue'
   },
 
+  chatUsers: {
+    display: 'flex',
+    border: '1px solid green'
+  },
+
   users: {
+    display: 'flex',
+    flexDirection: 'column',
     border: '1px solid red'
   },
 
@@ -75,14 +82,17 @@ export default function Chat({ location }: RouteComponentProps) {
       <Link to='/'>
         <Button variant="outlined">Home</Button>
       </Link>
-      <Grid container className={classes.chat}>
-        <Grid item className={classes.users}>
-          <RoomUsers users={usersInRoom}/>
-        </Grid>
-        <Grid item>
-          <p>lol</p>
-        </Grid>
-      </Grid>
+      <div className={classes.main}>
+        <div className={classes.chatUsers}>
+          <div className={classes.users}>
+            <RoomUsers users={usersInRoom}/>
+          </div>
+          <div>
+            <p>Feed</p>
+          </div>
+        </div>
+        <p>Other Rooms</p>
+      </div>
     </Grid>
   )
 }
