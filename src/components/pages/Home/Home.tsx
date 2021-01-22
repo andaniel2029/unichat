@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Typography } from '@material-ui/core';
 import { useAuth } from '../../../hooks/useAuthContext';
 import { useAppData } from '../../../contexts/AppDataProvider';
@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import CourseItem from './CourseItem';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import { SettingsRemoteRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +37,7 @@ export default function Home() {
   const classes = useStyles();
   const { currentUser } = useAuth();
   const { courses } = useAppData();
+  const [room, setRoom] = useState('');
 
   useEffect(() => {
     currentUser.user.getIdToken().then((token: any) => {
@@ -50,7 +52,7 @@ export default function Home() {
       <Typography className={`${classes.text} ${classes.courseTitle}`}>Chat Rooms</Typography>
       <Grid container justify="center" className={classes.container}>
         {courses.map((course:any) => {
-          return <CourseItem key={course.id} course={course}/>
+          return <CourseItem key={course.id} course={course} setRoom={setRoom}/>
         })}
       </Grid>
       <Link to='/chat'>
