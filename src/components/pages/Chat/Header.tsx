@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    width: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
   
   text: {
-    fontSize: '30pt',
+    fontSize: '36pt',
     fontFamily: 'montserrat',
     borderBottom: '2px solid #FF5A5F',
   }

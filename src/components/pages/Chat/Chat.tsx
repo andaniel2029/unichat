@@ -8,16 +8,29 @@ import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Header from './Header';
+import RoomUsers from './RoomUsers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexDirection: 'column'
-  }
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+
+  chat: {
+    display: 'flex',
+    width: '80%',
+    justifyContent: 'space-between',
+    border: '1px solid blue'
+  },
+
+  users: {
+    border: '1px solid red'
+  },
 
 }));
 
-interface User {
+export interface User {
   user: any,
   firstName: string,
   lastName: string,
@@ -62,11 +75,14 @@ export default function Chat({ location }: RouteComponentProps) {
       <Link to='/'>
         <Button variant="outlined">Home</Button>
       </Link>
-      {usersInRoom.map((user:User) => {
-        return (
-          <Typography key={user.user.uid}>{user.firstName}</Typography>
-        )
-      })}
+      <Grid container className={classes.chat}>
+        <Grid item className={classes.users}>
+          <RoomUsers users={usersInRoom}/>
+        </Grid>
+        <Grid item>
+          <p>lol</p>
+        </Grid>
+      </Grid>
     </Grid>
   )
 }
