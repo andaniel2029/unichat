@@ -7,6 +7,7 @@ import queryString from 'query-string';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Header from './Header';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +33,6 @@ export default function Chat({ location }: RouteComponentProps) {
   const { currentUser } = useAuth();
   const { room } = queryString.parse(location.search);
   const [usersInRoom, setUsersInRoom] = useState([]);
-  console.log(room);
 
   useEffect(() => {
     if(!socket) return;
@@ -58,7 +58,7 @@ export default function Chat({ location }: RouteComponentProps) {
 
   return (
     <Grid container className={classes.root}>
-      <Typography>Chat Page</Typography>
+      <Header title={room}/>
       <Link to='/'>
         <Button variant="outlined">Home</Button>
       </Link>
