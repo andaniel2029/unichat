@@ -7,19 +7,16 @@ import Home from './components/pages/Home/Home';
 import Login from './components/pages/Login';
 import PrivateRoute from './components/PrivateRoute';
 
-import { makeStyles } from '@material-ui/core/styles';
-import useApplicationData from './hooks/useApplicationData';
+// import { makeStyles } from '@material-ui/core/styles';
 import { SocketProvider } from './contexts/SocketProvider';
 import { AppDataProvider } from './contexts/AppDataProvider';
 import Chat from './components/Chat';
 
-const useStyles = makeStyles((theme) => ({
+// const useStyles = makeStyles((theme) => ({
 
-}));
+// }));
 
 export default function App() {
-
-  const { state } = useApplicationData();
 
   return (
     <Router>
