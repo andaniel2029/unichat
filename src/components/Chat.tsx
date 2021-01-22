@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { useSocket } from '../contexts/SocketProvider';
 import { useAuth } from '../hooks/useAuthContext';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
+import queryString from 'query-string';
 
-export default function Chat() {
+export default function Chat({ location }: RouteComponentProps) {
 
   const { socket } = useSocket();
   const { currentUser } = useAuth();
+  const { room } = queryString.parse(location.search);
+  console.log(room);
   // console.log('the socket from the chat', socket);
 
   useEffect(() => {
