@@ -10,7 +10,7 @@ import PrivateRoute from './components/PrivateRoute';
 // import { makeStyles } from '@material-ui/core/styles';
 import { SocketProvider } from './contexts/SocketProvider';
 import { AppDataProvider } from './contexts/AppDataProvider';
-import Chat from './components/Chat';
+import Chat from './components/pages/Chat/Chat';
 
 // const useStyles = makeStyles((theme) => ({
 

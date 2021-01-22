@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useSocket } from '../contexts/SocketProvider';
-import { useAuth } from '../hooks/useAuthContext';
+import { useSocket } from '../../../contexts/SocketProvider';
+import { useAuth } from '../../../hooks/useAuthContext';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
