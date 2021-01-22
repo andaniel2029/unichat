@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSocket } from '../contexts/SocketProvider';
 import { useAuth } from '../hooks/useAuthContext';
 import { Link, RouteComponentProps } from 'react-router-dom';
@@ -6,26 +6,47 @@ import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
 import queryString from 'query-string';
 
+interface User {
+  user: Object,
+  firstName: string,
+  lastName: string,
+  program: string
+}
+
 export default function Chat({ location }: RouteComponentProps) {
 
   const { socket } = useSocket();
   const { currentUser } = useAuth();
   const { room } = queryString.parse(location.search);
+  const [usersInRoom, setUsersInRoom] = useState([]);
   console.log(room);
-  // console.log('the socket from the chat', socket);
 
   useEffect(() => {
     if(!socket) return;
     console.log('going to emit the message event');
-    socket.emit('join-room', { room, currentUser }, () => {});
+    socket.emit('join-room', { room, currentUser }, (usersInRoom:any) => {
+      console.log('callback', usersInRoom);
+      setUsersInRoom(usersInRoom);
+    });
 
     return () => {
-      socket.emit('leave-room');
+      socket.emit('leave-room', { currentUser }, (roomUsers: Array<Object>) => {
+        // console.log('users on frontend', roomUsers);
+      });
       socket.off();
     };
 
   }, []);
 
+
+  useEffect(() => {
+    socket.on('update-users', (usersInRoom:any) => {
+      console.log('here', usersInRoom);
+      setUsersInRoom(usersInRoom);
+    })
+  }, []);
+
+  console.log(usersInRoom);
 
   return (
     <div>
@@ -33,6 +54,11 @@ export default function Chat({ location }: RouteComponentProps) {
       <Link to='/'>
         <Button variant="outlined">Home</Button>
       </Link>
+      {usersInRoom.map((user:User) => {
+        return (
+          <Typography>{user.firstName}</Typography>
+        )
+      })}
     </div>
   )
 }
