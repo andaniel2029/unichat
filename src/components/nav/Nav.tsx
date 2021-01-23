@@ -90,9 +90,12 @@ export default function Nav() {
   };
   
   const classes = useStyles();
+  
   return (
     <div className={classes.root}>
-      <Typography className={`${classes.font} ${classes.logo}`}>UniChat</Typography>
+      <Link to='/' className={classes.link}>
+        <Typography className={`${classes.font} ${classes.logo}`}>UniChat</Typography>
+      </Link>
       <div className={classes.buttonContainer}>
         {!currentUser.user && <Link to="/login" className={classes.link}>
           <Button variant="contained" className={classes.button}>Login</Button>
