@@ -20,12 +20,13 @@ const useStyles = makeStyles((theme) => ({
   main: {
     display: 'flex',
     width: '85%',
+    height: '700px',
     justifyContent: 'space-between',
     border: '1px solid blue'
   },
 
   usersFeedContainer: {
-    width: '75%',
+    width: '80%',
     display: 'flex',
     border: '1px solid green'
   },
@@ -33,12 +34,13 @@ const useStyles = makeStyles((theme) => ({
   users: {
     display: 'flex',
     flexDirection: 'column',
-    width: '25%',
+    width: '30%',
+    background: '#F2F2F2',
     border: '1px solid red'
   },
 
   feed: {
-    width: '75%',
+    width: '70%',
     display: 'flex',
     justifyContent: 'center',
   },
@@ -46,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   otherRooms: {
     display: 'flex',
     flexDirection: 'column',
-    width: '25%',
+    width: '20%',
     alignItems: 'center',
     border: '2px solid black'
   }
@@ -91,8 +93,6 @@ export default function Chat({ location }: RouteComponentProps) {
       setUsersInRoom(roomData.users);
     })
   }, []);
-
-  // console.log(usersInRoom);
 
   return (
     <Grid container className={classes.root}>
