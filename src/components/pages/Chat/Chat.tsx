@@ -19,13 +19,13 @@ const useStyles = makeStyles((theme) => ({
 
   main: {
     display: 'flex',
-    width: '80%',
+    width: '85%',
     justifyContent: 'space-between',
     border: '1px solid blue'
   },
 
   usersFeedContainer: {
-    width: '100%',
+    width: '75%',
     display: 'flex',
     border: '1px solid green'
   },
@@ -38,14 +38,17 @@ const useStyles = makeStyles((theme) => ({
   },
 
   feed: {
-    width: '50%'
+    width: '75%',
+    display: 'flex',
+    justifyContent: 'center',
   },
 
   otherRooms: {
     display: 'flex',
     flexDirection: 'column',
+    width: '25%',
     alignItems: 'center',
-    border: '1px solid pink'
+    border: '2px solid black'
   }
 
 }));
