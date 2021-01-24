@@ -6,9 +6,10 @@ import { User } from './Chat';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    height: '92%'
+    width: '100%',
+    height: '8%',
+    background: '#F7F7F7',
+    borderRadius: '0px 0px 20px 0px'
   },
 
 }));
@@ -16,13 +17,13 @@ const useStyles = makeStyles((theme) => ({
 interface Props {
 }
 
-export default function Feed(props: Props) {
+export default function Input(props: Props) {
 
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      Feed
+      Input
     </div>
   )
 }

@@ -4,11 +4,12 @@ import { useAuth } from '../../../hooks/useAuthContext';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import queryString from 'query-string';
-import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Header from './Header';
 import RoomUsers from './RoomUsers';
+import Feed from './Feed';
+import Input from './Input';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,13 +23,13 @@ const useStyles = makeStyles((theme) => ({
     width: '85%',
     height: '700px',
     justifyContent: 'space-between',
-    border: '1px solid blue'
   },
 
   usersFeedContainer: {
     width: '80%',
     display: 'flex',
-    border: '1px solid green'
+    borderRadius: '20px',
+    boxShadow: "1px 8px 15px 2px #EDEDED",
   },
 
   users: {
@@ -36,14 +37,12 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     width: '30%',
     padding: '10px',
+    borderRadius: '20px 0px 0px 20px',
     background: '#F2F2F2',
-    border: '1px solid red'
   },
 
-  feed: {
+  feedInput: {
     width: '70%',
-    display: 'flex',
-    justifyContent: 'center',
   },
 
   otherRooms: {
@@ -51,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     width: '20%',
     alignItems: 'center',
-    border: '2px solid black'
   }
 
 }));
@@ -106,8 +104,9 @@ export default function Chat({ location }: RouteComponentProps) {
           <div className={classes.users}>
             <RoomUsers users={usersInRoom}/>
           </div>
-          <div className={classes.feed}>
-            <p>Feed</p>
+          <div className={classes.feedInput}>
+            <Feed />
+            <Input />
           </div>
         </div>
         <div className={classes.otherRooms}>
