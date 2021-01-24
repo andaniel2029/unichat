@@ -8,7 +8,19 @@ import RoomUser from './RoomUser';
 const useStyles = makeStyles((theme) => ({
   root: {
 
+  },
+  
+  text: {
+    fontFamily: 'montserrat',
+  },
+
+  title: {
+    paddingBottom: '0.5rem',
+    fontSize: '20pt',
+    color: '#ACABAB',
   }
+
+
 
 }));
 
@@ -22,6 +34,7 @@ export default function RoomUsers(props: Props) {
 
   return (
     <div>
+      <Typography className={`${classes.text} ${classes.title}`}>Participants</Typography>
       {props.users.map(user => {
         return (
           <RoomUser user={user} />

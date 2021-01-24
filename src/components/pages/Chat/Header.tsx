@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   text: {
     fontSize: '36pt',
     fontFamily: 'montserrat',
+    color: '#585858',
     borderBottom: '2px solid #FF5A5F',
   }
 
