@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid blue'
   },
 
-  chatUsers: {
+  usersFeedContainer: {
+    width: '100%',
     display: 'flex',
     border: '1px solid green'
   },
@@ -32,8 +33,20 @@ const useStyles = makeStyles((theme) => ({
   users: {
     display: 'flex',
     flexDirection: 'column',
+    width: '25%',
     border: '1px solid red'
   },
+
+  feed: {
+    width: '50%'
+  },
+
+  otherRooms: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    border: '1px solid pink'
+  }
 
 }));
 
@@ -56,7 +69,9 @@ export default function Chat({ location }: RouteComponentProps) {
 
   useEffect(() => {
     if(!socket) return;
-    socket.emit('join-room', { room, currentUser }, () => {});
+    socket.emit('join-room', { room, currentUser }, (users: any) => {
+      setUsersInRoom(users);
+    });
 
     return () => {
       socket.emit('leave-room', { currentUser }, () => {
@@ -68,13 +83,13 @@ export default function Chat({ location }: RouteComponentProps) {
 
 
   useEffect(() => {
-    socket.on('update-users', (usersInRoom:any) => {
-      console.log('here', usersInRoom);
-      setUsersInRoom(usersInRoom);
+    socket.on('update-users', (roomData: any) => {
+      console.log('here roomData', roomData.message);
+      setUsersInRoom(roomData.users);
     })
   }, []);
 
-  console.log(usersInRoom);
+  // console.log(usersInRoom);
 
   return (
     <Grid container className={classes.root}>
@@ -83,15 +98,17 @@ export default function Chat({ location }: RouteComponentProps) {
         <Button variant="outlined">Home</Button>
       </Link>
       <div className={classes.main}>
-        <div className={classes.chatUsers}>
+        <div className={classes.usersFeedContainer}>
           <div className={classes.users}>
             <RoomUsers users={usersInRoom}/>
           </div>
-          <div>
+          <div className={classes.feed}>
             <p>Feed</p>
           </div>
         </div>
-        <p>Other Rooms</p>
+        <div className={classes.otherRooms}>
+          <p>Other Rooms</p>
+        </div>
       </div>
     </Grid>
   )
