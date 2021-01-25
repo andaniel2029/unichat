@@ -54,9 +54,6 @@ export default function Home() {
           return <CourseItem key={course.id} course={course} setRoom={setRoom}/>
         })}
       </Grid>
-      <Link to='/chat'>
-        <Button variant="outlined">Chat</Button>
-      </Link>
     </div>
   );
 }
