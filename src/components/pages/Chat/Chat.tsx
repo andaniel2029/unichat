@@ -96,7 +96,7 @@ export default function Chat({ location }: RouteComponentProps) {
       setUpdateMessage(roomData.message);
       setUsersInRoom(roomData.users);
     })
-  }, []);
+  }, [socket]);
 
   const sendMessage = function(e: FormEvent, message:string) {
     e.preventDefault();
