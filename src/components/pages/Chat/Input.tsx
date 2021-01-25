@@ -1,8 +1,8 @@
+import { useState, FormEvent } from 'react';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { User } from './Chat';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
-import { FormEvent } from 'react';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -64,27 +64,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
+  sendMessage: (event: FormEvent, message:string) => void
 }
 
 export default function Input(props: Props) {
 
   const classes = useStyles();
-
-  const sendMessage = function(e: FormEvent) {
-    console.log('sendMessage');
-    e.preventDefault();
-  }
+  const [message, setMessage] = useState('');
 
   return (
     <div className={classes.root}>
       <div className={classes.iconContainer}>
         <AttachFileIcon className={classes.icon}/>
       </div>
-      <form className={classes.form} onSubmit={sendMessage}>
+      <form className={classes.form} onSubmit={event => {
+        props.sendMessage(event, message);
+        setMessage('');
+        }}>
         <input
           className={`${classes.text} ${classes.input}`}
+          value={message}
           type="text"
           placeholder="Type a message..."
+          onChange={event => setMessage(event.target.value)}
           onClick={(event) => {}}
         />
         <button

@@ -10,6 +10,7 @@ import Header from './Header';
 import RoomUsers from './RoomUsers';
 import Feed from './Feed';
 import Input from './Input';
+import { FormEvent } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,6 +70,8 @@ export default function Chat({ location }: RouteComponentProps) {
   const { currentUser } = useAuth();
   const { room, id } = queryString.parse(location.search);
   const [usersInRoom, setUsersInRoom] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [updateMessage, setUpdateMessage] = useState('');
 
   useEffect(() => {
     if(!socket) return;
@@ -88,9 +91,15 @@ export default function Chat({ location }: RouteComponentProps) {
   useEffect(() => {
     socket.on('update-users', (roomData: any) => {
       console.log('here roomData', roomData.message);
+      setUpdateMessage(roomData.message);
       setUsersInRoom(roomData.users);
     })
   }, []);
+
+  const sendMessage = function(e: FormEvent, message:string) {
+    e.preventDefault();
+    console.log(message);
+  }
 
   return (
     <Grid container className={classes.root}>
@@ -105,7 +114,7 @@ export default function Chat({ location }: RouteComponentProps) {
           </div>
           <div className={classes.feedInput}>
             <Feed />
-            <Input />
+            <Input sendMessage={sendMessage}/>
           </div>
         </div>
         <div className={classes.otherRooms}>
