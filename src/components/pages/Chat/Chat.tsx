@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   main: {
     display: 'flex',
     width: '85%',
-    height: '700px',
+    height: '550px',
     justifyContent: 'space-between',
   },
 

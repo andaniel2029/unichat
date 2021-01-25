@@ -2,6 +2,7 @@ import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { User } from './Chat';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
+import { FormEvent } from 'react';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -9,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    height: '8%',
+    height: '10%',
     background: '#F7F7F7',
     borderRadius: '0px 0px 20px 0px',
   },
@@ -69,12 +70,17 @@ export default function Input(props: Props) {
 
   const classes = useStyles();
 
+  const sendMessage = function(e: FormEvent) {
+    console.log('sendMessage');
+    e.preventDefault();
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.iconContainer}>
         <AttachFileIcon className={classes.icon}/>
       </div>
-      <form className={classes.form}>
+      <form className={classes.form} onSubmit={sendMessage}>
         <input
           className={`${classes.text} ${classes.input}`}
           type="text"
@@ -82,6 +88,7 @@ export default function Input(props: Props) {
           onClick={(event) => {}}
         />
         <button
+          type="submit"
           className={`${classes.text} ${classes.button}`}
         >
           Send
