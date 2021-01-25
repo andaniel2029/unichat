@@ -89,6 +89,7 @@ export default function Chat({ location }: RouteComponentProps) {
 
 
   useEffect(() => {
+    if(!socket) return;
     socket.on('update-users', (roomData: any) => {
       console.log('here roomData', roomData.message);
       setUpdateMessage(roomData.message);

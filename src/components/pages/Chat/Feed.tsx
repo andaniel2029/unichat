@@ -25,7 +25,7 @@ export default function Feed(props: Props) {
   return (
     <div className={classes.root}>
       {props.messages.map((message:any) => {
-        return <Message message={message}/>
+        return <Message key={message} message={message}/>
       })}
     </div>
   )
