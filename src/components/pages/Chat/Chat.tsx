@@ -70,7 +70,7 @@ export default function Chat({ location }: RouteComponentProps) {
   const { currentUser } = useAuth();
   const { room, id } = queryString.parse(location.search);
   const [usersInRoom, setUsersInRoom] = useState([]);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Array<String>>([]);
   const [updateMessage, setUpdateMessage] = useState('');
 
   useEffect(() => {
@@ -98,22 +98,23 @@ export default function Chat({ location }: RouteComponentProps) {
 
   const sendMessage = function(e: FormEvent, message:string) {
     e.preventDefault();
-    console.log(message);
+
+    if(message) {
+      console.log(message);
+      setMessages(prev => [...prev, message])
+    }
   }
 
   return (
     <Grid container className={classes.root}>
       <Header title={room}/>
-      <Link to='/'>
-        <Button variant="outlined">Home</Button>
-      </Link>
       <div className={classes.main}>
         <div className={classes.usersFeedContainer}>
           <div className={classes.users}>
             <RoomUsers users={usersInRoom}/>
           </div>
           <div className={classes.feedInput}>
-            <Feed />
+            <Feed messages={messages}/>
             <Input sendMessage={sendMessage}/>
           </div>
         </div>

@@ -80,7 +80,8 @@ export default function Input(props: Props) {
       <form className={classes.form} onSubmit={event => {
         props.sendMessage(event, message);
         setMessage('');
-        }}>
+        }}
+      >
         <input
           className={`${classes.text} ${classes.input}`}
           value={message}
