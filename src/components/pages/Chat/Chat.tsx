@@ -75,6 +75,7 @@ export default function Chat({ location }: RouteComponentProps) {
 
   useEffect(() => {
     if(!socket) return;
+    console.log('is this happening');
     socket.emit('join-room', { room, currentUser }, (users: any) => {
       setUsersInRoom(users);
     });
@@ -85,7 +86,7 @@ export default function Chat({ location }: RouteComponentProps) {
       socket.off();
     };
 
-  }, []);
+  }, [socket]);
 
 
   useEffect(() => {
