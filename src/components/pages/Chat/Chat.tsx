@@ -67,7 +67,7 @@ export default function Chat({ location }: RouteComponentProps) {
 
   const { socket } = useSocket();
   const { currentUser } = useAuth();
-  const { room } = queryString.parse(location.search);
+  const { room, id } = queryString.parse(location.search);
   const [usersInRoom, setUsersInRoom] = useState([]);
 
   useEffect(() => {
