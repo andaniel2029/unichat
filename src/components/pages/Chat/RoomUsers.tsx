@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   title: {
-    paddingBottom: '0.5rem',
+    padding: '0.5rem',
     fontSize: '20pt',
     color: '#ACABAB',
   }

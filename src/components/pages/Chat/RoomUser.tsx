@@ -7,7 +7,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    margin: '0.5rem 0rem 0.5rem 0rem'
+    padding: '0.5rem',
+    transition: '0.2s ease-in-out',
+    '&:hover': {
+      background: '#C7C7C7'
+    },
+    '&:hover .program': {
+      color: 'white'
+    }
   },
 
   text: {
@@ -21,7 +28,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   program: {
-    color: '#ACABAB'
+    color: '#ACABAB',
+    transition: '0.2s ease-in-out',
+    '&:hover': {
+      color: 'white',
+    }
   }
 
 }));
