@@ -70,7 +70,7 @@ export default function Chat({ location }: RouteComponentProps) {
   const { currentUser } = useAuth();
   const { room, id } = queryString.parse(location.search);
   const [usersInRoom, setUsersInRoom] = useState([]);
-  const [messages, setMessages] = useState<Array<String>>([]);
+  const [messages, setMessages] = useState<Array<any>>([]);
   const [updateMessage, setUpdateMessage] = useState('');
 
   useEffect(() => {
@@ -95,6 +95,10 @@ export default function Chat({ location }: RouteComponentProps) {
       console.log('here roomData', roomData.message);
       setUpdateMessage(roomData.message);
       setUsersInRoom(roomData.users.filter((u:User) => u.user.uid !== currentUser.user.uid));
+    });
+
+    socket.on('message', (message:any) => {
+      setMessages((prev) => [...prev, message]);
     })
   }, [socket]);
 
@@ -102,9 +106,7 @@ export default function Chat({ location }: RouteComponentProps) {
     e.preventDefault();
 
     if(message) {
-      console.log(message);
-      socket.emit('send-message', { message, currentUser });
-      // setMessages(prev => [...prev, message]);
+      socket.emit('send-message', { room, message, currentUser });
     }
   }
 

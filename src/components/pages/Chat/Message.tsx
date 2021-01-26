@@ -19,7 +19,7 @@ export default function Message(props: Props) {
 
   return (
     <div className={classes.root}>
-      {props.message}
+      {props.message.firstName}
     </div>
   )
 }
