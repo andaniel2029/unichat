@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     padding: '0rem 1rem 0rem 1rem',
     overflow: 'scroll',
     overflowX: 'hidden',
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    }
   },
 
 }));
