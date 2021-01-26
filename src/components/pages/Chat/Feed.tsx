@@ -10,7 +10,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: '90%'
+    justifyContent: 'flex-end',
+    height: '90%',
+    padding: '0rem 1rem 0rem 1rem',
   },
 
 }));

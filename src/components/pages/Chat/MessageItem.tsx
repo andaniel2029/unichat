@@ -8,8 +8,39 @@ interface StyleProps {
 
 const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
   root: {
-    border: props => props.fromMe ? '1px solid red' : 'none'
+    display: 'flex',
+    justifyContent: props => props.fromMe ? 'flex-end' : 'flex-start',
+    width: '100%',
+    height: 'auto',
+    wordWrap: 'break-word'
   },
+
+  text: {
+    fontFamily: 'halcom'
+  },
+  
+  messageContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: '80%',
+    alignItems: props => props.fromMe ? 'flex-end' : 'flex-start',
+
+  },
+
+  textContainer: {
+    background: props => props.fromMe ? '#FF5A5F' : '#F7F7F7',
+    color: props => props.fromMe ? 'white' : 'black',
+    padding: '5px 8px 5px 8px',
+    borderRadius: '15px',
+    boxShadow: "0px 2px 5px 0.5px #E3E3E3",
+  },
+
+  nameContainer: {
+  },
+
+  name: {
+    color: '#8E8E8E'
+  }
 
 }));
 
@@ -24,7 +55,14 @@ export default function MessageItem(props: Props) {
 
   return (
     <div className={classes.root}>
-      {props.message.firstName}
+      <div className={classes.messageContainer}>
+        <div className={classes.textContainer}>
+          <Typography className={`${classes.text}`}>{props.message.text}</Typography>
+        </div>
+        <div className={classes.nameContainer}>
+          <Typography className={`${classes.text} ${classes.name}`}>{props.message.firstName}</Typography>
+        </div>
+      </div>
     </div>
   )
 }
