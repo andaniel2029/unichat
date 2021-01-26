@@ -1,7 +1,8 @@
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { User } from './Chat';
-import Message from './Message';
+import { Message } from './Chat';
+import MessageItem from './MessageItem';
+import { useAuth } from '../../../hooks/useAuthContext';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -15,17 +16,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  messages: any
+  messages: Message[]
 }
 
 export default function Feed(props: Props) {
 
   const classes = useStyles();
+  const { currentUser } = useAuth();
 
   return (
     <div className={classes.root}>
       {props.messages.map((message:any) => {
-        return <Message key={message} message={message}/>
+        return (
+          <MessageItem 
+            key={message} 
+            message={message}
+            fromMe={message.id === currentUser.user.uid}
+            />
+          )
       })}
     </div>
   )

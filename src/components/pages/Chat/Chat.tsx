@@ -56,9 +56,16 @@ const useStyles = makeStyles((theme) => ({
 
 export interface User {
   user: any,
-  firstName: string,
-  lastName: string,
-  program: string
+  firstName: string;
+  lastName: string;
+  program: string;
+}
+
+export interface Message {
+  text: string;
+  id: string;
+  firstName: string;
+  lastName: string;
 }
 
 
@@ -70,7 +77,7 @@ export default function Chat({ location }: RouteComponentProps) {
   const { currentUser } = useAuth();
   const { room, id } = queryString.parse(location.search);
   const [usersInRoom, setUsersInRoom] = useState([]);
-  const [messages, setMessages] = useState<Array<any>>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [updateMessage, setUpdateMessage] = useState('');
 
   useEffect(() => {
@@ -97,7 +104,7 @@ export default function Chat({ location }: RouteComponentProps) {
       setUsersInRoom(roomData.users.filter((u:User) => u.user.uid !== currentUser.user.uid));
     });
 
-    socket.on('message', (message:any) => {
+    socket.on('message', (message:Message) => {
       setMessages((prev) => [...prev, message]);
     })
   }, [socket]);
