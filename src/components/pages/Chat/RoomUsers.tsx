@@ -54,7 +54,10 @@ export default function RoomUsers(props: Props) {
       </div>
       {props.users.map(user => {
         return (
-          <RoomUser user={user} />
+          <RoomUser 
+            key={user.firstName}
+            user={user}
+          />
         )
       })}
     </div>
