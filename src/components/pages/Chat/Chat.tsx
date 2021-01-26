@@ -103,7 +103,8 @@ export default function Chat({ location }: RouteComponentProps) {
 
     if(message) {
       console.log(message);
-      setMessages(prev => [...prev, message])
+      socket.emit('send-message', { message, currentUser });
+      // setMessages(prev => [...prev, message]);
     }
   }
 
