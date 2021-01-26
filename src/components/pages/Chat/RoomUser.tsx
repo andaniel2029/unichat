@@ -9,10 +9,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    padding: '0.5rem',
+    padding: '0.5rem 0rem 0.5rem 1rem',
     transition: '0.2s ease-in-out',
     animation: '$fadeInSlide 0.4s ease-in-out',
-    // border: '1px solid red',
     '&:hover': {
       background: '#C7C7C7'
     },
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   '@keyframes fadeInSlide': {
     '0%': {
       opacity: 0,
-      transform: 'translateX(-20px)',
+      transform: 'translateX(-10px)',
     },
     '100%': {
       opacity: 1,
