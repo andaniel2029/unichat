@@ -4,11 +4,15 @@ import { User } from './Chat';
 
 
 const useStyles = makeStyles((theme) => ({
+
+  
   root: {
     display: 'flex',
     flexDirection: 'column',
     padding: '0.5rem',
     transition: '0.2s ease-in-out',
+    animation: '$fadeInSlide 0.4s ease-in-out',
+    // border: '1px solid red',
     '&:hover': {
       background: '#C7C7C7'
     },
@@ -16,25 +20,37 @@ const useStyles = makeStyles((theme) => ({
       color: 'white'
     }
   },
-
+  
   text: {
     fontFamily: 'montserrat'
   },
-
+  
   name: {
     fontWeight: 700,
     fontSize: '16pt',
     color: '#FF5A5F'
   },
-
+  
   program: {
     color: '#ACABAB',
     transition: '0.2s ease-in-out',
     '&:hover': {
       color: 'white',
     }
-  }
-
+  },
+  
+  
+  '@keyframes fadeInSlide': {
+    '0%': {
+      opacity: 0,
+      transform: 'translateX(-20px)',
+    },
+    '100%': {
+      opacity: 1,
+      transform: 'translateX(0px)',
+    }
+  },
+  
 }));
 
 interface Props {

@@ -12,6 +12,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     '&:visited': {
       textDecoration: 'none',
     },
+    // transition: '0.4s ease-in-out',
+    animation: '$fadeInSlide 0.4s ease-in-out',
   },
 
   course: {
@@ -37,6 +39,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: 'white',
     fontWeight: 700,
     fontSize: '16pt'
+  },
+
+  '@keyframes fadeInSlide': {
+    '0%': {
+      opacity: 0,
+      transform: 'translateX(-20px)',
+    },
+    '100%': {
+      opacity: 1,
+      transform: 'translateX(0px)',
+    }
   }
 
 }));
