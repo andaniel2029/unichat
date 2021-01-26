@@ -77,7 +77,7 @@ export default function Chat({ location }: RouteComponentProps) {
     if(!socket) return;
     console.log('is this happening');
     socket.emit('join-room', { room, currentUser }, (users: any) => {
-      setUsersInRoom(users);
+      setUsersInRoom(users.filter((u: User) => u.user.uid !== currentUser.user.uid));
     });
 
     return () => {
@@ -94,7 +94,7 @@ export default function Chat({ location }: RouteComponentProps) {
     socket.on('update-users', (roomData: any) => {
       console.log('here roomData', roomData.message);
       setUpdateMessage(roomData.message);
-      setUsersInRoom(roomData.users);
+      setUsersInRoom(roomData.users.filter((u:User) => u.user.uid !== currentUser.user.uid));
     })
   }, [socket]);
 
