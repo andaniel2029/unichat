@@ -13,11 +13,11 @@ const useStyles = makeStyles((theme) => ({
     transition: '0.2s ease-in-out',
     animation: '$fadeInSlide 0.4s ease-in-out',
     '&:hover': {
-      background: '#C7C7C7'
+      background: '#C7C7C7',
+      '& $program': {
+        color: 'white'
+      }
     },
-    '&:hover .program': {
-      color: 'white'
-    }
   },
   
   text: {
