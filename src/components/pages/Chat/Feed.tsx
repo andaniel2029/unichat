@@ -29,7 +29,7 @@ export default function Feed(props: Props) {
       {props.messages.map((message:any) => {
         return (
           <MessageItem 
-            key={message} 
+            key={message.id} 
             message={message}
             fromMe={message.id === currentUser.user.uid}
             />
