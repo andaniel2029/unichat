@@ -12,7 +12,8 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     justifyContent: props => props.fromMe ? 'flex-end' : 'flex-start',
     width: '100%',
     height: 'auto',
-    wordWrap: 'break-word'
+    wordWrap: 'break-word',
+    margin: '0.4rem 0rem 0.4rem 0rem'
   },
 
   text: {
@@ -24,7 +25,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     flexDirection: 'column',
     maxWidth: '80%',
     alignItems: props => props.fromMe ? 'flex-end' : 'flex-start',
-
   },
 
   textContainer: {
@@ -36,10 +36,11 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
   },
 
   nameContainer: {
+    padding: props => props.fromMe ? '0px 5px 0px 0px' : '0px 0px 0px 5px'
   },
 
   name: {
-    color: '#8E8E8E'
+    color: '#8E8E8E',
   }
 
 }));
@@ -60,7 +61,7 @@ export default function MessageItem(props: Props) {
           <Typography className={`${classes.text}`}>{props.message.text}</Typography>
         </div>
         <div className={classes.nameContainer}>
-          <Typography className={`${classes.text} ${classes.name}`}>{props.message.firstName}</Typography>
+          <Typography className={`${classes.text} ${classes.name}`}>{props.message.firstName} {props.message.lastName}</Typography>
         </div>
       </div>
     </div>

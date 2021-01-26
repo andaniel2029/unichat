@@ -3,16 +3,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Message } from './Chat';
 import MessageItem from './MessageItem';
 import { useAuth } from '../../../hooks/useAuthContext';
+// import ScrollToBottom from 'react-scroll-to-bottom';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-end',
     height: '90%',
     padding: '0rem 1rem 0rem 1rem',
+    overflow: 'scroll',
+    overflowX: 'hidden',
   },
 
 }));
