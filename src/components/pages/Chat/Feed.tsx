@@ -36,10 +36,9 @@ export default function Feed(props: Props) {
     <div className={classes.root}>
       {props.messages.map((message:any) => {
         return (
-          <MessageItem 
-            key={message.id} 
+          <MessageItem
             message={message}
-            fromMe={message.id === currentUser.user.uid}
+            fromMe={message.uid === currentUser.user.uid}
             />
           )
       })}

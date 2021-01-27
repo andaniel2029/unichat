@@ -64,7 +64,7 @@ export interface User {
 
 export interface Message {
   text: string;
-  id: string;
+  uid: string;
   firstName: string;
   lastName: string;
 }
@@ -76,7 +76,7 @@ export default function Chat({ location }: RouteComponentProps) {
 
   const { socket } = useSocket();
   const { currentUser } = useAuth();
-  const { room, id } = queryString.parse(location.search);
+  const { room, room_id } = queryString.parse(location.search);
   const [usersInRoom, setUsersInRoom] = useState([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [updateMessage, setUpdateMessage] = useState('');
@@ -95,6 +95,7 @@ export default function Chat({ location }: RouteComponentProps) {
     };
 
   }, [socket]);
+
 
   useEffect(() => {
     axios.get('/api/messages').then(res => console.log(res))
@@ -118,7 +119,7 @@ export default function Chat({ location }: RouteComponentProps) {
     e.preventDefault();
 
     if(message) {
-      socket.emit('send-message', { room, message, currentUser });
+      socket.emit('send-message', { room_id, room, message, currentUser });
     }
   }
 

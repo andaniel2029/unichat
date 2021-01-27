@@ -63,7 +63,7 @@ export default function CourseItem(props: Props) {
 
   const classes = useStyles();
   return (
-    <Link to={`/chat?room=${props.course.name}&id=${props.course.id}`} className={classes.link}>
+    <Link to={`/chat?room=${props.course.name}&room_id=${props.course.id}`} className={classes.link}>
       <Grid item 
         className={classes.course} 
         style={{background: `linear-gradient(${props.course.color_gradient}, ${props.course.color_main})`}}
