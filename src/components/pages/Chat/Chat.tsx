@@ -11,6 +11,7 @@ import RoomUsers from './RoomUsers';
 import Feed from './Feed';
 import Input from './Input';
 import { FormEvent } from 'react';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,6 +95,10 @@ export default function Chat({ location }: RouteComponentProps) {
     };
 
   }, [socket]);
+
+  useEffect(() => {
+    axios.get('/api/messages').then(res => console.log(res))
+  }, []);
 
 
   useEffect(() => {
