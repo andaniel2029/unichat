@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     width: '85%',
     height: '550px',
     justifyContent: 'space-between',
-    animation: '$fadeIn 1.5s ease-in-out'
+    // animation: '$fadeIn 1.5s ease-in-out'
   },
 
   usersFeedContainer: {
@@ -73,6 +73,7 @@ export interface User {
 }
 
 export interface Message {
+  id?: number;
   room_id: string;
   sender_id: string;
   body: string;

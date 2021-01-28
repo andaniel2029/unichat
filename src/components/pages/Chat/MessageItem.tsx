@@ -13,7 +13,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     width: '100%',
     height: 'auto',
     wordWrap: 'break-word',
-    margin: '0.4rem 0rem 0.4rem 0rem'
   },
 
   text: {
@@ -24,6 +23,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     maxWidth: '80%',
+    padding: '0rem 0.7rem 0rem 0.7rem',
     alignItems: props => props.fromMe ? 'flex-end' : 'flex-start',
   },
 

@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     height: '90%',
-    padding: '0rem 1rem 0rem 1rem',
+    position: 'relative',
     overflow: 'scroll',
     overflowX: 'hidden',
     '&::-webkit-scrollbar': {
