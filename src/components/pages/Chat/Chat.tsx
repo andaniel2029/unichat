@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     width: '85%',
     height: '550px',
     justifyContent: 'space-between',
-    // animation: '$fadeIn 1.5s ease-in-out'
+    animation: '$fadeIn 1.5s ease-in-out'
   },
 
   usersFeedContainer: {
@@ -74,13 +74,12 @@ export interface User {
 
 export interface Message {
   id?: number;
-  room_id: string;
+  course_id: string;
   sender_id: string;
   body: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   is_edited: boolean;
-  is_loading: boolean;
 }
 
 export default function Chat({ location }: RouteComponentProps) {
@@ -111,7 +110,10 @@ export default function Chat({ location }: RouteComponentProps) {
 
 
   useEffect(() => {
-    axios.get('/api/messages').then(res => console.log(res))
+    axios.get(`/api/messages/${room_id}`).then((res:any) => {
+      // console.log(res.data);
+      setMessages(res.data);
+    })
   }, []);
 
 
