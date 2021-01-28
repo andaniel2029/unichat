@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     width: '85%',
     height: '550px',
     justifyContent: 'space-between',
+    animation: '$fadeIn 1.5s ease-in-out'
   },
 
   usersFeedContainer: {
@@ -51,6 +52,15 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     width: '20%',
     alignItems: 'center',
+  },
+
+  '@keyframes fadeIn': {
+    '0%': {
+      opacity: 0,
+    },
+    '100%': {
+      opacity: 1,
+    }
   }
 
 }));
