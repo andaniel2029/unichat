@@ -95,7 +95,6 @@ export default function Chat({ location }: RouteComponentProps) {
 
   useEffect(() => {
     if(!socket) return;
-    console.log('is this happening');
     socket.emit('join-room', { room, currentUser }, (users: any) => {
       setUsersInRoom(users.filter((u: User) => u.user.uid !== currentUser.user.uid));
     });
@@ -111,7 +110,6 @@ export default function Chat({ location }: RouteComponentProps) {
 
   useEffect(() => {
     axios.get(`/api/messages/${room_id}`).then((res:any) => {
-      // console.log(res.data);
       setMessages(res.data);
     })
   }, []);
