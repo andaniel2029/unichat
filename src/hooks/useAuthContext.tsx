@@ -48,13 +48,13 @@ export default function AuthProvider({ children }: AuthProps) {
     return userExists;
   }
 
-  const signup = function(firstname:string, lastname:string, email:string, password:string) {
+  const signup = function(firstName:string, lastName:string, email:string, password:string) {
 
-    setFirstName(firstname);
-    setLastName(lastname);
-    localStorage.setItem('firstName', firstname);
-    localStorage.setItem('lastName', lastname);
-    console.log(firstname, lastname, email, password);
+    setFirstName(firstName);
+    setLastName(lastName);
+    localStorage.setItem('firstName', firstName);
+    localStorage.setItem('lastName', lastName);
+    console.log(firstName, lastName, email, password);
 
     return auth.createUserWithEmailAndPassword(email, password);
   }
@@ -85,12 +85,12 @@ export default function AuthProvider({ children }: AuthProps) {
       .then((response: any) => {
         setLoggedIn(true);
         console.log(response.data);
-        const { firstname, lastname, program } = response.data;
-        localStorage.setItem('firstName', firstname);
-        localStorage.setItem('lastName', lastname);
+        const { firstName, lastName, program } = response.data;
+        localStorage.setItem('firstName', firstName);
+        localStorage.setItem('lastName', lastName);
         localStorage.setItem('program', program);
-        setFirstName(firstname);
-        setLastName(lastname);
+        setFirstName(firstName);
+        setLastName(lastName);
         setProgram(program);
       })
     });
