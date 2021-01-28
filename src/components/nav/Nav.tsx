@@ -105,9 +105,9 @@ export default function Nav() {
         </Link>}
         {currentUser.user && 
           <Fragment>
-            <div style={{ marginRight: '1rem' }}>
+            {/* <div style={{ marginRight: '1rem' }}>
               <p>Notifications: {notifications}</p>
-            </div>
+            </div> */}
             <Typography className={classes.name}>{currentUser.firstName}</Typography>
             <Button variant="contained" className={classes.button} onClick={handleLogout}>Logout</Button> 
           </Fragment>

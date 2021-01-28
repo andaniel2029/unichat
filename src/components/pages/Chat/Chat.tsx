@@ -77,8 +77,8 @@ export interface Message {
   course_id: string;
   sender_id: string;
   body: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   is_edited: boolean;
 }
 

@@ -84,14 +84,14 @@ export default function AuthProvider({ children }: AuthProps) {
       return axios.get(`/api/users/${uid}`)
       .then((response: any) => {
         setLoggedIn(true);
-        const { first_name, last_name, program } = response.data;
-        localStorage.setItem('firstName', first_name);
-        localStorage.setItem('lastName', last_name);
+        console.log(response.data);
+        const { firstname, lastname, program } = response.data;
+        localStorage.setItem('firstName', firstname);
+        localStorage.setItem('lastName', lastname);
         localStorage.setItem('program', program);
-        setFirstName(first_name);
-        setLastName(last_name);
+        setFirstName(firstname);
+        setLastName(lastname);
         setProgram(program);
-        console.log(first_name, last_name, program)
       })
     });
   }
