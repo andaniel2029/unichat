@@ -38,7 +38,7 @@ export default function Feed(props: Props) {
         return (
           <MessageItem
             message={message}
-            fromMe={message.uid === currentUser.user.uid}
+            fromMe={message.sender_id === currentUser.user.uid}
             />
           )
       })}

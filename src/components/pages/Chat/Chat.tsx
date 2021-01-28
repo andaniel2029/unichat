@@ -73,12 +73,14 @@ export interface User {
 }
 
 export interface Message {
-  text: string;
-  uid: string;
+  room_id: string;
+  sender_id: string;
+  body: string;
   firstName: string;
   lastName: string;
+  is_edited: boolean;
+  is_loading: boolean;
 }
-
 
 export default function Chat({ location }: RouteComponentProps) {
 
