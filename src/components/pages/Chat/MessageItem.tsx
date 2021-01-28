@@ -53,7 +53,6 @@ interface Props {
 export default function MessageItem(props: Props) {
 
   const classes = useStyles(props);
-  console.log(props.message);
 
   return (
     <div className={classes.root}>
@@ -62,7 +61,7 @@ export default function MessageItem(props: Props) {
           <Typography className={`${classes.text}`}>{props.message.body}</Typography>
         </div>
         <div className={classes.nameContainer}>
-          <Typography className={`${classes.text} ${classes.name}`}>{props.message.firstName} {props.message.lastName}</Typography>
+          <Typography className={`${classes.text} ${classes.name}`}>{props.message.first_name} {props.message.last_name}</Typography>
         </div>
       </div>
     </div>
