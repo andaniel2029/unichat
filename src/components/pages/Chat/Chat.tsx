@@ -67,11 +67,30 @@ const useStyles = makeStyles((theme) => ({
     width: '70%',
   },
 
-  otherRooms: {
+  otherRoomsMain: {
     display: 'flex',
     flexDirection: 'column',
-    width: '20%',
+    height: '550px',
+    marginLeft: '4rem',
+    marginTop: '20px',
     alignItems: 'center',
+
+  },
+
+  otherRoomsTitleContainer: {
+    height: '50px',
+    position: 'fixed',
+  },
+
+  otherRoomsItemsContainer: {
+    marginTop: '50px',
+    borderRadius: '20px',
+    boxShadow: "1px 8px 15px 2px #EDEDED",
+    overflow: 'scroll',
+    overflowX: 'hidden',
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    }
   },
 
   otherRoomsTitle: {
@@ -205,11 +224,15 @@ export default function Chat({ location }: RouteComponentProps) {
             </div>
           </div>
         </div>
-        <div className={classes.otherRooms}>
-          <Typography className={`${classes.otherRoomsTitle}`}>Other Rooms</Typography>
-          {courses.map((course:any) => {
-            return <CourseItem key={course.id} course={course} home={false} />
-          })}
+        <div className={classes.otherRoomsMain}>
+          <div className={classes.otherRoomsTitleContainer}>
+            <Typography className={`${classes.otherRoomsTitle}`}>Other Rooms</Typography>
+          </div>
+          <div className={classes.otherRoomsItemsContainer}>
+            {courses.map((course:any) => {
+              return <CourseItem key={course.id} course={course} home={false} />
+            })}
+          </div>
         </div>
       </div>
     </Grid>
