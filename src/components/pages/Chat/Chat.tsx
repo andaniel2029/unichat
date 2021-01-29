@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSocket } from '../../../contexts/SocketProvider';
 import { useAuth } from '../../../hooks/useAuthContext';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { useAppData } from '../../../contexts/AppDataProvider';
+import { RouteComponentProps } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import queryString from 'query-string';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,6 +14,7 @@ import Input from './Input';
 import { FormEvent } from 'react';
 import axios from 'axios';
 import { Typography } from '@material-ui/core';
+import CourseItem from '../Home/CourseItem';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     width: '85%',
     justifyContent: 'space-between',
-    // animation: '$fadeIn 1.5s ease-in-out',
+    animation: '$fadeIn 1.5s ease-in-out',
   },
   
   chat: {
@@ -72,6 +74,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
 
+  otherRoomsTitle: {
+    fontFamily: 'montserrat',
+    fontSize: '16pt',
+    borderBottom: '2px solid #FF5A5F',
+  },
+
   '@keyframes fadeIn': {
     '0%': {
       opacity: 0,
@@ -80,6 +88,7 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
     }
   },
+
 
   '@keyframes fadeInOut': {
     '0%': {
@@ -94,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
     '100%': {
       opacity: 0,
     }
-  }
+  },
 
 }));
 
@@ -121,6 +130,7 @@ export default function Chat({ location }: RouteComponentProps) {
 
   const { socket } = useSocket();
   const { currentUser } = useAuth();
+  const { courses } = useAppData();
   const { room, room_id } = queryString.parse(location.search);
   const [usersInRoom, setUsersInRoom] = useState([]);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -139,14 +149,15 @@ export default function Chat({ location }: RouteComponentProps) {
       socket.off();
     };
 
-  }, [socket]);
+  }, [socket, room_id]);
 
 
   useEffect(() => {
     axios.get(`/api/messages/${room_id}`).then((res:any) => {
+      console.log('api was called');
       setMessages(res.data);
     })
-  }, []);
+  }, [room_id]);
 
 
   useEffect(() => {
@@ -164,7 +175,7 @@ export default function Chat({ location }: RouteComponentProps) {
     socket.on('message', (message:Message) => {
       setMessages((prev) => [...prev, message]);
     })
-  }, [socket]);
+  }, [socket, room_id]);
 
   const sendMessage = function(e: FormEvent, message:string) {
     e.preventDefault();
@@ -174,13 +185,15 @@ export default function Chat({ location }: RouteComponentProps) {
     }
   }
 
+  console.log(courses);
+
   return (
     <Grid container className={classes.root}>
       <Header title={room}/>
       <div className={classes.main}>
         <div className={classes.chat}>
           <div className={classes.alertContainer}>
-            {showUpdateMessage && <Typography className={classes.alertText}>{updateMessage}</Typography>}
+            {showUpdateMessage && <Typography className={`${classes.alertText}`}>{updateMessage}</Typography>}
           </div>
           <div className={classes.usersFeedContainer}>
             <div className={classes.users}>
@@ -193,7 +206,10 @@ export default function Chat({ location }: RouteComponentProps) {
           </div>
         </div>
         <div className={classes.otherRooms}>
-          <p>Other Rooms</p>
+          <Typography className={`${classes.otherRoomsTitle}`}>Other Rooms</Typography>
+          {courses.map((course:any) => {
+            return <CourseItem key={course.id} course={course} home={false} />
+          })}
         </div>
       </div>
     </Grid>

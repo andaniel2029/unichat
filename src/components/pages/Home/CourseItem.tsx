@@ -57,7 +57,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 
 interface Props {
   course: any;
-  setRoom: (room: string) => void;
+  // setRoom: (room: string) => void;
   home: boolean;
 }
 

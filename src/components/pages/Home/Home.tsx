@@ -34,7 +34,7 @@ export default function Home() {
   const classes = useStyles();
   const { currentUser } = useAuth();
   const { courses } = useAppData();
-  const [room, setRoom] = useState('');
+  // const [room, setRoom] = useState('');
 
   useEffect(() => {
     currentUser.user.getIdToken().then((token: any) => {
@@ -49,7 +49,7 @@ export default function Home() {
       <Typography className={`${classes.text} ${classes.courseTitle}`}>Chat Rooms</Typography>
       <Grid container justify="center" className={classes.container}>
         {courses.map((course:any) => {
-          return <CourseItem key={course.id} course={course} setRoom={setRoom} home={true}/>
+          return <CourseItem key={course.id} course={course} home={true}/>
         })}
       </Grid>
     </div>
