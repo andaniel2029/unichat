@@ -1,18 +1,19 @@
 import Grid from '@material-ui/core/Grid';
-// import { Course } from '../../../hooks/useApplicationData';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
+interface StyleProps {
+  home: boolean;
+}
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 
   link: {
     textDecoration: 'none',
     '&:visited': {
       textDecoration: 'none',
     },
-    // transition: '0.4s ease-in-out',
     animation: '$fadeInSlide 0.4s ease-in-out',
   },
 
@@ -57,19 +58,20 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface Props {
   course: any;
   setRoom: (room: string) => void;
+  home: boolean;
 }
 
 export default function CourseItem(props: Props) {
 
-  const classes = useStyles();
+  const classes = useStyles(props);
   return (
     <Link to={`/chat?room=${props.course.name}&room_id=${props.course.id}`} className={classes.link}>
-      <Grid item 
+      <div 
         className={classes.course} 
         style={{background: `linear-gradient(${props.course.color_gradient}, ${props.course.color_main})`}}
       >
         <Typography className={`${classes.text} ${classes.name}`}>{props.course.name}</Typography>
-      </Grid>
+      </div>
     </Link>
   )
 }
