@@ -12,6 +12,7 @@ import Feed from './Feed';
 import Input from './Input';
 import { FormEvent } from 'react';
 import axios from 'axios';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,16 +24,34 @@ const useStyles = makeStyles((theme) => ({
   main: {
     display: 'flex',
     width: '85%',
-    height: '550px',
     justifyContent: 'space-between',
-    animation: '$fadeIn 1.5s ease-in-out'
+    // animation: '$fadeIn 1.5s ease-in-out',
+  },
+  
+  chat: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '80%',
+    // border: '1px solid red'
   },
 
   usersFeedContainer: {
-    width: '80%',
     display: 'flex',
+    height: '550px',
     borderRadius: '20px',
     boxShadow: "1px 8px 15px 2px #EDEDED",
+
+  },
+
+  alertContainer: {
+    marginLeft: '30%',
+    height: '30px'
+  },
+
+  alertText: {
+    fontFamily: 'halcom',
+    color: '#FF5A5F',
+    animation: '$fadeInOut 2s ease-in-out'
   },
 
   users: {
@@ -60,6 +79,21 @@ const useStyles = makeStyles((theme) => ({
     },
     '100%': {
       opacity: 1,
+    }
+  },
+
+  '@keyframes fadeInOut': {
+    '0%': {
+      opacity: 0,
+    },
+    '25%': {
+      opacity: 1,
+    },
+    '75%': {
+      opacity: 1,
+    },
+    '100%': {
+      opacity: 0,
     }
   }
 
@@ -92,6 +126,7 @@ export default function Chat({ location }: RouteComponentProps) {
   const [usersInRoom, setUsersInRoom] = useState([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [updateMessage, setUpdateMessage] = useState('');
+  const [showUpdateMessage, setShowUpdateMessage] = useState(false);
 
   useEffect(() => {
     if(!socket) return;
@@ -120,6 +155,10 @@ export default function Chat({ location }: RouteComponentProps) {
     socket.on('update-users', (roomData: any) => {
       console.log('here roomData', roomData.message);
       setUpdateMessage(roomData.message);
+      setShowUpdateMessage(true);
+      setTimeout(() => {
+        setShowUpdateMessage(false);
+      }, 2000);
       setUsersInRoom(roomData.users.filter((u:User) => u.user.uid !== currentUser.user.uid));
     });
 
@@ -140,13 +179,18 @@ export default function Chat({ location }: RouteComponentProps) {
     <Grid container className={classes.root}>
       <Header title={room}/>
       <div className={classes.main}>
-        <div className={classes.usersFeedContainer}>
-          <div className={classes.users}>
-            <RoomUsers users={usersInRoom}/>
+        <div className={classes.chat}>
+          <div className={classes.alertContainer}>
+            {showUpdateMessage && <Typography className={classes.alertText}>{updateMessage}</Typography>}
           </div>
-          <div className={classes.feedInput}>
-            <Feed messages={messages}/>
-            <Input sendMessage={sendMessage}/>
+          <div className={classes.usersFeedContainer}>
+            <div className={classes.users}>
+              <RoomUsers users={usersInRoom}/>
+            </div>
+            <div className={classes.feedInput}>
+              <Feed messages={messages}/>
+              <Input sendMessage={sendMessage}/>
+            </div>
           </div>
         </div>
         <div className={classes.otherRooms}>
