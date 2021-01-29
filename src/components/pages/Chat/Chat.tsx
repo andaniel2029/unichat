@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '80%',
-    // border: '1px solid red'
   },
 
   usersFeedContainer: {

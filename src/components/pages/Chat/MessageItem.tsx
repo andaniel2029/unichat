@@ -13,6 +13,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     width: '100%',
     height: 'auto',
     wordWrap: 'break-word',
+    margin: '0.3rem 0rem 0.3rem 0rem'
   },
 
   text: {
