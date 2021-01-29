@@ -6,8 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 // import { Course } from '../../../hooks/useApplicationData';
 import Grid from '@material-ui/core/Grid';
 import CourseItem from './CourseItem';
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +49,7 @@ export default function Home() {
       <Typography className={`${classes.text} ${classes.courseTitle}`}>Chat Rooms</Typography>
       <Grid container justify="center" className={classes.container}>
         {courses.map((course:any) => {
-          return <CourseItem key={course.id} course={course} setRoom={setRoom}/>
+          return <CourseItem key={course.id} course={course} setRoom={setRoom} home={true}/>
         })}
       </Grid>
     </div>
