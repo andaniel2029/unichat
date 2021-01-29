@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   otherRoomsMain: {
     display: 'flex',
     flexDirection: 'column',
-    height: '550px',
+    height: '400px',
     marginLeft: '4rem',
     marginTop: '20px',
     alignItems: 'center',

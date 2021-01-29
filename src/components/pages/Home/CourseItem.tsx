@@ -25,7 +25,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     margin: '1rem',
     [theme.breakpoints.up('sm')]: {
       width: '200px',
-      height: '150px',
+      height: props => props.home ? '150px' : '60px'
     }
   },
 
@@ -35,7 +35,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 
   name: {
     position: 'relative',
-    top: '10px',
+    top: props => props.home ? '10px' : '15px',
     left: '10px',
     color: 'white',
     fontWeight: 700,
@@ -57,7 +57,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 
 interface Props {
   course: any;
-  // setRoom: (room: string) => void;
   home: boolean;
 }
 
