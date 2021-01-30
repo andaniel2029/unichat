@@ -8,9 +8,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '140px',
-    marginBottom: '2rem',
-    background: '#F7F7F7'
+    height: '15%',
+    // marginBottom: '2rem',
+    background: '#F7F7F7',
   },
   
   text: {

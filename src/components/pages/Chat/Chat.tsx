@@ -21,11 +21,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    flexFlow: 'column',
+    height: '94vh',
+    // border: '1px solid red'
   },
 
   main: {
     display: 'flex',
-    width: '85%',
+    height: '85%',
     justifyContent: 'space-between',
     animation: '$fadeIn 1.5s ease-in-out',
   },
@@ -33,12 +36,12 @@ const useStyles = makeStyles((theme) => ({
   chat: {
     display: 'flex',
     flexDirection: 'column',
-    width: '80%',
+    height: '100%',
   },
 
   usersFeedContainer: {
     display: 'flex',
-    height: '550px',
+    height: '100%',
     borderRadius: '20px',
     boxShadow: "1px 8px 15px 2px #EDEDED",
 
@@ -71,7 +74,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     height: '400px',
-    marginLeft: '4rem',
     marginTop: '20px',
     alignItems: 'center',
 
@@ -212,6 +214,7 @@ export default function Chat({ location }: RouteComponentProps) {
   }
 
   useEffect(() => {
+    if(!socket) return;
     socket.on('show-typing', (typingUser:any) => {
 
       clearTimeout(timeout);
@@ -238,8 +241,8 @@ export default function Chat({ location }: RouteComponentProps) {
   return (
     <Grid container className={classes.root}>
       <Header title={room}/>
-      <div className={classes.main}>
-        <div className={classes.chat}>
+      <Grid container className={classes.main}>
+        <Grid item xs={12} md={9} className={classes.chat}>
           <div className={classes.alertContainer}>
             {showUpdateMessage && <Typography className={`${classes.alertText}`}>{updateMessage}</Typography>}
           </div>
@@ -252,8 +255,8 @@ export default function Chat({ location }: RouteComponentProps) {
               <Input sendMessage={sendMessage} userTyping={userTyping}/>
             </div>
           </div>
-        </div>
-        <div className={classes.otherRoomsMain}>
+        </Grid>
+        <Grid item xs={12} md={3} className={classes.otherRoomsMain}>
           <div className={classes.otherRoomsTitleContainer}>
             <Typography className={`${classes.otherRoomsTitle}`}>Other Rooms</Typography>
           </div>
@@ -262,8 +265,8 @@ export default function Chat({ location }: RouteComponentProps) {
               return <CourseItem key={course.id} course={course} home={false} />
             })}
           </div>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </Grid>
   )
 }

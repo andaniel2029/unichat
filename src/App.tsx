@@ -7,16 +7,23 @@ import Home from './components/pages/Home/Home';
 import Login from './components/pages/Login';
 import PrivateRoute from './components/PrivateRoute';
 
-// import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import { SocketProvider } from './contexts/SocketProvider';
 import { AppDataProvider } from './contexts/AppDataProvider';
 import Chat from './components/pages/Chat/Chat';
 
-// const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme:Theme) => ({
 
-// }));
+  nav: {
+    height: '6vh',
+    padding: '20px'
+  }
+
+}));
 
 export default function App() {
+
+  const classes = useStyles();
 
   return (
     <Router>
@@ -24,7 +31,7 @@ export default function App() {
         <AuthProvider>
           <SocketProvider>
           <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.nav}>
               <Nav />
             </Grid>
             <Grid item xs={12}>

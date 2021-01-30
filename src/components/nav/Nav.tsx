@@ -11,8 +11,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '20px',
-    height: '60px',
+    height: '100%',
   },
 
   buttonContainer: {
