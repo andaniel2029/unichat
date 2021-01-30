@@ -201,18 +201,29 @@ export default function Chat({ location }: RouteComponentProps) {
 
   let timeout:any;
   const userTyping = function(key:string) {
-    if(key === 'Enter') {
-      clearTimeout(timeout);
-      setUserTypingMessage('');
-    } else {
-      socket.emit('user-typing', { room, firstName: currentUser.firstName, lastName: currentUser.lastName });
-    }
+    socket.emit('user-typing', 
+      { 
+        enter: key === 'Enter',
+        room, 
+        firstName: currentUser.firstName, 
+        lastName: currentUser.lastName 
+      }
+    );
   }
 
   useEffect(() => {
-    socket.on('show-typing', (firstName:string, lastName:string) => {
-      console.log(firstName, lastName);
-    })
+    socket.on('show-typing', (typingUser:any) => {
+
+      clearTimeout(timeout);
+      if(typingUser.enter) {
+        setUserTypingMessage('');
+      } else {
+        setUserTypingMessage(`${typingUser.firstName} ${typingUser.lastName} is typing`);
+        timeout = setTimeout(() => {
+          setUserTypingMessage('');
+        }, 2000);
+      }
+    });
 
   }, [socket, room_id]);
 
@@ -223,8 +234,6 @@ export default function Chat({ location }: RouteComponentProps) {
       socket.emit('send-message', { room_id, room, message, currentUser });
     }
   }
-
-  console.log(courses);
 
   return (
     <Grid container className={classes.root}>
