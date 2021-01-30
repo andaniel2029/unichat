@@ -155,6 +155,7 @@ export default function Chat({ location }: RouteComponentProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [updateMessage, setUpdateMessage] = useState('');
   const [showUpdateMessage, setShowUpdateMessage] = useState(false);
+  const [userTypingMessage, setUserTypingMessage] = useState('');
 
   useEffect(() => {
     if(!socket) return;
@@ -196,6 +197,17 @@ export default function Chat({ location }: RouteComponentProps) {
     })
   }, [socket, room_id]);
 
+
+  let timeout:any;
+  const userTyping = function(key:string) {
+    if(key === 'Enter') {
+      clearTimeout(timeout);
+      setUserTypingMessage('');
+    } else {
+      socket.emit('user-typing', { firstName: currentUser.firstName, lastName: currentUser.lastName })
+    }
+  }
+
   const sendMessage = function(e: FormEvent, message:string) {
     e.preventDefault();
 
@@ -219,7 +231,7 @@ export default function Chat({ location }: RouteComponentProps) {
               <RoomUsers users={usersInRoom}/>
             </div>
             <div className={classes.feedInput}>
-              <Feed messages={messages}/>
+              <Feed messages={messages} userTypingMessage={userTypingMessage}/>
               <Input sendMessage={sendMessage}/>
             </div>
           </div>

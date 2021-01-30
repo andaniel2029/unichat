@@ -39,14 +39,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  messages: Message[]
+  messages: Message[];
+  userTypingMessage: string;
 }
 
 export default function Feed(props: Props) {
 
   const classes = useStyles();
   const { currentUser } = useAuth();
-  const [userTypingMessage, setUserTypingMessage] = useState('');
 
   return (
     <div className={classes.root}>
@@ -61,7 +61,7 @@ export default function Feed(props: Props) {
           )
       })}
       <div className={classes.typingMessageContainer}>
-        <Typography className={classes.typingMessageText}>{userTypingMessage}</Typography>
+        <Typography className={classes.typingMessageText}>{props.userTypingMessage}</Typography>
       </div>
     </div>
   )
