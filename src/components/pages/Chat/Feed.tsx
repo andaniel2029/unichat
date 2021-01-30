@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Message } from './Chat';
 import MessageItem from './MessageItem';
@@ -11,15 +11,20 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-end',
     height: '90%',
-    position: 'relative',
     overflow: 'scroll',
+    scrollBehavior: 'smooth',
     overflowX: 'hidden',
     '&::-webkit-scrollbar': {
       display: 'none'
     }
   },
+
+  scroll: {
+    height: '500px',
+    overflow: 'scroll',
+    overflowX: 'hidden'
+  }
 
 }));
 
@@ -34,9 +39,11 @@ export default function Feed(props: Props) {
 
   return (
     <div className={classes.root}>
-      {props.messages.map((message:any) => {
+      {props.messages.map((message, index) => {
+        const lastMessage = props.messages.length - 1 === index;
         return (
           <MessageItem
+            lastMessage={lastMessage}
             message={message}
             fromMe={message.sender_id === currentUser.user.uid}
             />

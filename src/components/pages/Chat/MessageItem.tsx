@@ -47,8 +47,9 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
 }));
 
 interface Props {
-  message: Message,
-  fromMe: boolean
+  message: Message;
+  fromMe: boolean;
+  lastMessage: boolean;
 }
 
 export default function MessageItem(props: Props) {
