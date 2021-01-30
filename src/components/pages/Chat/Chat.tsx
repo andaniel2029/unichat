@@ -198,15 +198,23 @@ export default function Chat({ location }: RouteComponentProps) {
   }, [socket, room_id]);
 
 
+
   let timeout:any;
   const userTyping = function(key:string) {
     if(key === 'Enter') {
       clearTimeout(timeout);
       setUserTypingMessage('');
     } else {
-      socket.emit('user-typing', { firstName: currentUser.firstName, lastName: currentUser.lastName });
+      socket.emit('user-typing', { room, firstName: currentUser.firstName, lastName: currentUser.lastName });
     }
   }
+
+  useEffect(() => {
+    socket.on('show-typing', (firstName:string, lastName:string) => {
+      console.log(firstName, lastName);
+    })
+
+  }, [socket, room_id]);
 
   const sendMessage = function(e: FormEvent, message:string) {
     e.preventDefault();
