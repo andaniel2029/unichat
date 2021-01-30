@@ -204,7 +204,7 @@ export default function Chat({ location }: RouteComponentProps) {
       clearTimeout(timeout);
       setUserTypingMessage('');
     } else {
-      socket.emit('user-typing', { firstName: currentUser.firstName, lastName: currentUser.lastName })
+      socket.emit('user-typing', { firstName: currentUser.firstName, lastName: currentUser.lastName });
     }
   }
 
@@ -232,7 +232,7 @@ export default function Chat({ location }: RouteComponentProps) {
             </div>
             <div className={classes.feedInput}>
               <Feed messages={messages} userTypingMessage={userTypingMessage}/>
-              <Input sendMessage={sendMessage}/>
+              <Input sendMessage={sendMessage} userTyping={userTyping}/>
             </div>
           </div>
         </div>

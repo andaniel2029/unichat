@@ -64,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  sendMessage: (event: FormEvent, message:string) => void
+  sendMessage: (event: FormEvent, message:string) => void;
+  userTyping: (key:string) => void;
 }
 
 export default function Input(props: Props) {
@@ -89,6 +90,9 @@ export default function Input(props: Props) {
           placeholder="Type a message..."
           onChange={event => setMessage(event.target.value)}
           onClick={(event) => {}}
+          onKeyPress={(event:React.KeyboardEvent<HTMLInputElement>) => {
+            props.userTyping(event.key);
+          }}
         />
         <button
           type="submit"
