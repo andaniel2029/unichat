@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: '90%',
+    height: '92%',
     overflow: 'scroll',
     scrollBehavior: 'smooth',
     overflowX: 'hidden',

@@ -8,17 +8,19 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    justifyContent: 'space-evenly',
+    // justifyContent: 'space-between',
     alignItems: 'center',
-    height: '10%',
+    height: '8%',
     background: '#F7F7F7',
-    borderRadius: '0px 0px 20px 0px',
+    // borderRadius: '0px 0px 20px 0px',
   },
 
   form: {
-    width: '90%',
-    // height: '20px',
-
+    // height: '100%',
+  },
+  
+  formContainer: {
+    width: '92%',
   },
 
   text: {
@@ -26,18 +28,29 @@ const useStyles = makeStyles((theme) => ({
   },
   
   input: {
-    width: '85%',
-    height: '20px',
+    width: '100%',
+    height: '30px',
     border: "1px solid #E3E3E3",
-    padding: '3px 8px 3px 8px',
+    padding: '0px 6px 0px 6px',
     transition: '0.2s ease-in-out',
-    borderRadius: "20px 0px 0px 20px",
+    borderRadius: '20px',
     "&:focus": {
       outline: "none",
-      border: '1px solid #ACABAB'
     },
   },
 
+  
+  iconContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '5%',
+  },
+  
+  icon: {
+    color: '#585858'
+  },
+  
   button: {
     width: '60px',
     border: 'none',
@@ -52,14 +65,6 @@ const useStyles = makeStyles((theme) => ({
       cursor: "pointer",
     },
   },
-
-  iconContainer: {
-
-  },
-
-  icon: {
-    color: '#585858'
-  }
 
 }));
 
@@ -78,29 +83,31 @@ export default function Input(props: Props) {
       <div className={classes.iconContainer}>
         <AttachFileIcon className={classes.icon}/>
       </div>
-      <form className={classes.form} onSubmit={event => {
-        props.sendMessage(event, message);
-        setMessage('');
-        }}
-      >
-        <input
-          className={`${classes.text} ${classes.input}`}
-          value={message}
-          type="text"
-          placeholder="Type a message..."
-          onChange={event => setMessage(event.target.value)}
-          onClick={(event) => {}}
-          onKeyPress={(event:React.KeyboardEvent<HTMLInputElement>) => {
-            props.userTyping(event.key);
+      <div className={classes.formContainer}>
+        <form className={classes.form} onSubmit={event => {
+          props.sendMessage(event, message);
+          setMessage('');
           }}
-        />
-        <button
-          type="submit"
-          className={`${classes.text} ${classes.button}`}
         >
-          Send
-        </button>
-      </form>
+          <input
+            className={`${classes.text} ${classes.input}`}
+            value={message}
+            type="text"
+            placeholder="Type a message..."
+            onChange={event => setMessage(event.target.value)}
+            onClick={(event) => {}}
+            onKeyPress={(event:React.KeyboardEvent<HTMLInputElement>) => {
+              props.userTyping(event.key);
+            }}
+          />
+          {/* <button
+            type="submit"
+            className={`${classes.text} ${classes.button}`}
+          >
+            Send
+          </button> */}
+        </form>
+      </div>
     </div>
   )
 }
