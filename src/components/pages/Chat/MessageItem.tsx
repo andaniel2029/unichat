@@ -1,9 +1,11 @@
+import { useCallback } from 'react';
 import { Theme, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Message } from './Chat';
 
 interface StyleProps {
-  fromMe: boolean
+  fromMe: boolean;
+  lastMessage: boolean;
 }
 
 const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
@@ -13,7 +15,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     width: '100%',
     height: 'auto',
     wordWrap: 'break-word',
-    margin: '0.3rem 0rem 0.3rem 0rem'
+    margin: props => props.lastMessage ? '0.3rem 0rem 0.3rem 0rem' : '0.3rem 0rem 0.3rem 0rem'
   },
 
   text: {
@@ -56,8 +58,14 @@ export default function MessageItem(props: Props) {
 
   const classes = useStyles(props);
 
+  const setRef = useCallback(node => {
+    if(node) {
+      node.scrollIntoView()
+    }
+  }, []);
+
   return (
-    <div className={classes.root}>
+    <div ref={props.lastMessage ? setRef : null} className={classes.root}>
       <div className={classes.messageContainer}>
         <div className={classes.textContainer}>
           <Typography className={`${classes.text}`}>{props.message.body}</Typography>

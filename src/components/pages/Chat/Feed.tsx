@@ -1,8 +1,9 @@
-import { useCallback } from 'react';
+import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Message } from './Chat';
 import MessageItem from './MessageItem';
 import { useAuth } from '../../../hooks/useAuthContext';
+import { Typography } from '@material-ui/core';
 // import ScrollToBottom from 'react-scroll-to-bottom';
 
 
@@ -17,13 +18,22 @@ const useStyles = makeStyles((theme) => ({
     overflowX: 'hidden',
     '&::-webkit-scrollbar': {
       display: 'none'
-    }
+    },
+    // paddingBottom: '20px'
   },
 
-  scroll: {
-    height: '500px',
-    overflow: 'scroll',
-    overflowX: 'hidden'
+  typingMessageContainer: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    minHeight: '15px',
+    width: '100%',
+  },
+
+  typingMessageText: {
+    fontFamily: 'halcom',
+    fontSize: '10pt',
+    color: '#555555',
+    paddingLeft: '0.7rem'
   }
 
 }));
@@ -36,6 +46,7 @@ export default function Feed(props: Props) {
 
   const classes = useStyles();
   const { currentUser } = useAuth();
+  const [userTypingMessage, setUserTypingMessage] = useState('');
 
   return (
     <div className={classes.root}>
@@ -49,6 +60,9 @@ export default function Feed(props: Props) {
             />
           )
       })}
+      <div className={classes.typingMessageContainer}>
+        <Typography className={classes.typingMessageText}>{userTypingMessage}</Typography>
+      </div>
     </div>
   )
 }
