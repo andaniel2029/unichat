@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   form: {
-    // height: '100%',
   },
   
   formContainer: {
@@ -84,7 +83,7 @@ export default function Input(props: Props) {
         <AttachFileIcon className={classes.icon}/>
       </div>
       <div className={classes.formContainer}>
-        <form className={classes.form} onSubmit={event => {
+        <form onSubmit={event => {
           props.sendMessage(event, message);
           setMessage('');
           }}
