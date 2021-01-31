@@ -21,17 +21,22 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
   course: {
     height: '80px',
     width: '300px',
-    padding: props => props.home ? '3px' : 'none',
+    transition: '0.2s ease-in-out',
+    color: props => props.home ? 'white' : '#ACABAB',
     borderRadius: props => props.home ?  '20px' : 'none',
     background: props => props.home ? `linear-gradient(${props.course.color_gradient}, ${props.course.color_main})` : 'white',
     boxShadow: props => props.home ? "1px 4px 5px 2px #EDEDED" : 'none',
     margin: props => props.home ? '1rem' : 'none',
     [theme.breakpoints.up('sm')]: {
       width: props => props.home ? '200px' : '100%',
-      height: props => props.home ? '150px' : '60px'
+      height: props => props.home ? '150px' : '50px'
     },
-    borderTop: props => props.home ? 'none' : '1px solid #EDEDED',
-    borderBottom: props => props.home ? 'none' : '1px solid #EDEDED',
+    // borderTop: props => props.home ? 'none' : '1px solid #EDEDED',
+    // borderBottom: props => props.home ? 'none' : '1px solid #EDEDED',
+    '&:hover': {
+      background: props => props.home ? 'null' : '#FF5A5F',
+      color: props => props.home ? 'null' : 'white'
+    }
   },
 
   text: {
@@ -39,11 +44,10 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
   },
 
   name: {
-    color: props => props.home ? 'white' : '#555555',
     fontWeight: 700,
     fontSize: '16pt',
     maxWidth: '75%',
-    margin: '10px 0px 0px 10px',
+    padding: '10px',
   },
 
   '@keyframes fadeInSlide': {
