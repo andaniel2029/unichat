@@ -1,9 +1,11 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { Course } from '../../../hooks/useApplicationData';
 
 interface StyleProps {
   home: boolean;
+  course: Course;
 }
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
@@ -19,13 +21,17 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
   course: {
     height: '80px',
     width: '300px',
-    borderRadius: '20px',
-    boxShadow: "1px 4px 5px 2px #EDEDED",
-    margin: '1rem',
+    padding: props => props.home ? '3px' : 'none',
+    borderRadius: props => props.home ?  '20px' : 'none',
+    background: props => props.home ? `linear-gradient(${props.course.color_gradient}, ${props.course.color_main})` : 'white',
+    boxShadow: props => props.home ? "1px 4px 5px 2px #EDEDED" : 'none',
+    margin: props => props.home ? '1rem' : 'none',
     [theme.breakpoints.up('sm')]: {
-      width: '200px',
+      width: props => props.home ? '200px' : '100%',
       height: props => props.home ? '150px' : '60px'
-    }
+    },
+    borderTop: props => props.home ? 'none' : '1px solid #EDEDED',
+    borderBottom: props => props.home ? 'none' : '1px solid #EDEDED',
   },
 
   text: {
@@ -33,12 +39,11 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
   },
 
   name: {
-    position: 'relative',
-    top: props => props.home ? '10px' : '15px',
-    left: '10px',
-    color: 'white',
+    color: props => props.home ? 'white' : '#555555',
     fontWeight: 700,
-    fontSize: '16pt'
+    fontSize: '16pt',
+    maxWidth: '75%',
+    margin: '10px 0px 0px 10px',
   },
 
   '@keyframes fadeInSlide': {
@@ -65,8 +70,7 @@ export default function CourseItem(props: Props) {
   return (
     <Link to={`/chat?room=${props.course.name}&room_id=${props.course.id}`} className={classes.link}>
       <div 
-        className={classes.course} 
-        style={{background: `linear-gradient(${props.course.color_gradient}, ${props.course.color_main})`}}
+        className={classes.course}
       >
         <Typography className={`${classes.text} ${classes.name}`}>{props.course.name}</Typography>
       </div>

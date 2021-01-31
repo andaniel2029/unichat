@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSocket } from '../../../contexts/SocketProvider';
 import { useAuth } from '../../../hooks/useAuthContext';
-import { useAppData } from '../../../contexts/AppDataProvider';
 import { RouteComponentProps } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import queryString from 'query-string';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -55,14 +53,6 @@ const useStyles = makeStyles((theme) => ({
     width: '70%',
   },
 
-  // otherRoomsMain: {
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   height: '400px',
-  //   marginTop: '20px',
-  //   alignItems: 'center',
-  // },
-
   '@keyframes fadeIn': {
     '0%': {
       opacity: 0,
@@ -97,7 +87,6 @@ export default function Chat({ location }: RouteComponentProps) {
 
   const { socket } = useSocket();
   const { currentUser } = useAuth();
-  const { courses } = useAppData();
   const { room, room_id } = queryString.parse(location.search);
   const [usersInRoom, setUsersInRoom] = useState([]);
   const [messages, setMessages] = useState<Message[]>([]);

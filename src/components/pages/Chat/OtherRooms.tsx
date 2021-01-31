@@ -12,13 +12,15 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     height: '100%',
+    width: '100%'
   },
-
+  
   titleContainer: {
   },
-
+  
   itemsContainer: {
     borderRadius: '20px',
+    width: '100%',
     '&::-webkit-scrollbar': {
       display: 'none'
     }
