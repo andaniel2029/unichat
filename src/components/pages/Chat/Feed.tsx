@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     '&::-webkit-scrollbar': {
       display: 'none'
     },
-    // paddingBottom: '20px'
+    position: 'relative',
   },
 
   typingMessageContainer: {
@@ -34,13 +34,30 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '10pt',
     color: '#555555',
     paddingLeft: '0.7rem'
-  }
+  },
+
+  alertContainer: {
+    width: '30%',
+    textAlign: 'center',
+    border: '1px solid red',
+    position: 'fixed',
+
+  },
+  
+  alertText: {
+    fontFamily: 'halcom',
+    color: '#FF5A5F',
+    animation: '$fadeInOut 2s ease-in-out'
+  },
+
 
 }));
 
 interface Props {
   messages: Message[];
   userTypingMessage: string;
+  updateMessage: string;
+  showUpdateMessage: boolean;
 }
 
 export default function Feed(props: Props) {
@@ -50,6 +67,9 @@ export default function Feed(props: Props) {
 
   return (
     <div className={classes.root}>
+      <div className={classes.alertContainer}>
+        {props.showUpdateMessage && <Typography className={`${classes.alertText}`}>{props.updateMessage}</Typography>}
+      </div>
       {props.messages.map((message, index) => {
         const lastMessage = props.messages.length - 1 === index;
         return (

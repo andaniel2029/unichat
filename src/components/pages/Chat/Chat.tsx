@@ -42,33 +42,27 @@ const useStyles = makeStyles((theme) => ({
   usersFeedContainer: {
     display: 'flex',
     height: '100%',
-    borderRadius: '20px',
+    // borderRadius: '20px',
     boxShadow: "1px 8px 15px 2px #EDEDED",
 
   },
 
-  alertContainer: {
-    marginLeft: '30%',
-    height: '30px'
-  },
+  
 
-  alertText: {
-    fontFamily: 'halcom',
-    color: '#FF5A5F',
-    animation: '$fadeInOut 2s ease-in-out'
-  },
 
   users: {
     display: 'flex',
     flexDirection: 'column',
     width: '30%',
-    borderRadius: '20px 0px 0px 20px',
+    // borderRadius: '20px 0px 0px 20px',
     background: '#F2F2F2',
   },
 
   feedInput: {
     width: '70%',
   },
+
+
 
   otherRoomsMain: {
     display: 'flex',
@@ -81,7 +75,6 @@ const useStyles = makeStyles((theme) => ({
 
   otherRoomsTitleContainer: {
     height: '50px',
-    position: 'fixed',
   },
 
   otherRoomsItemsContainer: {
@@ -242,21 +235,22 @@ export default function Chat({ location }: RouteComponentProps) {
     <Grid container className={classes.root}>
       <Header title={room}/>
       <Grid container className={classes.main}>
-        <Grid item xs={12} md={9} className={classes.chat}>
-          <div className={classes.alertContainer}>
-            {showUpdateMessage && <Typography className={`${classes.alertText}`}>{updateMessage}</Typography>}
-          </div>
+        <Grid item xs={12} md={10} className={classes.chat}>
           <div className={classes.usersFeedContainer}>
             <div className={classes.users}>
               <RoomUsers users={usersInRoom}/>
             </div>
             <div className={classes.feedInput}>
-              <Feed messages={messages} userTypingMessage={userTypingMessage}/>
+              <Feed 
+                messages={messages} 
+                updateMessage={updateMessage}
+                showUpdateMessage={showUpdateMessage}
+                userTypingMessage={userTypingMessage}/>
               <Input sendMessage={sendMessage} userTyping={userTyping}/>
             </div>
           </div>
         </Grid>
-        <Grid item xs={12} md={3} className={classes.otherRoomsMain}>
+        <Grid item xs={12} md={2} className={classes.otherRoomsMain}>
           <div className={classes.otherRoomsTitleContainer}>
             <Typography className={`${classes.otherRoomsTitle}`}>Other Rooms</Typography>
           </div>
