@@ -38,18 +38,36 @@ const useStyles = makeStyles((theme) => ({
 
   alertContainer: {
     width: '30%',
+    height: '25px',
+    borderRadius: '0px 0px 10px 10px',
+    background: '#1AE060',
     textAlign: 'center',
-    border: '1px solid red',
     position: 'fixed',
+    zIndex: 0,
+    animation: '$fadeInOut 4s ease-in-out'
 
   },
   
   alertText: {
     fontFamily: 'halcom',
-    color: '#FF5A5F',
-    animation: '$fadeInOut 2s ease-in-out'
+    color: 'white',
   },
 
+  '@keyframes fadeInOut': {
+    '0%': {
+      transform: 'translateY(-25px)'
+    },
+    '10%': {
+      transform: 'translateY(0px)'
+    },
+    '75%': {
+      transform: 'translateY(0px)'
+    },
+    '100%': {
+      transform: 'translateY(-25px)'
+
+    }
+  },
 
 }));
 
@@ -67,9 +85,9 @@ export default function Feed(props: Props) {
 
   return (
     <div className={classes.root}>
-      <div className={classes.alertContainer}>
-        {props.showUpdateMessage && <Typography className={`${classes.alertText}`}>{props.updateMessage}</Typography>}
-      </div>
+      {props.showUpdateMessage && <div className={classes.alertContainer}>
+        <Typography className={`${classes.alertText}`}>{props.updateMessage}</Typography>
+      </div>}
       {props.messages.map((message, index) => {
         const lastMessage = props.messages.length - 1 === index;
         return (

@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     height: '15%',
     // marginBottom: '2rem',
     background: '#F7F7F7',
+    zIndex: 1
   },
   
   text: {

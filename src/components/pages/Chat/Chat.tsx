@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexFlow: 'column',
     height: '94vh',
-    // border: '1px solid red'
   },
 
   main: {
@@ -42,19 +41,13 @@ const useStyles = makeStyles((theme) => ({
   usersFeedContainer: {
     display: 'flex',
     height: '100%',
-    // borderRadius: '20px',
     boxShadow: "1px 8px 15px 2px #EDEDED",
-
   },
-
-  
-
 
   users: {
     display: 'flex',
     flexDirection: 'column',
     width: '30%',
-    // borderRadius: '20px 0px 0px 20px',
     background: '#F2F2F2',
   },
 
@@ -62,15 +55,12 @@ const useStyles = makeStyles((theme) => ({
     width: '70%',
   },
 
-
-
   otherRoomsMain: {
     display: 'flex',
     flexDirection: 'column',
     height: '400px',
     marginTop: '20px',
     alignItems: 'center',
-
   },
 
   otherRoomsTitleContainer: {
@@ -100,22 +90,6 @@ const useStyles = makeStyles((theme) => ({
     },
     '100%': {
       opacity: 1,
-    }
-  },
-
-
-  '@keyframes fadeInOut': {
-    '0%': {
-      opacity: 0,
-    },
-    '25%': {
-      opacity: 1,
-    },
-    '75%': {
-      opacity: 1,
-    },
-    '100%': {
-      opacity: 0,
     }
   },
 
@@ -183,7 +157,7 @@ export default function Chat({ location }: RouteComponentProps) {
       setShowUpdateMessage(true);
       setTimeout(() => {
         setShowUpdateMessage(false);
-      }, 2000);
+      }, 4000);
       setUsersInRoom(roomData.users.filter((u:User) => u.user.uid !== currentUser.user.uid));
     });
 
