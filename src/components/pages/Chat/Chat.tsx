@@ -13,8 +13,7 @@ import Feed from './Feed';
 import Input from './Input';
 import { FormEvent } from 'react';
 import axios from 'axios';
-import { Typography } from '@material-ui/core';
-import CourseItem from '../Home/CourseItem';
+import OtherRooms from './OtherRooms';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +40,8 @@ const useStyles = makeStyles((theme) => ({
   usersFeedContainer: {
     display: 'flex',
     height: '100%',
-    boxShadow: "1px 8px 15px 2px #EDEDED",
+    // boxShadow: "1px 8px 15px 2px #EDEDED",
+    borderRight: '1px solid #EDEDED'
   },
 
   users: {
@@ -55,34 +55,13 @@ const useStyles = makeStyles((theme) => ({
     width: '70%',
   },
 
-  otherRoomsMain: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '400px',
-    marginTop: '20px',
-    alignItems: 'center',
-  },
-
-  otherRoomsTitleContainer: {
-    height: '50px',
-  },
-
-  otherRoomsItemsContainer: {
-    marginTop: '50px',
-    borderRadius: '20px',
-    boxShadow: "1px 8px 15px 2px #EDEDED",
-    overflow: 'scroll',
-    overflowX: 'hidden',
-    '&::-webkit-scrollbar': {
-      display: 'none'
-    }
-  },
-
-  otherRoomsTitle: {
-    fontFamily: 'montserrat',
-    fontSize: '16pt',
-    borderBottom: '2px solid #FF5A5F',
-  },
+  // otherRoomsMain: {
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   height: '400px',
+  //   marginTop: '20px',
+  //   alignItems: 'center',
+  // },
 
   '@keyframes fadeIn': {
     '0%': {
@@ -224,15 +203,8 @@ export default function Chat({ location }: RouteComponentProps) {
             </div>
           </div>
         </Grid>
-        <Grid item xs={12} md={2} className={classes.otherRoomsMain}>
-          <div className={classes.otherRoomsTitleContainer}>
-            <Typography className={`${classes.otherRoomsTitle}`}>Other Rooms</Typography>
-          </div>
-          <div className={classes.otherRoomsItemsContainer}>
-            {courses.map((course:any) => {
-              return <CourseItem key={course.id} course={course} home={false} />
-            })}
-          </div>
+        <Grid item xs={12} md={2}>
+          <OtherRooms />
         </Grid>
       </Grid>
     </Grid>
