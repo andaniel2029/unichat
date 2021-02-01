@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Theme, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Message } from './Chat';
@@ -15,7 +15,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     width: '100%',
     height: 'auto',
     wordWrap: 'break-word',
-    margin: props => props.lastMessage ? '0.3rem 0rem 0.3rem 0rem' : '0.3rem 0rem 0.3rem 0rem'
+    margin: props => props.lastMessage ? '0.3rem 0rem 0.3rem 0rem' : '0.3rem 0rem 0.3rem 0rem',
   },
 
   text: {
@@ -57,6 +57,8 @@ interface Props {
 export default function MessageItem(props: Props) {
 
   const classes = useStyles(props);
+  const [editing, setEditing] = useState(false);
+  const [message, setMessage] = useState(props.message.body);
 
   const setRef = useCallback(node => {
     if(node) {
@@ -64,11 +66,20 @@ export default function MessageItem(props: Props) {
     }
   }, []);
 
+  console.log(props.message.body);
+
   return (
     <div ref={props.lastMessage ? setRef : null} className={classes.root}>
+      <button onClick={() => setEditing(!editing)}>Edit</button>
       <div className={classes.messageContainer}>
         <div className={classes.textContainer}>
-          <Typography className={`${classes.text}`}>{props.message.body}</Typography>
+          {!editing && <Typography className={`${classes.text}`}>{message}</Typography>}
+          {editing && <input
+            type="text"
+            value={message}
+            onChange={event => setMessage(event.target.value)}
+          />}
+          {/* {editing && <Typography className={`${classes.text}`}>haha some new message</Typography>} */}
         </div>
         <div className={classes.nameContainer}>
           <Typography className={`${classes.text} ${classes.name}`}>{props.message.firstName} {props.message.lastName}</Typography>
