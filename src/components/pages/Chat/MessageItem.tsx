@@ -14,8 +14,30 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     justifyContent: props => props.fromMe ? 'flex-end' : 'flex-start',
     width: '100%',
     height: 'auto',
+    padding: '5px 0px 5px 0px',
     wordWrap: 'break-word',
-    margin: props => props.lastMessage ? '0.3rem 0rem 0.3rem 0rem' : '0.3rem 0rem 0.3rem 0rem',
+    // margin: props => props.lastMessage ? '0.3rem 0rem 0.3rem 0rem' : '0.3rem 0rem 0.3rem 0rem',
+    transition: '0.2s ease-in-out',
+    '&:hover': {
+      background: '#EDEDED',
+      '& $editButton': {
+        display: 'block'
+      }
+    },
+  },
+
+  editButton: {
+    display: 'none',
+  },
+
+  editInput: {
+    width: '100%',
+    height: '100%',
+    border: "1px solid #E3E3E3",
+    borderRadius: '15px',
+    "&:focus": {
+      outline: "none",
+    },
   },
 
   text: {
@@ -66,15 +88,23 @@ export default function MessageItem(props: Props) {
     }
   }, []);
 
-  console.log(props.message.body);
+  console.log(props.message);
 
   return (
     <div ref={props.lastMessage ? setRef : null} className={classes.root}>
-      {props.fromMe && <button onClick={() => setEditing(!editing)}>Edit</button>}
+      {props.fromMe && 
+        <button 
+          className={classes.editButton} 
+          onClick={() => setEditing(!editing)}>
+          {editing ? 'Save Changes' : 'Edit'}
+        </button>
+      }
       <div className={classes.messageContainer}>
         <div className={classes.textContainer}>
           {!editing && <Typography className={`${classes.text}`}>{message}</Typography>}
-          {editing && <input
+          {editing && 
+          <input
+            className={`${classes.text} ${classes.editInput}`}
             type="text"
             value={message}
             onChange={event => setMessage(event.target.value)}
