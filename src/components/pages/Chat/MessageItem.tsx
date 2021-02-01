@@ -92,6 +92,7 @@ interface Props {
   lastMessage: boolean;
   randomIndex: number;
   index: number;
+  room: string | string[] | null;
 }
 
 export default function MessageItem(props: Props) {
@@ -110,12 +111,16 @@ export default function MessageItem(props: Props) {
   const updateMessage = function(newMessage:string) {
     setEditing(false);
     console.log(newMessage);
-    socket.emit('update-message', { newMessage })
+    socket.emit('update-message', { id: props.message.id, room: props.room, newMessage })
   }
 
   useEffect(() => {
-
-  }, [])
+    socket.on('set-new-message', (update:any) => {
+      if(props.message.id === update.id) {
+        setMessage(update.newMessage);
+      }
+    });
+  }, [socket]);
 
   console.log(props.randomIndex);
 

@@ -173,6 +173,8 @@ export default function Chat({ location }: RouteComponentProps) {
     }
   }
 
+  console.log('will the chat render');
+
   return (
     <Grid container className={classes.root}>
       <Header title={room}/>
@@ -183,11 +185,13 @@ export default function Chat({ location }: RouteComponentProps) {
               <RoomUsers users={usersInRoom}/>
             </div>
             <div className={classes.feedInput}>
-              <Feed 
+              <Feed
+                room={room}
                 messages={messages} 
                 updateMessage={updateMessage}
                 showUpdateMessage={showUpdateMessage}
-                userTypingMessage={userTypingMessage}/>
+                userTypingMessage={userTypingMessage}
+              />
               <Input sendMessage={sendMessage} userTyping={userTyping}/>
             </div>
           </div>

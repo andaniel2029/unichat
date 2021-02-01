@@ -76,12 +76,15 @@ interface Props {
   userTypingMessage: string;
   updateMessage: string;
   showUpdateMessage: boolean;
+  room: string | string[] | null;
 }
 
 export default function Feed(props: Props) {
 
   const classes = useStyles();
   const { currentUser } = useAuth();
+
+  console.log('is this rendering');
 
   return (
     <div className={classes.root}>
@@ -94,6 +97,7 @@ export default function Feed(props: Props) {
           <MessageItem
             index={index}
             randomIndex={128}
+            room={props.room}
             lastMessage={lastMessage}
             message={message}
             fromMe={message.sender_id === currentUser.user.uid}
