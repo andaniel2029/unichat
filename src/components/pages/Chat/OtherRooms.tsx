@@ -1,7 +1,8 @@
-import { Grid, Typography } from '@material-ui/core';
+import { useState } from 'react';
+import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import CourseItem from '../Home/CourseItem';
 import { useAppData } from '../../../contexts/AppDataProvider';
+import CourseItem from '../Home/CourseItem';
 
 
 
@@ -37,7 +38,9 @@ const useStyles = makeStyles((theme) => ({
 export default function OtherRooms() {
 
   const classes = useStyles();
+  const [selected, setSelected] = useState('');
   const { courses } = useAppData();
+
 
   return (
     <div className={classes.root}>
@@ -46,7 +49,15 @@ export default function OtherRooms() {
       </div>
       <div className={classes.itemsContainer}>
         {courses.map((course:any) => {
-          return <CourseItem key={course.id} course={course} home={false} />
+          return (
+            <CourseItem 
+              key={course.id} 
+              course={course}
+              home={false}
+              // selected={course.name === selected}
+              setSelected={setSelected}
+            />
+          )
         })}
       </div>
     </div>
