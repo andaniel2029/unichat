@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Theme, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button'
 import { Message } from './Chat';
 
 interface StyleProps {
@@ -28,7 +29,18 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
 
   editButton: {
     display: 'none',
+    fontFamily: 'halcom',
+    fontSize: '10pt',
+    color: 'white',
+    background: '#FF5A5F',
+    height: '30px',
+    borderRadius: '10px',
+    boxShadow: 'none',
+    '&:hover': {
+      background: '#FF5A5F',
+    },
   },
+
 
   editInput: {
     width: '100%',
@@ -93,11 +105,11 @@ export default function MessageItem(props: Props) {
   return (
     <div ref={props.lastMessage ? setRef : null} className={classes.root}>
       {props.fromMe && 
-        <button 
+        <Button 
           className={classes.editButton} 
           onClick={() => setEditing(!editing)}>
           {editing ? 'Save Changes' : 'Edit'}
-        </button>
+        </Button>
       }
       <div className={classes.messageContainer}>
         <div className={classes.textContainer}>
