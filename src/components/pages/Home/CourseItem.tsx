@@ -79,8 +79,6 @@ export default function CourseItem(props: Props, { location }: RouteComponentPro
   const { selectedCourse, setSelectedCourse } = useCourse();
   const classes = useStyles({ ...props, selectedCourse });
 
-  console.log(selectedCourse);
-
   return (
     <Link 
       to={`/chat?room=${props.course.name}&room_id=${props.course.id}`} 

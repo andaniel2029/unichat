@@ -92,6 +92,8 @@ export default function Feed(props: Props) {
         const lastMessage = props.messages.length - 1 === index;
         return (
           <MessageItem
+            index={index}
+            randomIndex={128}
             lastMessage={lastMessage}
             message={message}
             fromMe={message.sender_id === currentUser.user.uid}

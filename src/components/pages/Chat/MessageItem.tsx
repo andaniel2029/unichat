@@ -1,12 +1,15 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Theme, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 import { Message } from './Chat';
+import { useSocket } from '../../../contexts/SocketProvider';
 
 interface StyleProps {
   fromMe: boolean;
   lastMessage: boolean;
+  randomIndex: number;
+  index: number;
 }
 
 const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
@@ -17,6 +20,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     height: 'auto',
     padding: '5px 0px 5px 0px',
     wordWrap: 'break-word',
+    // background: props => props.randomIndex === props.index ? 'blue' : 'white',
     // margin: props => props.lastMessage ? '0.3rem 0rem 0.3rem 0rem' : '0.3rem 0rem 0.3rem 0rem',
     transition: '0.2s ease-in-out',
     '&:hover': {
@@ -86,11 +90,14 @@ interface Props {
   message: Message;
   fromMe: boolean;
   lastMessage: boolean;
+  randomIndex: number;
+  index: number;
 }
 
 export default function MessageItem(props: Props) {
 
   const classes = useStyles(props);
+  const { socket } = useSocket();
   const [editing, setEditing] = useState(false);
   const [message, setMessage] = useState(props.message.body);
 
@@ -100,16 +107,34 @@ export default function MessageItem(props: Props) {
     }
   }, []);
 
-  console.log(props.message);
+  const updateMessage = function(newMessage:string) {
+    setEditing(false);
+    console.log(newMessage);
+    socket.emit('update-message', { newMessage })
+  }
+
+  useEffect(() => {
+
+  }, [])
+
+  console.log(props.randomIndex);
 
   return (
     <div ref={props.lastMessage ? setRef : null} className={classes.root}>
-      {props.fromMe && 
-        <Button 
-          className={classes.editButton} 
-          onClick={() => setEditing(!editing)}>
-          {editing ? 'Save Changes' : 'Edit'}
-        </Button>
+      {props.fromMe && (
+          editing ? (
+          <Button 
+            className={classes.editButton} 
+            onClick={() => updateMessage(message)}>
+            Save Changes
+          </Button>
+          ) :
+          <Button 
+            className={classes.editButton} 
+            onClick={() => setEditing(!editing)}>
+            Edit
+          </Button>
+        )
       }
       <div className={classes.messageContainer}>
         <div className={classes.textContainer}>
