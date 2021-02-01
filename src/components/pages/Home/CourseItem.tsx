@@ -2,11 +2,12 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Course } from '../../../hooks/useApplicationData';
+import { useCourse } from '../../../contexts/CourseProvider';
 
 interface StyleProps {
   home: boolean;
   course: Course;
-  selected?: boolean;
+  selectedCourse: string;
 }
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
@@ -23,12 +24,14 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     height: '80px',
     width: '300px',
     transition: '0.2s ease-in-out',
-    color: props => props.home ? 'white' : '#ACABAB',
     borderRadius: props => props.home ?  '20px' : 'none',
-    // background: props => props.home ? `linear-gradient(${props.course.color_gradient}, ${props.course.color_main})` : 'white',
     background: props => props.home ? 
     `linear-gradient(${props.course.color_gradient}, ${props.course.color_main})` : (
-      props.selected ? 'black': 'white'
+      props.selectedCourse === props.course.name ? '#FF5A5F': 'white'
+    ),
+    color: props => props.home ? 
+    'white' : (
+      props.selectedCourse === props.course.name ? 'white': '#ACABAB'
     ),
     boxShadow: props => props.home ? "1px 4px 5px 2px #EDEDED" : 'none',
     margin: props => props.home ? '1rem' : 'none',
@@ -69,17 +72,20 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 interface Props {
   course: any;
   home: boolean;
-  // selected?: boolean;
-  setSelected?: (selected: string) => void;
 }
 
 export default function CourseItem(props: Props, { location }: RouteComponentProps) {
   
-  const classes = useStyles(props);
+  const { selectedCourse, setSelectedCourse } = useCourse();
+  const classes = useStyles({ ...props, selectedCourse });
+
+  console.log(selectedCourse);
+
   return (
     <Link 
       to={`/chat?room=${props.course.name}&room_id=${props.course.id}`} 
       className={classes.link}
+      onClick={() => setSelectedCourse(props.course.name)}
     >
       <div 
         className={classes.course}

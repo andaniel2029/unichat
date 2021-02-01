@@ -8,11 +8,11 @@ export function useCourse() {
 
 export function CourseProvider({ children }) {
 
-  const [course, setCourse] = useState('');
+  const [selectedCourse, setSelectedCourse] = useState('');
 
   const value = {
-    course,
-    setCourse
+    selectedCourse,
+    setSelectedCourse
   }
 
   return (

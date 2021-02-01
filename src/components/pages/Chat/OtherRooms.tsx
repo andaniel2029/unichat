@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
 export default function OtherRooms() {
 
   const classes = useStyles();
-  const [selected, setSelected] = useState('');
   const { courses } = useAppData();
 
 
@@ -54,8 +53,6 @@ export default function OtherRooms() {
               key={course.id} 
               course={course}
               home={false}
-              // selected={course.name === selected}
-              setSelected={setSelected}
             />
           )
         })}
