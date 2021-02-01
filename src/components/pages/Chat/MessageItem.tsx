@@ -70,7 +70,7 @@ export default function MessageItem(props: Props) {
 
   return (
     <div ref={props.lastMessage ? setRef : null} className={classes.root}>
-      <button onClick={() => setEditing(!editing)}>Edit</button>
+      {props.fromMe && <button onClick={() => setEditing(!editing)}>Edit</button>}
       <div className={classes.messageContainer}>
         <div className={classes.textContainer}>
           {!editing && <Typography className={`${classes.text}`}>{message}</Typography>}
