@@ -57,6 +57,8 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
   editInput: {
     width: '100%',
     height: '100%',
+    fontSize: '12pt',
+    // padding: '5px 8px 5px 8px',
     border: "1px solid #E3E3E3",
     borderRadius: '15px',
     "&:focus": {
@@ -65,7 +67,8 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
   },
 
   text: {
-    fontFamily: 'halcom'
+    fontFamily: 'halcom',
+    fontSize: '12pt',
   },
   
   messageContainer: {
@@ -77,6 +80,8 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
   },
 
   textContainer: {
+    display: 'flex',
+    alignItems: 'center',
     background: props => props.fromMe ? '#FF5A5F' : '#F7F7F7',
     color: props => props.fromMe ? 'white' : 'black',
     padding: '5px 8px 5px 8px',
