@@ -72,8 +72,8 @@ export interface User {
 }
 
 export interface Message {
-  id?: number;
-  course_id: string;
+  id: number;
+  course_id: number;
   sender_id: string;
   body: string;
   firstName: string;
@@ -130,6 +130,7 @@ export default function Chat({ location }: RouteComponentProps) {
     });
 
     socket.on('message', (message:Message) => {
+      console.log('here is the new message', message);
       setMessages((prev) => [...prev, message]);
     })
   }, [socket, room_id]);

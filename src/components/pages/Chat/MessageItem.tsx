@@ -135,7 +135,7 @@ export default function MessageItem(props: Props) {
     });
   }, [socket]);
 
-  console.log(props.randomIndex);
+  // console.log(props.message);
 
   return (
     <div ref={props.lastMessage ? setRef : null} className={classes.root}>
