@@ -135,8 +135,6 @@ export default function MessageItem(props: Props) {
     });
   }, [socket]);
 
-  // console.log(props.message);
-
   return (
     <div ref={props.lastMessage ? setRef : null} className={classes.root}>
       {props.fromMe && (
@@ -166,7 +164,6 @@ export default function MessageItem(props: Props) {
             value={message}
             onChange={event => setMessage(event.target.value)}
           />}
-          {/* {editing && <Typography className={`${classes.text}`}>haha some new message</Typography>} */}
         </div>
         <div className={classes.nameContainer}>
           <Typography className={`${classes.text} ${classes.name}`}>{props.message.firstName} {props.message.lastName}</Typography>

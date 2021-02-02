@@ -111,9 +111,10 @@ export default function Chat({ location }: RouteComponentProps) {
 
   useEffect(() => {
     axios.get(`/api/messages/${room_id}`).then((res:any) => {
-      console.log('api was called');
       setMessages(res.data);
-    })
+    });
+
+    return setMessages([]);
   }, [room_id]);
 
 
@@ -173,8 +174,6 @@ export default function Chat({ location }: RouteComponentProps) {
       socket.emit('send-message', { room_id, room, message, currentUser });
     }
   }
-
-  console.log('will the chat render');
 
   return (
     <Grid container className={classes.root}>
