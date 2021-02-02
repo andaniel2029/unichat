@@ -10,6 +10,7 @@ interface StyleProps {
   lastMessage: boolean;
   randomIndex: number;
   index: number;
+  editing: boolean;
 }
 
 const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
@@ -22,6 +23,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     wordWrap: 'break-word',
     // background: props => props.randomIndex === props.index ? 'blue' : 'white',
     // margin: props => props.lastMessage ? '0.3rem 0rem 0.3rem 0rem' : '0.3rem 0rem 0.3rem 0rem',
+    background: props => props.editing ? '#EDEDED' : 'white',
     transition: '0.2s ease-in-out',
     '&:hover': {
       background: '#EDEDED',
@@ -32,7 +34,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
   },
 
   editButton: {
-    display: 'none',
+    display: props => props.editing ? 'block' : 'none',
     fontFamily: 'halcom',
     fontSize: '10pt',
     color: 'white',
@@ -103,10 +105,10 @@ interface Props {
 
 export default function MessageItem(props: Props) {
 
-  const classes = useStyles(props);
   const { socket } = useSocket();
   const [editing, setEditing] = useState(false);
   const [message, setMessage] = useState(props.message.body);
+  const classes = useStyles({ ...props, editing });
 
   const setRef = useCallback(node => {
     if(node) {
