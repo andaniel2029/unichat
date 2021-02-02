@@ -15,7 +15,7 @@ interface StyleProps {
 const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
   root: {
     display: 'flex',
-    justifyContent: props => props.fromMe ? 'flex-end' : 'flex-start',
+    justifyContent: props => props.fromMe ? 'space-between' : 'flex-start',
     width: '100%',
     height: 'auto',
     padding: '5px 0px 5px 0px',
@@ -45,6 +45,9 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     },
   },
 
+  messageOptionsContainer: {
+    minWidth: '50px'
+  },
 
   editInput: {
     width: '100%',
@@ -127,20 +130,22 @@ export default function MessageItem(props: Props) {
   return (
     <div ref={props.lastMessage ? setRef : null} className={classes.root}>
       {props.fromMe && (
-          editing ? (
-          <Button 
-            className={classes.editButton} 
-            onClick={() => updateMessage(message)}>
-            Save Changes
-          </Button>
-          ) :
-          <Button 
-            className={classes.editButton} 
-            onClick={() => setEditing(!editing)}>
-            Edit
-          </Button>
-        )
-      }
+        <div className={classes.messageOptionsContainer}>
+          {editing ? (
+            <Button 
+              className={classes.editButton} 
+              onClick={() => updateMessage(message)}>
+              Save
+            </Button>
+            ) :
+            <Button 
+              className={classes.editButton} 
+              onClick={() => setEditing(!editing)}>
+              Edit
+            </Button>
+          }
+        </div>
+      )}
       <div className={classes.messageContainer}>
         <div className={classes.textContainer}>
           {!editing && <Typography className={`${classes.text}`}>{message}</Typography>}
