@@ -37,7 +37,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     fontSize: '10pt',
     color: 'white',
     background: '#FF5A5F',
-    height: '30px',
+    // height: '30px',
     borderRadius: '10px',
     boxShadow: 'none',
     '&:hover': {
@@ -46,7 +46,10 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
   },
 
   messageOptionsContainer: {
-    minWidth: '50px'
+    display: 'flex',
+    alignItems: 'center',
+    minWidth: '50px',
+    paddingLeft: '10px',
   },
 
   editInput: {
