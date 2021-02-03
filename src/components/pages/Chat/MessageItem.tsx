@@ -56,7 +56,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     width: '100%',
     height: '100%',
     fontSize: '12pt',
-    // padding: '5px 8px 5px 8px',
     border: "1px solid #E3E3E3",
     borderRadius: '15px',
     "&:focus": {
@@ -121,7 +120,6 @@ export default function MessageItem(props: Props) {
 
   const updateMessage = function(newMessage:string) {
     setEditing(false);
-    console.log(newMessage);
     socket.emit('update-message', { id: props.message.id, room: props.room, newMessage });
   }
 

@@ -79,8 +79,6 @@ interface Props {
 
 export default function Feed(props: Props) {
 
-  if(props.messages.length === 0) console.log('empty');
-
   const classes = useStyles();
   const { currentUser } = useAuth();
 
@@ -91,7 +89,6 @@ export default function Feed(props: Props) {
       </div>}
       {props.messages.map((message, index) => {
         const lastMessage = props.messages.length - 1 === index;
-        console.log(message.body);
         return (
           <MessageItem
             index={index}
