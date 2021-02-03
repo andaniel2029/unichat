@@ -94,8 +94,7 @@ export default function Feed(props: Props) {
         const lastMessage = props.messages.length - 1 === index;
         return (
           <MessageItem
-            index={index}
-            randomIndex={128}
+            key={message.id}
             room={props.room}
             lastMessage={lastMessage}
             message={message}
