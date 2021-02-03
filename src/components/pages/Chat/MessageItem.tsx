@@ -8,8 +8,6 @@ import { useSocket } from '../../../contexts/SocketProvider';
 interface StyleProps {
   fromMe: boolean;
   lastMessage: boolean;
-  randomIndex: number;
-  index: number;
   editing: boolean;
 }
 
@@ -100,8 +98,6 @@ interface Props {
   message: Message;
   fromMe: boolean;
   lastMessage: boolean;
-  randomIndex: number;
-  index: number;
   room: string | string[] | null;
 }
 
