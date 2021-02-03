@@ -66,7 +66,6 @@ export default function Nav() {
 
   useEffect(() => {
     if(!socket) return;
-    console.log('is this running');
 
     socket.on('hey', ({ message }: any) => {
       console.log('notification received');
