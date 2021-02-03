@@ -21,8 +21,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     height: 'auto',
     padding: '5px 0px 5px 0px',
     wordWrap: 'break-word',
-    // background: props => props.randomIndex === props.index ? 'blue' : 'white',
-    // margin: props => props.lastMessage ? '0.3rem 0rem 0.3rem 0rem' : '0.3rem 0rem 0.3rem 0rem',
     background: props => props.editing ? '#EDEDED' : 'white',
     transition: '0.2s ease-in-out',
     '&:hover': {
@@ -124,7 +122,7 @@ export default function MessageItem(props: Props) {
   const updateMessage = function(newMessage:string) {
     setEditing(false);
     console.log(newMessage);
-    socket.emit('update-message', { id: props.message.id, room: props.room, newMessage })
+    socket.emit('update-message', { id: props.message.id, room: props.room, newMessage });
   }
 
   useEffect(() => {
