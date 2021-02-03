@@ -9,6 +9,7 @@ interface StyleProps {
   fromMe: boolean;
   lastMessage: boolean;
   editing: boolean;
+  index: number;
 }
 
 const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
@@ -17,7 +18,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     justifyContent: props => props.fromMe ? 'space-between' : 'flex-start',
     width: '100%',
     height: 'auto',
-    padding: '5px 0px 5px 0px',
+    padding: props => props.index !== 0 ? '5px 0px 5px 0px' : '20px 0px 5px 0px',
     wordWrap: 'break-word',
     background: props => props.editing ? '#EDEDED' : 'white',
     transition: '0.2s ease-in-out',
@@ -99,6 +100,7 @@ interface Props {
   fromMe: boolean;
   lastMessage: boolean;
   room: string | string[] | null;
+  index: number;
 }
 
 export default function MessageItem(props: Props) {
@@ -106,6 +108,7 @@ export default function MessageItem(props: Props) {
   const { socket } = useSocket();
   const [editing, setEditing] = useState(false);
   const [message, setMessage] = useState(props.message.body);
+  const [editedMessage, setEditedMessage] = useState(props.message.body);
   const classes = useStyles({ ...props, editing });
 
   const setRef = useCallback(node => {
@@ -116,9 +119,13 @@ export default function MessageItem(props: Props) {
 
   const updateMessage = function(newMessage:string) {
     setEditing(false);
-    socket.emit('update-message', { id: props.message.id, room: props.room, newMessage });
-  }
+    if(newMessage !== message) {
+      setMessage(newMessage);
+      socket.emit('update-message', { id: props.message.id, room: props.room, newMessage });
 
+    }
+  }
+  
   useEffect(() => {
     socket.on('set-new-message', (update:any) => {
       if(props.message.id === update.id) {
@@ -134,7 +141,7 @@ export default function MessageItem(props: Props) {
           {editing ? (
             <Button 
               className={classes.editButton} 
-              onClick={() => updateMessage(message)}>
+              onClick={() => updateMessage(editedMessage)}>
               Save
             </Button>
             ) :
@@ -153,8 +160,8 @@ export default function MessageItem(props: Props) {
           <input
             className={`${classes.text} ${classes.editInput}`}
             type="text"
-            value={message}
-            onChange={event => setMessage(event.target.value)}
+            value={editedMessage}
+            onChange={event => setEditedMessage(event.target.value)}
           />}
         </div>
         <div className={classes.nameContainer}>

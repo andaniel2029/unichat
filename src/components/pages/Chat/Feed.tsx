@@ -95,6 +95,7 @@ export default function Feed(props: Props) {
         return (
           <MessageItem
             key={message.id}
+            index={index}
             room={props.room}
             lastMessage={lastMessage}
             message={message}
