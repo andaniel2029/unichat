@@ -31,21 +31,23 @@ export default function App() {
       <AppDataProvider>
         <AuthProvider>
           <SocketProvider>
-            <CourseProvider>
+            {/* <CourseProvider> */}
               <Grid container>
                 <Grid item xs={12} className={classes.nav}>
                   <Nav />
                 </Grid>
                 <Grid item xs={12}>
                   <Switch>
-                      <PrivateRoute exact path="/" component={Home} />
-                      <PrivateRoute path="/chat" component={Chat}/>
                     <Route path="/signup" component={SignUp} />
                     <Route path="/login" component={Login} />
+                    <CourseProvider>
+                      <PrivateRoute exact path="/" component={Home} />
+                      <PrivateRoute path="/chat" component={Chat}/>
+                    </CourseProvider>
                   </Switch>
                 </Grid>
               </Grid>
-            </CourseProvider>
+            {/* </CourseProvider> */}
           </SocketProvider>
         </AuthProvider>
       </AppDataProvider>
