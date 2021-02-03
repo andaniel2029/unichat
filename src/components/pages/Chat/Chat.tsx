@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
   usersFeedContainer: {
     display: 'flex',
     height: '100%',
-    // boxShadow: "1px 8px 15px 2px #EDEDED",
     borderRight: '1px solid #EDEDED'
   },
 
@@ -131,7 +130,6 @@ export default function Chat({ location }: RouteComponentProps) {
     });
 
     socket.on('message', (message:Message) => {
-      console.log('here is the new message', message);
       setMessages((prev) => [...prev, message]);
     })
   }, [socket, room_id]);
