@@ -99,6 +99,10 @@ export default function Chat({ location }: RouteComponentProps) {
       setUsersInRoom(users.filter((u: User) => u.user.uid !== currentUser.user.uid));
     });
 
+    window.addEventListener('unload', () => {
+      socket.emit('leave-room', { currentUser });
+    });
+
     return () => {
       socket.emit('leave-room', { currentUser }, () => {
       });
@@ -106,7 +110,6 @@ export default function Chat({ location }: RouteComponentProps) {
     };
 
   }, [socket, room_id]);
-
 
   useEffect(() => {
     axios.get(`/api/messages/${room_id}`).then((res:any) => {
@@ -133,7 +136,6 @@ export default function Chat({ location }: RouteComponentProps) {
       setMessages((prev) => [...prev, message]);
     })
   }, [socket, room_id]);
-
 
 
   let timeout:any;
