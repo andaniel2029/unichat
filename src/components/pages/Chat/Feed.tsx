@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-end',
     minHeight: '15px',
     width: '100%',
+    position: 'absolute',
+    paddingBottom: '5px',
+    bottom: '0px'
   },
 
   typingMessageText: {
