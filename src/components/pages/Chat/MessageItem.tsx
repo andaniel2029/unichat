@@ -38,7 +38,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     fontSize: '10pt',
     color: 'white',
     background: '#FF5A5F',
-    // height: '30px',
     borderRadius: '10px',
     boxShadow: 'none',
     '&:hover': {
@@ -58,7 +57,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     fontSize: '12pt',
   },
   
-  messageContainer: {
+  messageRoot: {
     display: 'flex',
     flexDirection: 'column',
     maxWidth: '80%',
@@ -66,14 +65,37 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     alignItems: props => props.fromMe ? 'flex-end' : 'flex-start',
   },
 
-  textContainer: {
+  messageDataContainer: {
     display: 'flex',
-    alignItems: 'center',
+    flexDirection: props => props.fromMe ? 'row' : 'row-reverse',
+    justifyContent: 'flex-end'
+  },
+  
+  messageTextContainer: {
+    maxWidth: '80%',
+    display: 'flex',
     background: props => props.fromMe ? '#FF5A5F' : '#F7F7F7',
     color: props => props.fromMe ? 'white' : 'black',
     padding: '5px 8px 5px 8px',
     borderRadius: '15px',
     boxShadow: "0px 2px 5px 0.5px #E3E3E3",
+  },
+
+  messageTimeEditedContainer: {
+    textAlign: props => props.fromMe ? 'right' : 'left',
+    margin: props => props.fromMe ? '0px 10px 0px 0px' : '0px 0px 0px 10px'
+  },
+  
+  timeEditedText: {
+    fontSize: '10pt',
+  },
+
+  timeText: {
+    color: '#8E8E8E'
+  },
+
+  editedText: {
+    color: '#ACABAB'
   },
 
   editInput: {
@@ -91,7 +113,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     justifyContent: 'flex-end',
     flexDirection: props => props.fromMe ? 'row' : 'row-reverse',
     padding: props => props.fromMe ? '0px 5px 0px 5px' : '0px 0px 0px 5px',
-    border: '1px solid red',
     width:  '100%',
   },
 
@@ -162,19 +183,25 @@ export default function MessageItem(props: Props) {
           }
         </div>
       )}
-      <div className={classes.messageContainer}>
-        <div className={classes.textContainer}>
-          {!editing && <Typography className={`${classes.text}`}>{message}</Typography>}
-          {editing && 
-          <input
-            className={`${classes.text} ${classes.editInput}`}
-            type="text"
-            value={editedMessage}
-            onChange={event => setEditedMessage(event.target.value)}
-          />}
+      <div className={classes.messageRoot}>
+        <div className={classes.messageDataContainer}>
+          <div className={classes.messageTimeEditedContainer}>
+            <Typography className={`${classes.text} ${classes.timeEditedText} ${classes.timeText}`}>{props.message.created_at}</Typography>
+            {edited && 
+            <Typography className={`${classes.text} ${classes.timeEditedText} ${classes.editedText}`}>Edited</Typography>}
+          </div>
+          <div className={classes.messageTextContainer}>
+            {!editing && <Typography className={`${classes.text}`}>{message}</Typography>}
+            {editing && 
+            <input
+              className={`${classes.text} ${classes.editInput}`}
+              type="text"
+              value={editedMessage}
+              onChange={event => setEditedMessage(event.target.value)}
+            />}
+          </div>
         </div>
         <div className={classes.nameContainer}>
-          {edited && <Typography className={`${classes.text}`}>Edited</Typography>}
           <Typography className={`${classes.text} ${classes.name}`}>{props.message.firstName} {props.message.lastName}</Typography>
         </div>
       </div>
