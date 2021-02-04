@@ -87,7 +87,12 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
   },
 
   nameContainer: {
-    padding: props => props.fromMe ? '0px 5px 0px 0px' : '0px 0px 0px 5px'
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexDirection: props => props.fromMe ? 'row' : 'row-reverse',
+    padding: props => props.fromMe ? '0px 5px 0px 5px' : '0px 0px 0px 5px',
+    border: '1px solid red',
+    width:  '100%',
   },
 
   name: {
@@ -108,6 +113,7 @@ export default function MessageItem(props: Props) {
 
   const { socket } = useSocket();
   const [editing, setEditing] = useState(false);
+  const [edited, setEdited] = useState(props.message.is_edited);
   const [message, setMessage] = useState(props.message.body);
   const [editedMessage, setEditedMessage] = useState(props.message.body);
   const classes = useStyles({ ...props, editing });
@@ -121,6 +127,7 @@ export default function MessageItem(props: Props) {
   const updateMessage = function(newMessage:string) {
     setEditing(false);
     if(newMessage !== message) {
+      setEdited(true);
       setMessage(newMessage);
       socket.emit('update-message', { id: props.message.id, room: props.room, newMessage });
 
@@ -130,6 +137,7 @@ export default function MessageItem(props: Props) {
   useEffect(() => {
     socket.on('set-new-message', (update:any) => {
       if(props.message.id === update.id) {
+        setEdited(true);
         setMessage(update.newMessage);
       }
     });
@@ -166,6 +174,7 @@ export default function MessageItem(props: Props) {
           />}
         </div>
         <div className={classes.nameContainer}>
+          {edited && <Typography className={`${classes.text}`}>Edited</Typography>}
           <Typography className={`${classes.text} ${classes.name}`}>{props.message.firstName} {props.message.lastName}</Typography>
         </div>
       </div>
