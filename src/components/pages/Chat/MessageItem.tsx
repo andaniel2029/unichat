@@ -53,17 +53,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     paddingLeft: '10px',
   },
 
-  editInput: {
-    width: '100%',
-    height: '100%',
-    fontSize: '12pt',
-    border: "1px solid #E3E3E3",
-    borderRadius: '15px',
-    "&:focus": {
-      outline: "none",
-    },
-  },
-
   text: {
     fontFamily: 'halcom',
     fontSize: '12pt',
@@ -85,6 +74,16 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     padding: '5px 8px 5px 8px',
     borderRadius: '15px',
     boxShadow: "0px 2px 5px 0.5px #E3E3E3",
+  },
+
+  editInput: {
+    height: '100%',
+    fontSize: '12pt',
+    border: "1px solid #E3E3E3",
+    borderRadius: '15px',
+    "&:focus": {
+      outline: "none",
+    },
   },
 
   nameContainer: {
