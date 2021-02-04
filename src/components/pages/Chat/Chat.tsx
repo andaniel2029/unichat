@@ -78,6 +78,7 @@ export interface Message {
   firstName: string;
   lastName: string;
   is_edited: boolean;
+  created_at: string;
 }
 
 export default function Chat({ location }: RouteComponentProps) {
