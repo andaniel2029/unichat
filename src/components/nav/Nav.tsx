@@ -1,12 +1,17 @@
+// React
 import { Fragment, useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
+
+// Contexts and Hooks
 import { useAuth } from '../../hooks/useAuthContext';
 import { useSocket } from '../../contexts/SocketProvider';
 
-const useStyles = makeStyles((theme) => ({
+// Material UI
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
+const useStyles = makeStyles((theme:Theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -20,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
 
-  font: {
+  text: {
     fontFamily: 'halcom',
   },
 
@@ -53,29 +58,34 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: 'none',
     },
   }
-
 }));
 
 export default function Nav() {
 
+  // Styles
+  const classes = useStyles();
+
+  // Context variables
   const { currentUser, logout } = useAuth();
   const { socket } = useSocket();
-  const [notifications, setNotifications] = useState(0);
-  const [error, setError] = useState('');
   const history = useHistory();
 
+  // State
+  const [error, setError] = useState('');
+  const [notifications, setNotifications] = useState(0);
+
+  // Test useEffect to listen for socket events from children - will be used later for notifications
   useEffect(() => {
     if(!socket) return;
-
     socket.on('hey', ({ message }: any) => {
       console.log('notification received');
       setNotifications(prev => prev + 1);
     });
-    
     return () => socket.off('sendNotification');
   }, [socket]);
   
 
+  // Communicates with Firebase logout function
   const handleLogout = function() {
     setError('');
     logout()
@@ -83,18 +93,18 @@ export default function Nav() {
       history.push('/login');
     })
     .catch((error: any) => {
-      setError('Unable to logout')
+      setError('Unable to logout');
     })
   };
   
-  const classes = useStyles();
   
   return (
     <div className={classes.root}>
       <Link to='/' className={classes.link}>
-        <Typography className={`${classes.font} ${classes.logo}`}>UniChat</Typography>
+        <Typography className={`${classes.text} ${classes.logo}`}>UniChat</Typography>
       </Link>
       <div className={classes.buttonContainer}>
+        {error && <Typography className={classes.text}>{error}</Typography>}
         {!currentUser.user && <Link to="/login" className={classes.link}>
           <Button variant="contained" className={classes.button}>Login</Button>
         </Link>}
@@ -103,9 +113,6 @@ export default function Nav() {
         </Link>}
         {currentUser.user && 
           <Fragment>
-            {/* <div style={{ marginRight: '1rem' }}>
-              <p>Notifications: {notifications}</p>
-            </div> */}
             <Typography className={classes.name}>{currentUser.firstName}</Typography>
             <Button variant="contained" className={classes.button} onClick={handleLogout}>Logout</Button> 
           </Fragment>
