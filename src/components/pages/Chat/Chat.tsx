@@ -94,6 +94,12 @@ interface UpdatedRoomData {
   users: User[];
 }
 
+interface typingUser {
+  enter: boolean;
+  firstName: string;
+  lastName: string;
+}
+
 export default function Chat({ location }: RouteComponentProps) {
 
   // Styles
@@ -160,10 +166,11 @@ export default function Chat({ location }: RouteComponentProps) {
 
     socket.on('message', (message:Message) => {
       setMessages((prev) => [...prev, message]);
-    })
+    });
   }, [socket, room_id]);
 
 
+  // Handles type events to notify other clients which user is typing
   let timeout:any;
   const userTyping = function(key:string) {
     socket.emit('user-typing', 
@@ -178,19 +185,23 @@ export default function Chat({ location }: RouteComponentProps) {
 
   useEffect(() => {
     if(!socket) return;
-    socket.on('show-typing', (typingUser:any) => {
 
+    // Event listener for typing events to update UI with user who is typing
+    socket.on('show-typing', (user: typingUser) => {
+
+      // Timeout used to clear typingMessage after 2 seconds of no typing
       clearTimeout(timeout);
-      if(typingUser.enter) {
+
+      // user.enter is a boolean representing if the enter key was pressed
+      if(user.enter) {
         setUserTypingMessage('');
       } else {
-        setUserTypingMessage(`${typingUser.firstName} ${typingUser.lastName} is typing`);
+        setUserTypingMessage(`${user.firstName} ${user.lastName} is typing`);
         timeout = setTimeout(() => {
           setUserTypingMessage('');
         }, 2000);
       }
     });
-
   }, [socket, room_id]);
 
   const sendMessage = function(e: FormEvent, message:string) {
