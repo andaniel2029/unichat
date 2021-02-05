@@ -1,19 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useSocket } from '../../../contexts/SocketProvider';
-import { useAuth } from '../../../hooks/useAuthContext';
+// React
+import React, { useEffect, useState, FormEvent } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import queryString from 'query-string';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+
+// Components
 import Header from './Header';
+import OtherRooms from './OtherRooms';
 import RoomUsers from './RoomUsers';
 import Feed from './Feed';
 import Input from './Input';
-import { FormEvent } from 'react';
-import axios from 'axios';
-import OtherRooms from './OtherRooms';
 
-const useStyles = makeStyles((theme) => ({
+// Contexts and Hooks
+import { useSocket } from '../../../contexts/SocketProvider';
+import { useAuth } from '../../../hooks/useAuthContext';
+
+// Material UI
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+
+// Other libraries
+import axios from 'axios';
+import queryString from 'query-string';
+
+const useStyles = makeStyles((theme:Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -22,14 +30,14 @@ const useStyles = makeStyles((theme) => ({
     height: '94vh',
   },
 
-  main: {
+  chatRoomsContainer: {
     display: 'flex',
     height: '85%',
     justifyContent: 'space-between',
     animation: '$fadeIn 1.5s ease-in-out',
   },
   
-  chat: {
+  chatContainer: {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
@@ -41,14 +49,14 @@ const useStyles = makeStyles((theme) => ({
     borderRight: '1px solid #EDEDED'
   },
 
-  users: {
+  usersContainer: {
     display: 'flex',
     flexDirection: 'column',
     width: '30%',
     background: '#F2F2F2',
   },
 
-  feedInput: {
+  feedInputContainer: {
     width: '70%',
   },
 
@@ -179,13 +187,13 @@ export default function Chat({ location }: RouteComponentProps) {
   return (
     <Grid container className={classes.root}>
       <Header title={room}/>
-      <Grid container className={classes.main}>
-        <Grid item xs={12} md={10} className={classes.chat}>
+      <Grid container className={classes.chatRoomsContainer}>
+        <Grid item xs={12} md={10} className={classes.chatContainer}>
           <div className={classes.usersFeedContainer}>
-            <div className={classes.users}>
+            <div className={classes.usersContainer}>
               <RoomUsers users={usersInRoom}/>
             </div>
-            <div className={classes.feedInput}>
+            <div className={classes.feedInputContainer}>
               <Feed
                 room={room}
                 messages={messages} 
