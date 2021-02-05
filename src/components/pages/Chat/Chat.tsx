@@ -68,9 +68,9 @@ const useStyles = makeStyles((theme:Theme) => ({
       opacity: 1,
     }
   },
-
 }));
 
+// Interfaces
 export interface User {
   user: any,
   firstName: string;
@@ -91,43 +91,54 @@ export interface Message {
 
 export default function Chat({ location }: RouteComponentProps) {
 
+  // Styles
   const classes = useStyles();
 
+  // Context variables
   const { socket } = useSocket();
   const { currentUser } = useAuth();
+
+  // URL Parameters
   const { room, room_id } = queryString.parse(location.search);
-  const [usersInRoom, setUsersInRoom] = useState([]);
+
+  // State
+  const [usersInRoom, setUsersInRoom] = useState<User[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [updateMessage, setUpdateMessage] = useState('');
   const [showUpdateMessage, setShowUpdateMessage] = useState(false);
   const [userTypingMessage, setUserTypingMessage] = useState('');
+  
+  // Retrieving messages in current conversation from API
+  useEffect(() => {
+    axios.get(`/api/messages/${room_id}`).then((res:any) => {
+      setMessages(res.data);
+    });
+
+    // Cleanup to prevent stale messages state when moving between conversations
+    return setMessages([]);
+  }, [room_id]);
 
   useEffect(() => {
     if(!socket) return;
-    socket.emit('join-room', { room, currentUser }, (users: any) => {
+
+    // Notifying other clients in room when currentUser joins said room
+    socket.emit('join-room', { room, currentUser }, (users: User[] = []) => {
       setUsersInRoom(users.filter((u: User) => u.user.uid !== currentUser.user.uid));
     });
 
+    // When a user closes browser tab, they must be removed from the room on other clients
     window.addEventListener('unload', () => {
       socket.emit('leave-room', { currentUser });
     });
 
     return () => {
+      // Notifying other users in room when currentUser leaves said room
       socket.emit('leave-room', { currentUser }, () => {
       });
       socket.off();
     };
 
   }, [socket, room_id]);
-
-  useEffect(() => {
-    axios.get(`/api/messages/${room_id}`).then((res:any) => {
-      setMessages(res.data);
-    });
-
-    return setMessages([]);
-  }, [room_id]);
-
 
   useEffect(() => {
     if(!socket) return;
