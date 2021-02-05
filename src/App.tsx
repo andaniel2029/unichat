@@ -1,37 +1,40 @@
+// React
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import AuthProvider from './hooks/useAuthContext';
+
+// Components
 import Nav from './components/nav/Nav';
 import Grid from '@material-ui/core/Grid';
 import SignUp from './components/pages/SignUp/SignUp';
 import Home from './components/pages/Home/Home';
 import Login from './components/pages/Login';
 import PrivateRoute from './components/PrivateRoute';
+import Chat from './components/pages/Chat/Chat';
 
-import { makeStyles, Theme } from '@material-ui/core/styles';
+// Contexts and Hooks
+import AuthProvider from './hooks/useAuthContext';
 import { SocketProvider } from './contexts/SocketProvider';
 import { AppDataProvider } from './contexts/AppDataProvider';
 import { CourseProvider } from './contexts/CourseProvider';
-import Chat from './components/pages/Chat/Chat';
+
+// Material UI
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme:Theme) => ({
-
   nav: {
     height: '6vh',
     padding: '20px'
   }
-
 }));
 
 export default function App() {
 
   const classes = useStyles();
-
+  
   return (
     <Router>
       <AppDataProvider>
         <AuthProvider>
           <SocketProvider>
-            {/* <CourseProvider> */}
               <Grid container>
                 <Grid item xs={12} className={classes.nav}>
                   <Nav />
@@ -47,7 +50,6 @@ export default function App() {
                   </Switch>
                 </Grid>
               </Grid>
-            {/* </CourseProvider> */}
           </SocketProvider>
         </AuthProvider>
       </AppDataProvider>
