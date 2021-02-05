@@ -83,7 +83,9 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
 
   messageTimeEditedContainer: {
     textAlign: props => props.fromMe ? 'right' : 'left',
-    margin: props => props.fromMe ? '0px 10px 0px 0px' : '0px 0px 0px 10px'
+    margin: props => props.fromMe ? '0px 10px 0px 0px' : '0px 0px 0px 10px',
+    height: '32px',
+
   },
   
   timeEditedText: {
