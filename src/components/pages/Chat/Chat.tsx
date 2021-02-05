@@ -121,7 +121,7 @@ export default function Chat({ location }: RouteComponentProps) {
   
   // Retrieving messages in current conversation from API
   useEffect(() => {
-    axios.get<AxiosResponse>(`/api/messages/${room_id}`).then((res:AxiosResponse) => {
+    axios.get<AxiosResponse>(`/api/messages/${room_id}`).then((res: AxiosResponse) => {
       setMessages(res.data);
     });
 

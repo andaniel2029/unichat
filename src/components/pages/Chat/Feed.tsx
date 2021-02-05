@@ -1,11 +1,16 @@
-import { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Message } from './Chat';
+// Components and Interfaces
 import MessageItem from './MessageItem';
-import { useAuth } from '../../../hooks/useAuthContext';
-import { Typography } from '@material-ui/core';
+import { Message } from './Chat';
 
-const useStyles = makeStyles((theme) => ({
+// Contexts and Hooks
+import { useAuth } from '../../../hooks/useAuthContext';
+
+// Material UI
+import { makeStyles } from '@material-ui/core/styles';
+import { Theme, Typography } from '@material-ui/core';
+
+
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -20,6 +25,10 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
   },
 
+  text: {
+    fontFamily: 'halcom'
+  },
+
   typingMessageContainer: {
     display: 'flex',
     alignItems: 'flex-end',
@@ -31,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   typingMessageText: {
-    fontFamily: 'halcom',
     fontSize: '10pt',
     color: '#555555',
     paddingLeft: '0.7rem'
@@ -50,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
   },
   
   alertText: {
-    fontFamily: 'halcom',
     color: 'white',
   },
 
@@ -72,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+// Interfaces
 interface Props {
   messages: Message[];
   userTypingMessage: string;
@@ -82,13 +90,16 @@ interface Props {
 
 export default function Feed(props: Props) {
 
+  // Styles
   const classes = useStyles();
+
+  // Context variables
   const { currentUser } = useAuth();
 
   return (
     <div className={classes.root}>
       {props.showUpdateMessage && <div className={classes.alertContainer}>
-        <Typography className={`${classes.alertText}`}>{props.updateMessage}</Typography>
+        <Typography className={`${classes.text} ${classes.alertText}`}>{props.updateMessage}</Typography>
       </div>}
       {props.messages.map((message, index) => {
         const lastMessage = props.messages.length - 1 === index;
@@ -104,7 +115,7 @@ export default function Feed(props: Props) {
           )
       })}
       <div className={classes.typingMessageContainer}>
-        <Typography className={classes.typingMessageText}>{props.userTypingMessage}</Typography>
+        <Typography className={`${classes.text} ${classes.typingMessageText}`}>{props.userTypingMessage}</Typography>
       </div>
     </div>
   )

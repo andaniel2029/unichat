@@ -77,6 +77,8 @@ export default function Input(props: Props) {
   const classes = useStyles();
   const [message, setMessage] = useState('');
 
+  console.log('input is rendering');
+
   return (
     <div className={classes.root}>
       <div className={classes.iconContainer}>
@@ -99,12 +101,6 @@ export default function Input(props: Props) {
               props.userTyping(event.key);
             }}
           />
-          {/* <button
-            type="submit"
-            className={`${classes.text} ${classes.button}`}
-          >
-            Send
-          </button> */}
         </form>
       </div>
     </div>
