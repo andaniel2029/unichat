@@ -18,7 +18,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 // Other libraries
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import queryString from 'query-string';
 
 const useStyles = makeStyles((theme:Theme) => ({
@@ -115,7 +115,7 @@ export default function Chat({ location }: RouteComponentProps) {
   
   // Retrieving messages in current conversation from API
   useEffect(() => {
-    axios.get(`/api/messages/${room_id}`).then((res:any) => {
+    axios.get<AxiosResponse>(`/api/messages/${room_id}`).then((res:AxiosResponse) => {
       setMessages(res.data);
     });
 
