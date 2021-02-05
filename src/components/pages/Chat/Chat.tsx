@@ -130,6 +130,7 @@ export default function Chat({ location }: RouteComponentProps) {
   }, [room_id]);
 
   useEffect(() => {
+    // Waiting for socket connection to establish and the object to be defined
     if(!socket) return;
 
     // Notifying other clients in room when currentUser joins said room
@@ -152,6 +153,7 @@ export default function Chat({ location }: RouteComponentProps) {
   }, [socket, room_id]);
 
   useEffect(() => {
+    // Waiting for socket connection to establish and the object to be defined
     if(!socket) return;
 
     // Event listener responsible for updating the UI when users leave/join
