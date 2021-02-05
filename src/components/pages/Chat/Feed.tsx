@@ -76,7 +76,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
     }
   },
-
 }));
 
 // Interfaces
