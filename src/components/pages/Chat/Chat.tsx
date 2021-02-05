@@ -204,9 +204,11 @@ export default function Chat({ location }: RouteComponentProps) {
     });
   }, [socket, room_id]);
 
-  const sendMessage = function(e: FormEvent, message:string) {
+  const sendMessage = function(e: FormEvent, message: string) {
+    // Preventing page reload
     e.preventDefault();
 
+    // Preventing emits for empty string messages
     if(message) {
       socket.emit('send-message', { room_id, room, message, currentUser });
     }
