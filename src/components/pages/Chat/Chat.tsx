@@ -1,5 +1,5 @@
 // React
-import React, { useEffect, useState, FormEvent } from 'react';
+import React, { useEffect, useState, useCallback, FormEvent } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 // Components
@@ -172,7 +172,7 @@ export default function Chat({ location }: RouteComponentProps) {
 
   // Handles type events to notify other clients which user is typing
   let timeout:any;
-  const userTyping = function(key:string) {
+  const userTyping = useCallback((key:string) => {
     socket.emit('user-typing', 
       { 
         enter: key === 'Enter',
@@ -181,7 +181,7 @@ export default function Chat({ location }: RouteComponentProps) {
         lastName: currentUser.lastName 
       }
     );
-  }
+  }, [currentUser, room, socket]);
 
   useEffect(() => {
     if(!socket) return;
@@ -204,15 +204,14 @@ export default function Chat({ location }: RouteComponentProps) {
     });
   }, [socket, room_id]);
 
-  const sendMessage = function(e: FormEvent, message: string) {
-    // Preventing page reload
+  const sendMessage = useCallback((e: FormEvent, message: string) => {
     e.preventDefault();
 
     // Preventing emits for empty string messages
     if(message) {
       socket.emit('send-message', { room_id, room, message, currentUser });
     }
-  }
+  }, [currentUser, room, room_id, socket]);
 
   return (
     <Grid container className={classes.root}>
