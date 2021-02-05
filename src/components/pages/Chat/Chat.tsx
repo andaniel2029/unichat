@@ -89,6 +89,11 @@ export interface Message {
   created_at: string;
 }
 
+interface UpdatedRoomData {
+  message: string;
+  users: User[];
+}
+
 export default function Chat({ location }: RouteComponentProps) {
 
   // Styles
@@ -142,14 +147,15 @@ export default function Chat({ location }: RouteComponentProps) {
 
   useEffect(() => {
     if(!socket) return;
-    socket.on('update-users', (roomData: any) => {
-      console.log('here roomData', roomData.message);
-      setUpdateMessage(roomData.message);
+
+    // Event listener responsible for updating the UI when users leave/join
+    socket.on('update-users', (data: UpdatedRoomData) => {
+      setUpdateMessage(data.message);
       setShowUpdateMessage(true);
       setTimeout(() => {
         setShowUpdateMessage(false);
       }, 4000);
-      setUsersInRoom(roomData.users.filter((u:User) => u.user.uid !== currentUser.user.uid));
+      setUsersInRoom(data.users.filter((u:User) => u.user.uid !== currentUser.user.uid));
     });
 
     socket.on('message', (message:Message) => {
