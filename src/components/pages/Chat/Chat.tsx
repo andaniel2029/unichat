@@ -134,7 +134,7 @@ export default function Chat({ location }: RouteComponentProps) {
     if(!socket) return;
 
     // Notifying other clients in room when currentUser joins said room
-    socket.emit('join-room', { room, currentUser }, (users: User[] = []) => {
+    socket.emit('join-room', { room, currentUser }, (users: User[]) => {
       setUsersInRoom(users.filter((u: User) => u.user.uid !== currentUser.user.uid));
     });
 
