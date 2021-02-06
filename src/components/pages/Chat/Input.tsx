@@ -77,7 +77,7 @@ export default function Input(props: Props) {
   const classes = useStyles();
   const [message, setMessage] = useState('');
 
-  console.log('input is rendering');
+  // console.log('input is rendering');
 
   return (
     <div className={classes.root}>
