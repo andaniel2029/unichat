@@ -179,8 +179,6 @@ export default React.memo(function MessageItem(props: Props) {
       socket.emit('update-message', { id: props.message.id, room: props.room, newMessage });
     }
   }, [message, socket, props.message.id, props.room]);
-
-  console.log('message is rendering');
   
   return (
     <div ref={props.lastMessage ? setRef : null} className={classes.root}>
