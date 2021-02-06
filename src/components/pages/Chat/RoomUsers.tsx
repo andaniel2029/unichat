@@ -13,7 +13,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Theme, Typography } from '@material-ui/core';
 
 
-
 const useStyles = makeStyles((theme: Theme) => ({
   self: {
     display: 'flex',
@@ -44,16 +43,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
+// Interfaces
 interface Props {
   users: User[]
 }
 
 export default React.memo(function RoomUsers(props: Props) {
 
+  // Styles
   const classes = useStyles();
+  
+  // Context variables
   const { currentUser } = useAuth();
-
-  console.log('RoomUsers is rendering lol');
 
   return (
     <div>
