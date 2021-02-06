@@ -1,28 +1,29 @@
+// React
 import { useState, useCallback, useEffect } from 'react';
+
+// Components and Interfaces
+import { Message } from './Chat';
+
+// Contexts and Hooks
+import { useSocket } from '../../../contexts/SocketProvider';
+
+// Material UI
 import { Theme, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
-import { Message } from './Chat';
-import { useSocket } from '../../../contexts/SocketProvider';
 
-interface StyleProps {
-  fromMe: boolean;
-  lastMessage: boolean;
-  editing: boolean;
-  index: number;
-}
 
-const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
+
+const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
   root: {
     display: 'flex',
-    justifyContent: props => props.fromMe ? 'space-between' : 'flex-start',
     width: '100%',
     height: 'auto',
-    marginTop: props => props.index === 0 ? '15px' : 'none',
-    // padding: props => props.index !== 0 ? '5px 0px 5px 0px' : '20px 0px 5px 0px',
     padding: '5px 0px 5px 0px',
-    wordWrap: 'break-word',
+    justifyContent: props => props.fromMe ? 'space-between' : 'flex-start',
+    marginTop: props => props.index === 0 ? '15px' : 'none',
     background: props => props.editing ? '#EDEDED' : 'white',
+    wordWrap: 'break-word',
     transition: '0.2s ease-in-out',
     '&:hover': {
       background: '#EDEDED',
@@ -30,6 +31,11 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
         display: 'block'
       }
     },
+  },
+
+  text: {
+    fontFamily: 'halcom',
+    fontSize: '12pt',
   },
 
   editButton: {
@@ -52,11 +58,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     paddingLeft: '10px',
   },
 
-  text: {
-    fontFamily: 'halcom',
-    fontSize: '12pt',
-  },
-  
   messageRoot: {
     display: 'flex',
     flexDirection: 'column',
@@ -110,19 +111,26 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     },
   },
 
-  nameContainer: {
+  senderNameContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
+    width:  '100%',
     flexDirection: props => props.fromMe ? 'row' : 'row-reverse',
     padding: props => props.fromMe ? '0px 5px 0px 5px' : '0px 0px 0px 5px',
-    width:  '100%',
   },
 
-  name: {
+  senderName: {
     color: '#8E8E8E',
   }
-
 }));
+
+// Interfaces
+interface StyleProps {
+  fromMe: boolean;
+  lastMessage: boolean;
+  editing: boolean;
+  index: number;
+}
 
 interface Props {
   message: Message;
@@ -141,22 +149,6 @@ export default function MessageItem(props: Props) {
   const [editedMessage, setEditedMessage] = useState(props.message.body);
   const classes = useStyles({ ...props, editing });
 
-  const setRef = useCallback(node => {
-    if(node) {
-      node.scrollIntoView()
-    }
-  }, []);
-
-  const updateMessage = function(newMessage:string) {
-    setEditing(false);
-    if(newMessage !== message) {
-      setEdited(true);
-      setMessage(newMessage);
-      socket.emit('update-message', { id: props.message.id, room: props.room, newMessage });
-
-    }
-  }
-  
   useEffect(() => {
     socket.on('set-new-message', (update:any) => {
       if(props.message.id === update.id) {
@@ -166,6 +158,25 @@ export default function MessageItem(props: Props) {
     });
   }, [socket]);
 
+  // Scrolling the container to show the latest message (i.e. scroll-to-bottom behavoir)
+  const setRef = useCallback(node => {
+    if(node) {
+      node.scrollIntoView()
+    }
+  }, []);
+
+  // Responsible for handling message edits
+  const updateMessage = useCallback((newMessage: string) =>  {
+    setEditing(false);
+
+    // Preventing emitting to other clients when no changes are made
+    if(newMessage !== message) {
+      setEdited(true);
+      setMessage(newMessage);
+      socket.emit('update-message', { id: props.message.id, room: props.room, newMessage });
+    }
+  }, [message]);
+  
   return (
     <div ref={props.lastMessage ? setRef : null} className={classes.root}>
       {props.fromMe && (
@@ -203,8 +214,8 @@ export default function MessageItem(props: Props) {
             />}
           </div>
         </div>
-        <div className={classes.nameContainer}>
-          <Typography className={`${classes.text} ${classes.name}`}>{props.message.firstName} {props.message.lastName}</Typography>
+        <div className={classes.senderNameContainer}>
+          <Typography className={`${classes.text} ${classes.senderName}`}>{props.message.firstName} {props.message.lastName}</Typography>
         </div>
       </div>
     </div>
