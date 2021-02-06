@@ -1,6 +1,7 @@
 // Components and Interfaces
 import MessageItem from './MessageItem';
 import { Message } from './Chat';
+import TestComponent from './TestComponent';
 
 // Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';
@@ -118,6 +119,7 @@ export default function Feed(props: Props) {
       <div className={classes.typingMessageContainer}>
         <Typography className={`${classes.text} ${classes.typingMessageText}`}>{props.userTypingMessage}</Typography>
       </div>
+      <TestComponent room={props.room}/>
     </div>
   )
 }
