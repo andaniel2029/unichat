@@ -10,11 +10,11 @@ import { useAuth } from '../../../hooks/useAuthContext';
 
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import { Theme, Typography } from '@material-ui/core';
 
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   self: {
     display: 'flex',
     flexDirection: 'column',
