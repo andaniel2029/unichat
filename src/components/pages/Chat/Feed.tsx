@@ -95,6 +95,8 @@ export default function Feed(props: Props) {
   // Context variables
   const { currentUser } = useAuth();
 
+  // console.log('feed is rendering');
+
   return (
     <div className={classes.root}>
       {props.showUpdateMessage && <div className={classes.alertContainer}>
