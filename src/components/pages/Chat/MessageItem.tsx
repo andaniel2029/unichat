@@ -13,7 +13,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 
 
-
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
   root: {
     display: 'flex',
@@ -68,8 +67,8 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 
   messageDataContainer: {
     display: 'flex',
+    justifyContent: 'flex-end',
     flexDirection: props => props.fromMe ? 'row' : 'row-reverse',
-    justifyContent: 'flex-end'
   },
   
   messageTextContainer: {
@@ -175,7 +174,7 @@ export default function MessageItem(props: Props) {
       setMessage(newMessage);
       socket.emit('update-message', { id: props.message.id, room: props.room, newMessage });
     }
-  }, [message]);
+  }, [message, socket, props.message.id, props.room]);
   
   return (
     <div ref={props.lastMessage ? setRef : null} className={classes.root}>
