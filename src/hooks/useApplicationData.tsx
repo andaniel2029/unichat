@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+// Interfaces
 export interface Program {
   id: number | null;
   name: string | null;
@@ -15,15 +16,18 @@ export interface Course {
 
 export default function useApplicationData() {
 
+  // appData variables
   const programs:Program[] = [];
   const courses:Course[] = [];
 
+  // Application-level state
   const [state, setState] = useState({
     programs,
     courses,
     error: false
   });
 
+  // Responsible for retrieving all app-level data from the API
   useEffect(() => {
     Promise.all([
       axios.get<Program[]>('/api/programs'),
@@ -41,7 +45,7 @@ export default function useApplicationData() {
         error: true
       })
     })
-  }, [])
+  }, []);
 
   return {
     state
