@@ -1,12 +1,17 @@
-import { useState } from 'react';
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { useAppData } from '../../../contexts/AppDataProvider';
+// React
+import React from 'react';
+
+// Components and Interfaces
 import CourseItem from '../Home/CourseItem';
 
+// Contexts and Hooks
+import { useAppData } from '../../../contexts/AppDataProvider';
 
+// Material UI
+import { makeStyles } from '@material-ui/core/styles';
+import { Theme, Typography } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
 
   root: {
     display: 'flex',
@@ -35,11 +40,12 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-export default function OtherRooms() {
+export default React.memo(function OtherRooms() {
 
   const classes = useStyles();
   const { courses } = useAppData();
 
+  console.log('OtherRooms is rendering');
 
   return (
     <div className={classes.root}>
@@ -59,4 +65,4 @@ export default function OtherRooms() {
       </div>
     </div>
   )
-}
+});
