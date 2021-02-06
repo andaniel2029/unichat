@@ -10,18 +10,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     height: '15%',
-    // marginBottom: '2rem',
     background: '#F7F7F7',
     zIndex: 1
   },
   
-  text: {
+  headerText: {
     fontSize: '36pt',
     fontFamily: 'montserrat',
     color: '#585858',
     borderBottom: '2px solid #FF5A5F',
   }
-
 }));
 
 interface Props {
@@ -35,7 +33,7 @@ export default function Header(props: Props) {
 
   return (
     <div className={classes.root}>
-      <Typography className={classes.text}>{props.title.toUpperCase()}</Typography>
+      <Typography className={classes.headerText}>{props.title.toUpperCase()}</Typography>
     </div>
   )
 }
