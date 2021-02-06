@@ -1,21 +1,17 @@
+// React
 import { useState, FormEvent } from 'react';
-import { Typography } from '@material-ui/core';
+
+// Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import { User } from './Chat';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    // justifyContent: 'space-between',
     alignItems: 'center',
     height: '8%',
     background: '#F7F7F7',
-    // borderRadius: '0px 0px 20px 0px',
-  },
-
-  form: {
   },
   
   formContainer: {
@@ -38,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  
   iconContainer: {
     display: 'flex',
     justifyContent: 'center',
@@ -64,20 +59,20 @@ const useStyles = makeStyles((theme) => ({
       cursor: "pointer",
     },
   },
-
 }));
 
 interface Props {
-  sendMessage: (event: FormEvent, message:string) => void;
-  userTyping: (key:string) => void;
+  sendMessage: (event: FormEvent, message: string) => void;
+  userTyping: (key: string) => void;
 }
 
 export default function Input(props: Props) {
 
+  // Styles
   const classes = useStyles();
-  const [message, setMessage] = useState('');
 
-  // console.log('input is rendering');
+  // State
+  const [message, setMessage] = useState('');
 
   return (
     <div className={classes.root}>
@@ -96,7 +91,6 @@ export default function Input(props: Props) {
             type="text"
             placeholder="Type a message..."
             onChange={event => setMessage(event.target.value)}
-            onClick={(event) => {}}
             onKeyPress={(event:React.KeyboardEvent<HTMLInputElement>) => {
               props.userTyping(event.key);
             }}
