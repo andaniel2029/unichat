@@ -140,12 +140,16 @@ interface Props {
 }
 
 export default function MessageItem(props: Props) {
-
+  
+  // Context variables
   const { socket } = useSocket();
+  // State
   const [editing, setEditing] = useState(false);
   const [edited, setEdited] = useState(props.message.is_edited);
   const [message, setMessage] = useState(props.message.body);
   const [editedMessage, setEditedMessage] = useState(props.message.body);
+  
+  // Styles
   const classes = useStyles({ ...props, editing });
 
   useEffect(() => {
