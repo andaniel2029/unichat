@@ -1,3 +1,4 @@
+// Material UI
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -24,11 +25,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  title: any
+  title: any;
 }
 
 export default function Header(props: Props) {
 
+  // Styles
   const classes = useStyles();
 
   return (
