@@ -1,5 +1,5 @@
 // React
-import { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 // Components and Interfaces
 import { Message } from './Chat';
@@ -139,7 +139,7 @@ interface Props {
   index: number;
 }
 
-export default function MessageItem(props: Props) {
+export default React.memo(function MessageItem(props: Props) {
   
   // Context variables
   const { socket } = useSocket();
@@ -179,6 +179,8 @@ export default function MessageItem(props: Props) {
       socket.emit('update-message', { id: props.message.id, room: props.room, newMessage });
     }
   }, [message, socket, props.message.id, props.room]);
+
+  console.log('message is rendering');
   
   return (
     <div ref={props.lastMessage ? setRef : null} className={classes.root}>
@@ -223,4 +225,4 @@ export default function MessageItem(props: Props) {
       </div>
     </div>
   )
-}
+});
