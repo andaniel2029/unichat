@@ -12,7 +12,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Theme, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
-
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -32,25 +31,25 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
 
-  title: {
+  titleText: {
     fontFamily: 'montserrat',
     fontSize: '16pt',
     borderBottom: '2px solid #FF5A5F',
   },
-  
 }));
 
 export default React.memo(function OtherRooms() {
 
+  // Styles
   const classes = useStyles();
-  const { courses } = useAppData();
 
-  console.log('OtherRooms is rendering');
+  // Context variables
+  const { courses } = useAppData();
 
   return (
     <div className={classes.root}>
       <div className={classes.titleContainer}>
-        <Typography className={`${classes.title}`}>Other Rooms</Typography>
+        <Typography className={`${classes.titleText}`}>Other Rooms</Typography>
       </div>
       <div className={classes.itemsContainer}>
         {courses.map((course:any) => {
