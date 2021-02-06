@@ -26,19 +26,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontFamily: 'montserrat',
   },
   
-  name: {
+  userName: {
     fontWeight: 700,
     fontSize: '16pt',
     color: '#FF5A5F'
   },
 
-  title: {
+  titleText: {
     padding: '0.5rem 0rem 0.5rem 1rem',
     fontSize: '20pt',
     color: '#ACABAB',
   },
 
-  program: {
+  programName: {
     color: '#ACABAB',
   }
 }));
@@ -58,10 +58,10 @@ export default React.memo(function RoomUsers(props: Props) {
 
   return (
     <div>
-      <Typography className={`${classes.text} ${classes.title}`}>Participants</Typography>
+      <Typography className={`${classes.text} ${classes.titleText}`}>Participants</Typography>
       <div className={classes.self}>
-        <Typography className={`${classes.text} ${classes.name}`}>{currentUser.firstName} {currentUser.lastName}</Typography>
-        <Typography className={`${classes.text} ${classes.program}`}>{currentUser.program} Engineering</Typography>
+        <Typography className={`${classes.text} ${classes.userName}`}>{currentUser.firstName} {currentUser.lastName}</Typography>
+        <Typography className={`${classes.text} ${classes.programName}`}>{currentUser.program} Engineering</Typography>
       </div>
       {props.users.map(user => {
         return (
