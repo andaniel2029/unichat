@@ -1,8 +1,16 @@
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { User } from './Chat';
+// React
+import React from 'react';
+
+// Components and Interfaces
 import RoomUser from './RoomUser';
+import { User } from './Chat';
+
+// Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';
+
+// Material UI
+import { makeStyles } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 
 
 
@@ -40,10 +48,12 @@ interface Props {
   users: User[]
 }
 
-export default function RoomUsers(props: Props) {
+export default React.memo(function RoomUsers(props: Props) {
 
   const classes = useStyles();
   const { currentUser } = useAuth();
+
+  console.log('RoomUsers is rendering lol');
 
   return (
     <div>
@@ -62,4 +72,4 @@ export default function RoomUsers(props: Props) {
       })}
     </div>
   )
-}
+});
