@@ -114,7 +114,8 @@ export default function SignUp() {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  // Responsible for error handling and for communicating with Firebase auth function to create new user
+  // Responsible for handling credentials input by the user
+  // firebaseSignUp communicates with the Firebase database to create the new user 
   const submitCredentials = async function(e: any, newUser: newUser) {
     setFirstName(newUser.firstName);
     e.preventDefault();
