@@ -1,7 +1,11 @@
+// Components
 import ProgramItem from './ProgramItem';
-// import { Program } from '../../../hooks/useApplicationData';
+
+// Material UI
 import Grid from '@material-ui/core/Grid';
 
+
+// Interfaces
 export interface Props {
   programs: any,
   setSelected: (selected: string) => void,
@@ -11,7 +15,7 @@ export interface Props {
 export default function Programs(props: Props) {
 
   return (
-    <Grid container justify="center" spacing={0} style={{ padding: '0px'}}>
+    <Grid container justify="center" spacing={0}>
       {props.programs.map((program:any) => {
         return (
           <ProgramItem 
@@ -19,7 +23,7 @@ export default function Programs(props: Props) {
             program={program}
             selected={props.selected === program.name} 
             setSelected={props.setSelected} 
-            />
+          />
         )
       })}
     </Grid>
