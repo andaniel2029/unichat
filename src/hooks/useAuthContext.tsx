@@ -4,7 +4,12 @@ import axios from 'axios';
 
 // Creating the initial state of the Context
 const AuthContext = React.createContext<AppContextInterface>({
-  currentUser: null, 
+  currentUser: {
+    user: {},
+    firstName: '',
+    lastName: '',
+    program: ''
+  }, 
   getUserByEmail: null,
   firebaseSignUp: null, 
   submitApplicationUser: null,
@@ -25,7 +30,7 @@ export interface User {
 }
 
 interface AppContextInterface {
-  currentUser: any;
+  currentUser: User;
   getUserByEmail: any;
   firebaseSignUp: any;
   submitApplicationUser: any;
