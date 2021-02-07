@@ -138,8 +138,7 @@ export default function SignUp() {
       setError('');
       setProgress(50);
     })
-    .catch((error: any) => {
-      console.log(error.message);
+    .catch((error: Error) => {
       setLoading(false);
       return setError(error.message);
     });
@@ -163,7 +162,7 @@ export default function SignUp() {
         history.push('/');
       }, 1500)
     })
-    .catch((error: any) => {
+    .catch((error: Error) => {
       setTimeout(() => {
         setLoading(false);
         setError('Whoops! Something went wrong on our end. Please try again')
