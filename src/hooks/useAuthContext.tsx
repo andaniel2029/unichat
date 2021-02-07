@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, ReactNode } from 'react';
 import { auth } from '../firebase';
 import axios from 'axios';
 
-// Creating the initial state of the Context
+// Creating the initial values of the Context
 const AuthContext = React.createContext<AppContextInterface>({
   currentUser: {
     user: {},
@@ -53,6 +53,7 @@ export default function AuthProvider({ children }: AuthProps) {
   const [program, setProgram] = useState(localStorage.getItem('program') || '');
   const [error, setError] = useState('');
 
+  // Consumes application users endpoint to check whether a user with entered email exists
   const getUserByEmail = async function(email: string) {
 
     let userExists:boolean = false;
@@ -63,6 +64,8 @@ export default function AuthProvider({ children }: AuthProps) {
     return userExists;
   }
 
+  // Responsible for creating the user in the Firebase database
+  //*Note* Firebase and Postgres user creation to be combined into single step 
   const firebaseSignUp = function(firstName:string, lastName:string, email:string, password:string) {
 
     setFirstName(firstName);
@@ -74,13 +77,15 @@ export default function AuthProvider({ children }: AuthProps) {
     return auth.createUserWithEmailAndPassword(email, password);
   }
 
+  // Responsible for consuming application users endpoint and creating Postgres user entry
+  //*Note* Firebase and Postgres user creation to be combined into single step
   const submitApplicationUser = function(program: string) {
 
     setProgram(program);
     localStorage.setItem('program', program);
     setLoggedIn(true);
     
-    // Consuming our users endpoint
+    // Consuming application users endpoint
     return axios.post('/api/users', {
       currentUser,
       program
@@ -92,6 +97,7 @@ export default function AuthProvider({ children }: AuthProps) {
     });
   }
 
+  // Firebase login function execution
   const login = function(email: string, password: string) {
     return auth.signInWithEmailAndPassword(email, password).then((firebaseObj: any) => {
       const uid = firebaseObj.user.uid;
@@ -111,6 +117,7 @@ export default function AuthProvider({ children }: AuthProps) {
     });
   }
 
+  // Firebase logout function execution
   const logout = function() {
     setLoggedIn(false);
     setFirstName('');
