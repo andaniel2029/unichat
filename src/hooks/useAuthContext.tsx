@@ -6,8 +6,8 @@ import axios from 'axios';
 const AuthContext = React.createContext<AppContextInterface>({
   currentUser: null, 
   getUserByEmail: null,
-  signup: null, 
-  submitUser: null,
+  firebaseSignUp: null, 
+  submitApplicationUser: null,
   login: null,
   logout: null
 });
@@ -20,8 +20,8 @@ export function useAuth() {
 interface AppContextInterface {
   currentUser: any;
   getUserByEmail: any;
-  signup: any;
-  submitUser: any;
+  firebaseSignUp: any;
+  submitApplicationUser: any;
   login: any;
   logout: any;
 }
@@ -51,7 +51,7 @@ export default function AuthProvider({ children }: AuthProps) {
     return userExists;
   }
 
-  const signup = function(firstName:string, lastName:string, email:string, password:string) {
+  const firebaseSignUp = function(firstName:string, lastName:string, email:string, password:string) {
 
     setFirstName(firstName);
     setLastName(lastName);
@@ -62,13 +62,13 @@ export default function AuthProvider({ children }: AuthProps) {
     return auth.createUserWithEmailAndPassword(email, password);
   }
 
-  const submitUser = function(program:string) {
+  const submitApplicationUser = function(program: string) {
 
     setProgram(program);
     localStorage.setItem('program', program);
     setLoggedIn(true);
     
-    // Calling our users API
+    // Consuming our users endpoint
     return axios.post('/api/users', {
       currentUser,
       program
@@ -127,8 +127,8 @@ export default function AuthProvider({ children }: AuthProps) {
   const value:AppContextInterface = {
     currentUser,
     getUserByEmail,
-    signup,
-    submitUser,
+    firebaseSignUp,
+    submitApplicationUser,
     login,
     logout
   }
