@@ -1,10 +1,13 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import { Typography } from '@material-ui/core';
+// Components and Interfaces
 import { Program } from '../../../hooks/useApplicationData';
 
-const useStyles = makeStyles((theme: Theme) => ({
+// Material UI
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 
+
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'center',
@@ -31,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
 
-  typography: {
+  text: {
     fontFamily: 'halcom'
   }
 }));
@@ -45,7 +48,8 @@ interface Props {
 
 export default function ProgramItem(props: Props) {
 
-  const classes = useStyles(props);
+  // Styles
+  const classes = useStyles();
 
   return (
     <Grid 
@@ -55,7 +59,7 @@ export default function ProgramItem(props: Props) {
       style={{background: props.selected ? '#FF5A5F' : 'white',
               color: props.selected ? 'white' : 'black'}}
     >
-      <Typography className={classes.typography}>{props.program.name}</Typography> 
+      <Typography className={classes.text}>{props.program.name}</Typography> 
     </Grid>
   )
 }
