@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface Props {
   programs: any;
   firstName: string;
-  createUser: any;
+  createApplicationUser: (selected: string) => void;
   error: string;
   loading: boolean;
 }
@@ -73,7 +73,7 @@ export default function SelectProgram(props: Props) {
         </Fragment>
       )}
       {props.error && <Typography className={classes.joinError}>{props.error}</Typography>}
-      {!props.loading && <Button variant="contained" type="submit" className={classes.joinButton} onClick={() => props.createUser(selected)}>Join</Button>}
+      {!props.loading && <Button variant="contained" type="submit" className={classes.joinButton} onClick={() => props.createApplicationUser(selected)}>Join</Button>}
     </div>
   );
 }
