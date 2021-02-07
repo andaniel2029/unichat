@@ -3,7 +3,7 @@ import React from 'react';
 
 // Components and Interfaces
 import RoomUser from './RoomUser';
-import { User } from './Chat';
+import { User } from '../../../hooks/useAuthContext';
 
 // Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';

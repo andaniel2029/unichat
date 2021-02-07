@@ -1,5 +1,5 @@
 // Components and Interfaces
-import { User } from './Chat';
+import { User } from '../../../hooks/useAuthContext';
 
 // Material UI
 import { Theme, Typography } from '@material-ui/core';

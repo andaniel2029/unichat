@@ -2,12 +2,13 @@
 import React, { useEffect, useState, useCallback, FormEvent } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-// Components
+// Components and Interfaces
 import Header from './Header';
 import OtherRooms from './OtherRooms';
 import RoomUsers from './RoomUsers';
 import Feed from './Feed';
 import Input from './Input';
+import { User } from '../../../hooks/useAuthContext';
 
 // Contexts and Hooks
 import { useSocket } from '../../../contexts/SocketProvider';
@@ -71,13 +72,6 @@ const useStyles = makeStyles((theme:Theme) => ({
 }));
 
 // Interfaces
-export interface User {
-  user: any,
-  firstName: string;
-  lastName: string;
-  program: string;
-}
-
 export interface Message {
   id: number;
   course_id: number;
