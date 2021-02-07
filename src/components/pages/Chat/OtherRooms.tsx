@@ -46,8 +46,6 @@ export default React.memo(function OtherRooms() {
   // Context variables
   const { courses } = useAppData();
 
-  console.log('OtherRooms is rendering');
-
   return (
     <div className={classes.root}>
       <div className={classes.titleContainer}>
