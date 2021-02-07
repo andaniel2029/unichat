@@ -1,11 +1,18 @@
-import { useEffect, useState } from 'react';
-import { Typography } from '@material-ui/core';
+// React
+import { useEffect } from 'react';
+
+// Components
+import CourseItem from './CourseItem';
+
+// Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';
 import { useAppData } from '../../../contexts/AppDataProvider';
+
+// Material UI
+import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-// import { Course } from '../../../hooks/useApplicationData';
 import Grid from '@material-ui/core/Grid';
-import CourseItem from './CourseItem';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,40 +21,39 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
 
-  container: {
-    width: '80%',
-  },
-
-  text: {
+  chatRoomContainer: {
+    width: '80%'
   },
 
   courseTitle: {
-    fontSize: '20pt',
-    fontFamily: 'montserrat',
-    borderBottom: '2px solid #FF5A5F'
+    fontFamily: 'halcom',
+    fontSize: '26pt',
+    marginBottom: '1.5rem',
+    borderBottom: '2px solid #FF5A5F',
   }
 }));
 
-
 export default function Home() {
 
+  // Styles
   const classes = useStyles();
+
+  // Context variables
   const { currentUser } = useAuth();
   const { courses } = useAppData();
-  // const [room, setRoom] = useState('');
 
+  // Testing token authentication with Firebase - to be implemented
   useEffect(() => {
     currentUser.user.getIdToken().then((token: any) => {
       // console.log(token);
-    })
-    
-  }, [])
+    });
+  }, []);
 
 
   return (
     <div className={classes.root}>
-      <Typography className={`${classes.text} ${classes.courseTitle}`}>Chat Rooms</Typography>
-      <Grid container justify="center" className={classes.container}>
+      <Typography className={`${classes.courseTitle}`}>Chat Rooms</Typography>
+      <Grid container justify="center" className={classes.chatRoomContainer}>
         {courses.map((course:any) => {
           return <CourseItem key={course.id} course={course} home={true}/>
         })}
