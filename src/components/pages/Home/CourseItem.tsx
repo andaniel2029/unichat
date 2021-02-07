@@ -1,8 +1,14 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
-import { Link, RouteComponentProps } from 'react-router-dom';
+// React
+import { Link } from 'react-router-dom';
+
+// Contexts and Hooks
 import { Course } from '../../../hooks/useApplicationData';
 import { useCourse } from '../../../contexts/CourseProvider';
+
+// Material UI
+import { Typography } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+
 
 interface StyleProps {
   home: boolean;
@@ -11,8 +17,7 @@ interface StyleProps {
 }
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
-
-  link: {
+  courseLink: {
     textDecoration: 'none',
     '&:visited': {
       textDecoration: 'none',
@@ -20,7 +25,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     animation: '$fadeInSlide 0.4s ease-in-out',
   },
 
-  course: {
+  courseCard: {
     height: '80px',
     width: '300px',
     transition: '0.2s ease-in-out',
@@ -28,12 +33,12 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     background: props => props.home ? 
     `linear-gradient(${props.course.color_gradient}, ${props.course.color_main})` : (
       props.selectedCourse === props.course.name ? '#FF5A5F': 'white'
-    ),
-    color: props => props.home ? 
-    'white' : (
-      props.selectedCourse === props.course.name ? 'white': '#ACABAB'
-    ),
-    boxShadow: props => props.home ? "1px 4px 5px 2px #EDEDED" : 'none',
+      ),
+      color: props => props.home ? 
+      'white' : (
+        props.selectedCourse === props.course.name ? 'white': '#ACABAB'
+        ),
+        boxShadow: props => props.home ? "1px 4px 5px 2px #EDEDED" : 'none',
     margin: props => props.home ? '1rem' : 'none',
     [theme.breakpoints.up('sm')]: {
       width: props => props.home ? '200px' : '100%',
@@ -45,11 +50,11 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     }
   },
 
-  text: {
+  courseText: {
     fontFamily: 'montserrat',
   },
 
-  name: {
+  courseName: {
     fontWeight: 700,
     fontSize: '16pt',
     maxWidth: '75%',
@@ -66,29 +71,32 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
       transform: 'translateX(0px)',
     }
   }
-
 }));
 
+// Interfaces
 interface Props {
   course: any;
   home: boolean;
 }
 
-export default function CourseItem(props: Props, { location }: RouteComponentProps) {
+export default function CourseItem(props: Props) {
   
+  // Context variables
   const { selectedCourse, setSelectedCourse } = useCourse();
+
+  // Styles
   const classes = useStyles({ ...props, selectedCourse });
 
   return (
     <Link 
       to={`/chat?room=${props.course.name}&room_id=${props.course.id}`} 
-      className={classes.link}
+      className={classes.courseLink}
       onClick={() => setSelectedCourse(props.course.name)}
     >
       <div 
-        className={classes.course}
+        className={classes.courseCard}
       >
-        <Typography className={`${classes.text} ${classes.name}`}>{props.course.name}</Typography>
+        <Typography className={`${classes.courseText} ${classes.courseName}`}>{props.course.name}</Typography>
       </div>
     </Link>
   )
