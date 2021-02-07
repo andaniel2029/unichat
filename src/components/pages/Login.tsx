@@ -1,14 +1,17 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+// React
+import React, { FormEvent, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+
+// Contexts and Hooks
+import { useAuth } from '../../hooks/useAuthContext';
+
+// Material UI
+import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
-import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuthContext';
-import { LocalFloristTwoTone } from '@material-ui/icons';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -18,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center'
   },
 
-  paper: {
+  loginContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
 
-  field: {
+  textField: {
     height: '20px',
     margin: '0.5rem 0rem 0.5rem 0rem',
     fontFamily: 'halcom',
@@ -57,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
 
-  form: {
+  formRoot: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -65,7 +68,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '250px',
   },
 
-  formInner: {
+  formInnerContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -78,19 +81,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
 
-  typography: {
+  text: {
     fontFamily: 'halcom'
   },
 
-  title: {
+  loginTitle: {
     fontSize: '20pt',
     fontWeight: 500,
     color: '#FF5A5F',
   },
 
-  btn: {
+  loginButton: {
     margin: '0.5rem 0rem 1rem 0rem',
-    fontFamily: 'halcom',
     color: 'white',
     background: '#FF5A5F',
     width: '100px',
@@ -101,16 +103,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
 
-  link: {
+  signupLink: {
     color: '#FF5A5F',
     textDecoration: 'none',
     '&:visited': {
-      // color: 'black',
       textDecoration: 'none',
     },
   },
 
-  error: {
+  loginError: {
     fontFamily: 'halcom',
     textAlign: 'center',
     color: '#FF5A5F'
@@ -127,6 +128,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
+// Progress bar at top of component to show successful login
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -148,17 +150,22 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 
 export default function Login() {
 
+  // Styles
   const classes = useStyles();
 
+  // Context variables and hooks
   const { login } = useAuth();
+  const history = useHistory();
+
+  // State
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
 
-  const handleLogin = function(e: any) {
+  // Responsible for validating user credentials
+  const handleLogin = function(e: FormEvent) {
     e.preventDefault();
     setLoading(true);
     login(email, password)
@@ -169,22 +176,22 @@ export default function Login() {
         history.push('/');
       }, 1000);
     })
-    .catch((error: any) => {
+    .catch((error: Error) => {
       setLoading(false);
       return setError('email or password is incorrect');
-    })
+    });
   }
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <Typography className={`${classes.typography} ${classes.title}`}>Login</Typography>
+      <Paper className={classes.loginContainer}>
+        <Typography className={`${classes.text} ${classes.loginTitle}`}>Login</Typography>
         <BorderLinearProgress variant="determinate" value={progress} />
         {loading && <CircularProgress className={classes.spinner} size={100}/>}
-        {!loading && <form className={classes.form} onSubmit={event => handleLogin(event)}>
-          <div className={classes.formInner}>
+        {!loading && <form className={classes.formRoot} onSubmit={event => handleLogin(event)}>
+          <div className={classes.formInnerContainer}>
             <input
-                className={classes.field}
+                className={classes.textField}
                 required
                 type="email"
                 placeholder="email"
@@ -192,21 +199,28 @@ export default function Login() {
                 onChange={event => setEmail(event.target.value)}
               />
             <input
-                className={classes.field}
+                className={classes.textField}
                 required
                 type="password"
                 placeholder="password"
                 value={password}
                 onChange={event => setPassword(event.target.value)}
               />
-              {error && <Typography className={classes.error}>{error}</Typography>}
+              {error && 
+                <Typography className={`${classes.text} ${classes.loginError}`}>{error}</Typography>
+              }
           </div>
-          <Button variant="contained" type="submit" className={classes.btn}>Login</Button>
+          <Button 
+            variant="contained" 
+            type="submit" 
+            className={`${classes.text} ${classes.loginButton}`}>
+            Login
+          </Button>
         </form>}
       </Paper>
       <div className={classes.redirectContainer}>
-        <Typography className={classes.typography}>
-          Don't have an account? <Link to="/signup" className={classes.link}>Sign Up</Link>
+        <Typography className={classes.text}>
+          Don't have an account? <Link to="/signup" className={classes.signupLink}>Sign Up</Link>
         </Typography>
       </div>
     </div>
