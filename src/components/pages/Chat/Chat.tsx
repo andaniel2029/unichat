@@ -121,7 +121,7 @@ export default function Chat({ location }: RouteComponentProps) {
   
   // Retrieving messages in current conversation from API
   useEffect(() => {
-    axios.get<AxiosResponse>(`/api/messages/${room_id}`).then((res:AxiosResponse) => {
+    axios.get<AxiosResponse>(`/api/messages/${room_id}`).then((res: AxiosResponse) => {
       setMessages(res.data);
     });
 
@@ -166,6 +166,7 @@ export default function Chat({ location }: RouteComponentProps) {
       setUsersInRoom(data.users.filter((u:User) => u.user.uid !== currentUser.user.uid));
     });
 
+    // Event listener responsible for updating message state on new messages
     socket.on('message', (message:Message) => {
       setMessages((prev) => [...prev, message]);
     });
@@ -190,8 +191,6 @@ export default function Chat({ location }: RouteComponentProps) {
 
     // Event listener for typing events to update UI with user who is typing
     socket.on('show-typing', (user: typingUser) => {
-
-      // Timeout used to clear typingMessage after 2 seconds of no typing
       clearTimeout(timeout);
 
       // user.enter is a boolean representing if the enter key was pressed
