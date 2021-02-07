@@ -1,13 +1,13 @@
-import { useState, useMemo } from 'react';
+// React
+import { useState } from 'react';
+
+// Material UI
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-
-
 
 const useStyles = makeStyles((theme: Theme) => ({
-
-  form: {
+  root: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -15,14 +15,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '400px',
   },
 
-  formInner: {
+  formInnerContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
 
-
-  field: {
+  textField: {
     height: '20px',
     margin: '0.5rem 0rem 0.5rem 0rem',
     fontFamily: 'halcom',
@@ -47,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
 
-  btn: {
+  nextButton: {
     margin: '0.5rem 0rem 1rem 0rem',
     fontFamily: 'halcom',
     color: 'white',
@@ -60,13 +59,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
 
-  error: {
+  credentialsError: {
     fontFamily: 'halcom',
     textAlign: 'center',
     color: '#FF5A5F'
   }
 }));
 
+// Interfaces
 interface Props {
   submitCredentials: any,
   error: string
@@ -74,8 +74,11 @@ interface Props {
 
 export default function UserCredentials (props: Props) {
 
+  // Styles
   const classes = useStyles();
-  const [newUser, setNewUser] = useState({
+
+  // State
+  const [newUserCredentials, setNewUserCredentials] = useState({
     email: '',
     firstName: '',
     lastName: '',
@@ -84,76 +87,76 @@ export default function UserCredentials (props: Props) {
   });
 
   return (
-    <form className={classes.form} onSubmit={event => props.submitCredentials(event, newUser)}>
-      <div className={classes.formInner}>
+    <form className={classes.root} onSubmit={event => props.submitCredentials(event, newUserCredentials)}>
+      <div className={classes.formInnerContainer}>
         <input
-            className={classes.field}
+            className={classes.textField}
             required
             type="text"
             placeholder="first name"
-            value={newUser.firstName}
+            value={newUserCredentials.firstName}
             onChange={event => {
-              setNewUser({
-                ...newUser,
+              setNewUserCredentials({
+                ...newUserCredentials,
                 firstName: event.target.value
               })
             }}
           />
         <input
-            className={classes.field}
+            className={classes.textField}
             required
             type="text"
             placeholder="last name"
-            value={newUser.lastName}
+            value={newUserCredentials.lastName}
             onChange={event => {
-              setNewUser({
-                ...newUser,
+              setNewUserCredentials({
+                ...newUserCredentials,
                 lastName: event.target.value
               })
             }}
           />
         <input
-            className={classes.field}
+            className={classes.textField}
             required
             type="text"
             placeholder="email"
-            value={newUser.email}
+            value={newUserCredentials.email}
             onChange={event => {
-              setNewUser({
-                ...newUser,
+              setNewUserCredentials({
+                ...newUserCredentials,
                 email: event.target.value
               })
             }}
           />
         <input
-            className={classes.field}
+            className={classes.textField}
             required
             type="password"
             placeholder="password"
-            value={newUser.password}
+            value={newUserCredentials.password}
             onChange={event => {
-              setNewUser({
-                ...newUser,
+              setNewUserCredentials({
+                ...newUserCredentials,
                 password: event.target.value
               })
             }}
           />
         <input
-            className={classes.field}
+            className={classes.textField}
             required
             type="password"
             placeholder="confirm password"
-            value={newUser.passwordConfirm}
+            value={newUserCredentials.passwordConfirm}
             onChange={event => {
-              setNewUser({
-                ...newUser,
+              setNewUserCredentials({
+                ...newUserCredentials,
                 passwordConfirm: event.target.value
               })
             }}
           />
-          {props.error && <Typography className={classes.error}>{props.error}</Typography>}
+          {props.error && <Typography className={classes.credentialsError}>{props.error}</Typography>}
       </div>
-      <Button variant="contained" type="submit" className={classes.btn}>Next</Button>
+      <Button variant="contained" type="submit" className={classes.nextButton}>Next</Button>
     </form>
   );
 }
