@@ -49,5 +49,4 @@ export function AppDataProvider({ children }) {
       {children}
     </AppDataContext.Provider>
   )
-
 }
