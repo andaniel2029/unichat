@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontFamily: 'halcom'
   },
 
-  formContainer: {
+  signupContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
 
-  formTitle: {
+  signupTitle: {
     fontSize: '20pt',
     fontWeight: 500,
     color: '#FF5A5F',
@@ -173,8 +173,8 @@ export default function SignUp() {
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.formContainer}>
-        <Typography className={`${classes.text} ${classes.formTitle}`}>Create an Account</Typography>
+      <Paper className={classes.signupContainer}>
+        <Typography className={`${classes.text} ${classes.signupTitle}`}>Create an Account</Typography>
         <BorderLinearProgress variant="determinate" value={progress} />
         {!haveCredentials && !loading && 
           (<UserCredentials 
