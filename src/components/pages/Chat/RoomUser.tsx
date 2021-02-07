@@ -1,11 +1,11 @@
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+// Components and Interfaces
 import { User } from './Chat';
 
+// Material UI
+import { Theme, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-
-  
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -24,20 +24,19 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'montserrat'
   },
   
-  name: {
+  userName: {
     fontWeight: 700,
     fontSize: '16pt',
     color: '#FF5A5F'
   },
   
-  program: {
+  programName: {
     color: '#ACABAB',
     transition: '0.2s ease-in-out',
     '&:hover': {
       color: 'white',
     }
   },
-  
   
   '@keyframes fadeInSlide': {
     '0%': {
@@ -48,22 +47,23 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
       transform: 'translateX(0px)',
     }
-  },
-  
+  }
 }));
 
+// Interfaces
 interface Props {
   user: User
 }
 
 export default function RoomUser(props: Props) {
 
+  // Styles
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Typography className={`${classes.text} ${classes.name}`}>{props.user.firstName} {props.user.lastName}</Typography>
-      <Typography className={`${classes.text} ${classes.program}`}>{props.user.program} Engineering</Typography>
+      <Typography className={`${classes.text} ${classes.userName}`}>{props.user.firstName} {props.user.lastName}</Typography>
+      <Typography className={`${classes.text} ${classes.programName}`}>{props.user.program} Engineering</Typography>
     </div>
   )
 }

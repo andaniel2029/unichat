@@ -9,12 +9,12 @@ import { useAuth } from '../../../hooks/useAuthContext';
 import { useAppData } from '../../../contexts/AppDataProvider';
 
 // Material UI
-import { Typography } from '@material-ui/core';
+import { Theme, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
