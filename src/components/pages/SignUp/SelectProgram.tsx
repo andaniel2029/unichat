@@ -1,14 +1,17 @@
+// React
 import { Fragment, useState } from 'react';
+
+// Components and Interfaces
+import Programs from './Programs';
+
+// Material UI
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import Programs from './Programs';
-// import { Program } from '../../../hooks/useApplicationData';
-import { makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
-
-  form: {
+  root: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -23,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
 
-  btn: {
+  joinButton: {
     margin: '0.5rem 0rem 1rem 0rem',
     fontFamily: 'halcom',
     color: 'white',
@@ -36,14 +39,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
 
-  error: {
+  joinError: {
     fontFamily: 'halcom',
     textAlign: 'center',
     color: '#FF5A5F'
   },
 }));
 
-
+// Interfaces
 interface Props {
   programs: any;
   firstName: string;
@@ -52,14 +55,13 @@ interface Props {
   loading: boolean;
 }
 
-
 export default function SelectProgram(props: Props) {
 
   const classes = useStyles();
   const [selected, setSelected] = useState('');
   
   return (
-    <div className={classes.form}>
+    <div className={classes.root}>
       {!props.loading && (
         <Fragment>
           <Typography className={classes.programTitle}>Welcome, {props.firstName}! What program are you in?</Typography>
@@ -70,9 +72,8 @@ export default function SelectProgram(props: Props) {
           />
         </Fragment>
       )}
-      {props.error && <Typography className={classes.error}>{props.error}</Typography>}
-      {!props.loading && <Button variant="contained" type="submit" className={classes.btn} onClick={() => props.createUser(selected)}>Join</Button>}
+      {props.error && <Typography className={classes.joinError}>{props.error}</Typography>}
+      {!props.loading && <Button variant="contained" type="submit" className={classes.joinButton} onClick={() => props.createUser(selected)}>Join</Button>}
     </div>
   );
 }
-
