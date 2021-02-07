@@ -103,7 +103,7 @@ export default function SignUp() {
   const classes = useStyles();
 
   // Context variables
-  const { signup, submitUser } = useAuth();
+  const { firebaseSignUp, submitApplicationUser } = useAuth();
   const { programs } = useAppData();
 
   // State
@@ -130,7 +130,7 @@ export default function SignUp() {
     setLoading(true);
 
     // Creating new Firebase user
-    signup(newUser.firstName, newUser.lastName, newUser.email, newUser.password)
+    firebaseSignUp(newUser.firstName, newUser.lastName, newUser.email, newUser.password)
     .then(() => {
       setLoading(false);
       setHaveCredentials(true);
@@ -154,7 +154,7 @@ export default function SignUp() {
     setError('');
     
     // submitUser creates application user (i.e. Postgres)
-    submitUser(selected)
+    submitApplicationUser(selected)
     .then((data: any) => {
       setProgress(100);
       setTimeout(() => {
