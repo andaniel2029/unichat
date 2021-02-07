@@ -17,6 +17,13 @@ export function useAuth() {
 }
 
 // Interfaces
+export interface User {
+  user: any;
+  firstName: string;
+  lastName: string;
+  program: string;
+}
+
 interface AppContextInterface {
   currentUser: any;
   getUserByEmail: any;
