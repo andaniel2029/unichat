@@ -1,3 +1,6 @@
+// Contexts and Hooks
+import { useCourse } from '../../../contexts/CourseProvider';
+
 // Material UI
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,6 +33,9 @@ export default function Header(props: Props) {
 
   // Styles
   const classes = useStyles();
+
+  // Will be modifying CourseProvider to use this object here instead of props
+  const { selectedCourse } = useCourse();
 
   return (
     <div className={classes.root}>
