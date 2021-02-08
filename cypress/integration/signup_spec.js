@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe("Sign up new user", () => {
 
   beforeEach(() => {
