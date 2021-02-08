@@ -1,11 +1,15 @@
+// React
 import React, { useContext, useEffect, useState } from 'react';
-import io from 'socket.io-client';
+
+// Contexts
 import { useAuth } from '../hooks/useAuthContext';
+
+// Socket IO
+import io from 'socket.io-client';
 
 const SocketContext = React.createContext();
 
 const ENDPOINT = process.env.REACT_APP_SOCKET_URL;
-console.log(ENDPOINT);
 
 export function useSocket() {
   return useContext(SocketContext);
