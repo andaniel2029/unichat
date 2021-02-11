@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 // Components
 import CourseItem from './CourseItem';
+import TutorItem from './TutorItem';
 
 // Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';
@@ -62,7 +63,28 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-const tutors = [1, 2, 3, 4];
+// Temporary mock tutor data just used for initial rendering and styling
+const tutors:Tutor[] = [
+  {
+    name: 'Shadee Merhi',
+    courses: ['ENGG 233', 'ENGG 201', 'MATH 211']
+  },
+  {
+    name: 'Joshua Arpon',
+    courses: ['ENGG 233', 'ENGG 201', 'MATH 211']
+  },
+  {
+    name: 'Sarah Douglas',
+    courses: ['ENGG 233', 'ENGG 201', 'MATH 211']
+  },
+];
+
+
+// Temporary interface to match above mock data
+export interface Tutor {
+  name: string;
+  courses: string[];
+}
 
 export default function Home() {
 
@@ -74,7 +96,7 @@ export default function Home() {
   const { courses } = useAppData();
 
   // State
-  const [availableTutors, setAvailableTutors] = useState([]);
+  const [availableTutors, setAvailableTutors] = useState<Tutor[]>(tutors);
 
   // Testing token authentication with Firebase - to be implemented
   useEffect(() => {
@@ -89,11 +111,16 @@ export default function Home() {
       <Grid container justify="center" className={classes.tutorRoomsContainer}>
         <Typography className={`${classes.text} ${classes.sectionTitle}`}>Available Tutors</Typography>
         {availableTutors.length === 0 && (
-        <div className={classes.noTutorsContainer}>
-          <Typography className={`${classes.text} ${classes.noTutorsText}`}>There are no available tutors right now!</Typography>
-          <SentimentDissatisfiedIcon className={classes.noTutorsIcon}/>
-        </div>
+          <div className={classes.noTutorsContainer}>
+            <Typography className={`${classes.text} ${classes.noTutorsText}`}>There are no available tutors right now!</Typography>
+            <SentimentDissatisfiedIcon className={classes.noTutorsIcon}/>
+          </div>
         )}
+        <Grid container justify="center">
+          {tutors.map((tutor: Tutor) => {
+            return <TutorItem tutor={tutor}/>
+          })}
+        </Grid>
       </Grid>
       <Grid container justify="center" className={classes.chatRoomContainer}>
         <Typography className={`${classes.text} ${classes.sectionTitle}`}>Chat Rooms</Typography>
