@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     animation: '$fadeInSlide 0.4s ease-in-out',
     '&:hover': {
       background: '#C7C7C7',
-      '& $program': {
+      '& $programName': {
         color: 'white'
       }
     },
@@ -59,6 +59,7 @@ export default function RoomUser(props: Props) {
 
   // Styles
   const classes = useStyles();
+  console.log('room user', props.user);
 
   return (
     <div className={classes.root}>
