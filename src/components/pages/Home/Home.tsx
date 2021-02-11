@@ -14,6 +14,7 @@ import { Theme, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -60,7 +61,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: '26pt',
     marginBottom: '1.5rem',
     borderBottom: '2px solid #FF5A5F',
-  }
+  },
+
+  loadingSpinner: {
+    // marginTop: '4rem',
+    // fontSize: '60pt',
+    color: '#FF5A5F'
+  },
+
 }));
 
 // Temporary mock tutor data just used for initial rendering and styling
@@ -96,7 +104,8 @@ export default function Home() {
   const { courses } = useAppData();
 
   // State
-  const [availableTutors, setAvailableTutors] = useState<Tutor[]>(tutors);
+  const [availableTutors, setAvailableTutors] = useState<Tutor[]>([]);
+  const [loadingTutors, setLoadingTutors] = useState(true);
 
   // Testing token authentication with Firebase - to be implemented
   useEffect(() => {
@@ -105,22 +114,30 @@ export default function Home() {
     });
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setAvailableTutors(tutors);
+      setLoadingTutors(false);
+    }, 2000)
+  }, []);
+
 
   return (
     <div className={classes.root}>
       <Grid container justify="center" className={classes.tutorRoomsContainer}>
         <Typography className={`${classes.text} ${classes.sectionTitle}`}>Available Tutors</Typography>
-        {availableTutors.length === 0 && (
+        {loadingTutors && <CircularProgress className={classes.loadingSpinner}/>}
+        {availableTutors.length === 0 && !loadingTutors && (
           <div className={classes.noTutorsContainer}>
             <Typography className={`${classes.text} ${classes.noTutorsText}`}>There are no available tutors right now!</Typography>
             <SentimentDissatisfiedIcon className={classes.noTutorsIcon}/>
           </div>
         )}
-        <Grid container justify="center">
-          {tutors.map((tutor: Tutor) => {
+        {!loadingTutors && <Grid container justify="center">
+          {availableTutors.map((tutor: Tutor) => {
             return <TutorItem tutor={tutor}/>
           })}
-        </Grid>
+        </Grid>}
       </Grid>
       <Grid container justify="center" className={classes.chatRoomContainer}>
         <Typography className={`${classes.text} ${classes.sectionTitle}`}>Chat Rooms</Typography>
