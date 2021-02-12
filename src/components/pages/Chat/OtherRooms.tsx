@@ -3,6 +3,7 @@ import React from 'react';
 
 // Components and Interfaces
 import CourseItem from '../Home/CourseItem';
+import { CourseRoom } from '../../../hooks/useApplicationData';
 
 // Contexts and Hooks
 import { useAppData } from '../../../contexts/AppDataProvider';
@@ -44,7 +45,7 @@ export default React.memo(function OtherRooms() {
   const classes = useStyles();
 
   // Context variables
-  const { courses } = useAppData();
+  const { rooms } = useAppData();
 
   return (
     <div className={classes.root}>
@@ -52,11 +53,11 @@ export default React.memo(function OtherRooms() {
         <Typography className={`${classes.titleText}`}>Other Rooms</Typography>
       </div>
       <div className={classes.itemsContainer}>
-        {courses.map((course:any) => {
+        {rooms.map((room:CourseRoom) => {
           return (
             <CourseItem 
-              key={course.id} 
-              course={course}
+              key={room.id} 
+              room={room}
               home={false}
             />
           )
