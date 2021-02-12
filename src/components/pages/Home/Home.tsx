@@ -1,8 +1,9 @@
 // React
 import { useEffect } from 'react';
 
-// Components
+// Components and Interfaces
 import CourseItem from './CourseItem';
+import { CourseRoom } from '../../../hooks/useApplicationData';
 
 // Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';
@@ -40,7 +41,7 @@ export default function Home() {
 
   // Context variables
   const { currentUser } = useAuth();
-  const { courses } = useAppData();
+  const { rooms } = useAppData();
 
   // Testing token authentication with Firebase - to be implemented
   useEffect(() => {
@@ -54,8 +55,8 @@ export default function Home() {
     <div className={classes.root}>
       <Typography className={`${classes.courseTitle}`}>Chat Rooms</Typography>
       <Grid container justify="center" className={classes.chatRoomContainer}>
-        {courses.map((course:any) => {
-          return <CourseItem key={course.id} course={course} home={true}/>
+        {rooms.map((room:CourseRoom) => {
+          return <CourseItem key={room.id} room={room} home={true}/>
         })}
       </Grid>
     </div>

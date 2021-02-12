@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 
 // Contexts and Hooks
-import { Course } from '../../../hooks/useApplicationData';
+import { CourseRoom } from '../../../hooks/useApplicationData';
 import { useCourse } from '../../../contexts/CourseProvider';
 
 // Material UI
@@ -12,7 +12,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 interface StyleProps {
   home: boolean;
-  course: Course;
+  room: CourseRoom;
   selectedCourse: string;
 }
 
@@ -31,12 +31,12 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     transition: '0.2s ease-in-out',
     borderRadius: props => props.home ?  '20px' : 'none',
     background: props => props.home ? 
-    `linear-gradient(${props.course.color_gradient}, ${props.course.color_main})` : (
-      props.selectedCourse === props.course.name ? '#FF5A5F': 'white'
+    `linear-gradient(${props.room.color_gradient}, ${props.room.color_main})` : (
+      props.selectedCourse === props.room.name ? '#FF5A5F': 'white'
       ),
       color: props => props.home ? 
       'white' : (
-        props.selectedCourse === props.course.name ? 'white': '#ACABAB'
+        props.selectedCourse === props.room.name ? 'white': '#ACABAB'
         ),
         boxShadow: props => props.home ? "1px 4px 5px 2px #EDEDED" : 'none',
     margin: props => props.home ? '1rem' : 'none',
@@ -75,7 +75,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 
 // Interfaces
 interface Props {
-  course: any;
+  room: any;
   home: boolean;
 }
 
@@ -89,14 +89,14 @@ export default function CourseItem(props: Props) {
 
   return (
     <Link 
-      to={`/chat?room=${props.course.name}&room_id=${props.course.id}`} 
+      to={`/chat?room=${props.room.name}&room_id=${props.room.id}`} 
       className={classes.courseLink}
-      onClick={() => setSelectedCourse(props.course.name)}
+      onClick={() => setSelectedCourse(props.room.name)}
     >
       <div 
         className={classes.courseCard}
       >
-        <Typography className={`${classes.courseText} ${classes.courseName}`}>{props.course.name}</Typography>
+        <Typography className={`${classes.courseText} ${classes.courseName}`}>{props.room.name}</Typography>
       </div>
     </Link>
   )
