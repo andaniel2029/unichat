@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     boxShadow: '1px 4px 5px 2px #EDEDED',
     padding: '10px',
     margin: '1rem',
+    animation: '$fadeInSlide 0.4s ease-in-out',
   },
 
   text: {
@@ -30,6 +31,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     marginTop: '1rem',
+  },
+
+  '@keyframes fadeInSlide': {
+    '0%': {
+      opacity: 0,
+      transform: 'translateX(-20px)',
+    },
+    '100%': {
+      opacity: 1,
+      transform: 'translateX(0px)',
+    }
   }
 
 }));
@@ -46,7 +58,7 @@ export default function TutorItem(props: Props) {
       <Typography className={classes.text}>{props.tutor.name}</Typography>
       <div className={classes.coursesContainer}>
         {props.tutor.courses.map((course: string) => {
-          return <TutorCourseItem course={course}/>
+          return <TutorCourseItem key={course} course={course}/>
         })}
       </div>   
     </div>
