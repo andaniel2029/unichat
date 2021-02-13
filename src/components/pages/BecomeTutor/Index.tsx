@@ -14,7 +14,7 @@ export default function BecomeTutor() {
       console.log(res.data);
     })
     .catch((error:AxiosError) => setError(true));
-  })
+  }, []);
 
   return (
     <div>
