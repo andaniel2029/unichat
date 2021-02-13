@@ -136,7 +136,7 @@ export default function Home() {
         )}
         {!loadingTutors && <Grid container justify="center">
           {availableTutors.map((tutor: Tutor) => {
-            return <TutorItem tutor={tutor}/>
+            return <TutorItem key={tutor.name} tutor={tutor}/>
           })}
         </Grid>}
       </Grid>
