@@ -3,11 +3,7 @@ import { useState, useEffect } from 'react';
 
 // Components and Interfaces
 import CourseItem from './CourseItem';
-<<<<<<< HEAD
 import TutorItem from './TutorItem';
-=======
-import { CourseRoom } from '../../../hooks/useApplicationData';
->>>>>>> master
 
 // Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';
@@ -144,18 +140,12 @@ export default function Home() {
         </Grid>}
       </Grid>
       <Grid container justify="center" className={classes.chatRoomContainer}>
-<<<<<<< HEAD
         <Typography className={`${classes.text} ${classes.sectionTitle}`}>Chat Rooms</Typography>
         <Grid container justify="center">
-          {courses.map((course:any) => {
-            return <CourseItem key={course.id} course={course} home={true}/>
+          {rooms.map((course:any) => {
+            return <CourseItem key={course.id} room={course} home={true}/>
           })}
         </Grid>
-=======
-        {rooms.map((room:CourseRoom) => {
-          return <CourseItem key={room.id} room={room} home={true}/>
-        })}
->>>>>>> master
       </Grid>
 
     </div>
