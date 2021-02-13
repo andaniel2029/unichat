@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme:Theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    // border: '1px solid red'
   },
 
   text: {
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme:Theme) => ({
   button: {
     color: 'white',
     background: '#FF5A5F',
-    width: '100px',
+    minWidth: '100px',
     margin: '0rem 0.5rem 0rem 0.5rem',
     borderRadius: '20px',
     boxShadow: 'none',
@@ -114,7 +115,10 @@ export default function Nav() {
         {currentUser.user && 
           <Fragment>
             <Typography className={classes.name}>{currentUser.firstName}</Typography>
-            <Button variant="contained" className={classes.button} onClick={handleLogout}>Logout</Button> 
+            <Link to='/becomeatutor' className={classes.link}>
+              <Button variant="contained" className={classes.button}>Become A Tutor</Button>
+            </Link>
+            <Button variant="contained" className={classes.button} onClick={handleLogout}>Logout</Button>
           </Fragment>
         }
       </div>
