@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 
 // Contexts and Hooks
-// import { CourseRoom } from '../../../hooks/useApplicationData';
+import { CourseRoom } from '../../../hooks/useApplicationData';
 import { useCourse } from '../../../contexts/CourseProvider';
 
 // Material UI
@@ -12,7 +12,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 interface StyleProps {
   home: boolean;
-  room: any;
+  room: CourseRoom;
   selectedCourse: string;
 }
 
