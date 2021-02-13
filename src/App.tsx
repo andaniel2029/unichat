@@ -9,6 +9,7 @@ import Home from './components/pages/Home/Home';
 import Login from './components/pages/Login';
 import PrivateRoute from './components/PrivateRoute';
 import Chat from './components/pages/Chat/Chat';
+import BecomeTutor from './components/pages/BecomeTutor/Index';
 
 // Contexts and Hooks
 import AuthProvider from './hooks/useAuthContext';
@@ -44,6 +45,7 @@ export default function App() {
                   <Switch>
                     <Route path="/signup" component={SignUp} />
                     <Route path="/login" component={Login} />
+                    <PrivateRoute path='/becomeatutor' component={BecomeTutor}/>
                     <CourseProvider>
                       <PrivateRoute exact path="/" component={Home} />
                       <PrivateRoute path="/chat" component={Chat}/>

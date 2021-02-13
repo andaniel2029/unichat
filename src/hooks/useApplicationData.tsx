@@ -7,7 +7,7 @@ export interface Program {
   name: string | null;
 }
 
-export interface Course {
+export interface CourseRoom {
   id: number;
   name: string;
   color_main: string;
@@ -18,7 +18,7 @@ export default function useApplicationData() {
 
   // appData variables
   const programs:Program[] = [];
-  const courses:Course[] = [];
+  const courses:CourseRoom[] = [];
 
   // Application-level state
   const [state, setState] = useState({
@@ -31,7 +31,7 @@ export default function useApplicationData() {
   useEffect(() => {
     Promise.all([
       axios.get<Program[]>('/api/programs'),
-      axios.get<Course[]>('/api/courses'),
+      axios.get<CourseRoom[]>('/api/courses'),
     ]).then((all) => {
       setState({
         ...state,

@@ -15,7 +15,7 @@ export function AppDataProvider({ children }) {
   // State - will likely implement useReducer here when tutor functionality is implemented
   const [state, setState] = useState({
     programs: [],
-    courses: [],
+    rooms: [],
     error: false
   });
 
@@ -23,12 +23,12 @@ export function AppDataProvider({ children }) {
   useEffect(() => {
     Promise.all([
       axios.get('/api/programs'),
-      axios.get('/api/courses'),
+      axios.get('/api/courses/rooms'),
     ]).then((all) => {
       setState({
         ...state,
         programs: all[0].data,
-        courses: all[1].data
+        rooms: all[1].data
       })
     })
     .catch(error => {
@@ -41,7 +41,8 @@ export function AppDataProvider({ children }) {
 
   const value = {
     programs: state.programs,
-    courses: state.courses
+    rooms: state.rooms,
+    error: state.error
   }
 
   return (
