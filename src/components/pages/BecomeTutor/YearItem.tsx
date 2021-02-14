@@ -49,7 +49,9 @@ export default function YearItem(props: Props) {
 
   return (
     <Paper className={classes.root} onClick={() => props.setSelectedYear(props.year)}>
-      <Typography className={classes.text}>{props.year}</Typography>
+      <Typography className={classes.text}>
+        {props.year.split('_').map(year => year.charAt(0).toUpperCase() + year.slice(1)).join(' ')}
+      </Typography>
     </Paper>
   )
 }
