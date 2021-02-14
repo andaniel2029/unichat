@@ -16,6 +16,7 @@ export function AppDataProvider({ children }) {
   const [state, setState] = useState({
     programs: [],
     rooms: [],
+    tutorCourses: {},
     error: false
   });
 
@@ -24,11 +25,13 @@ export function AppDataProvider({ children }) {
     Promise.all([
       axios.get('/api/programs'),
       axios.get('/api/courses/rooms'),
+      axios.get('/api/courses/tutorcourses')
     ]).then((all) => {
       setState({
         ...state,
         programs: all[0].data,
-        rooms: all[1].data
+        rooms: all[1].data,
+        tutorCourses: all[2].data
       })
     })
     .catch(error => {
@@ -42,6 +45,7 @@ export function AppDataProvider({ children }) {
   const value = {
     programs: state.programs,
     rooms: state.rooms,
+    tutorCourses: state.tutorCourses,
     error: state.error
   }
 
