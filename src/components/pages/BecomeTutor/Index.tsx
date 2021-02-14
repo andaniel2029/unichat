@@ -8,15 +8,16 @@ import { useAuth } from '../../../hooks/useAuthContext';
 
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Theme } from '@material-ui/core';
+import { Typography, Theme, Paper } from '@material-ui/core';
 
 // Other libraries
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    // display: 'flex',
-    // flexDirection: 'column',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   
   headerContainer: {
@@ -27,11 +28,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '160px',
     width: '100%',
     animation: '$fadeInSlide 0.4s ease-in-out',
-    background: '#F7F7F7'
+    background: '#F7F7F7',
+    marginBottom: '2rem'
   },
 
   text: {
-    fontFamily: 'halcom'
+    fontFamily: 'halcom',
+    fontSize: '13pt',
+    margin: '0.5rem 0rem 0.5rem 0rem'
   },
 
   thankYouHeaderText: {
@@ -41,8 +45,23 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: '1.5rem'
   },
 
-  tutorMessageText: {
-    fontSize: '13pt',
+  courseSelectorContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '1rem 0rem 1rem',
+    width: '320px',
+    height: '300px',
+    borderRadius: '20px',
+    boxShadow: "1px 4px 5px 2px #EDEDED",
+    [theme.breakpoints.up('sm')]: {
+      width: '650px'
+    }
+  },
+
+  courseSelectorHeaderText: {
+    fontSize: '14pt',
+    borderBottom: '2px solid #FF5A5F',
   },
 
   '@keyframes fadeInSlide': {
@@ -82,11 +101,15 @@ export default function BecomeTutor() {
         <Typography className={`${classes.text} ${classes.thankYouHeaderText}`}>
           Thank you for your interest in becoming a Tutor, {currentUser.firstName}!
         </Typography>
-        <Typography className={`${classes.text} ${classes.tutorMessageText}`}>
+        <Typography className={classes.text}>
           It’s our amazing tutors that make this platform so valuable to students, so we really appreciate it.
         </Typography>
       </div>
       {error && <Typography>There was an error</Typography>}
+      <Paper className={classes.courseSelectorContainer}>
+        <Typography className={`${classes.text} ${classes.courseSelectorHeaderText}`}>What courses would you like to assist with?</Typography>
+        <Typography className={classes.text}>Select a year to view available courses</Typography>
+      </Paper>
     </div>
   )
 }
