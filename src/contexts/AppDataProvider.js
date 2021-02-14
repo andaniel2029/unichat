@@ -16,7 +16,6 @@ export function AppDataProvider({ children }) {
   const [state, setState] = useState({
     programs: [],
     rooms: [],
-    tutorCourses: {},
     error: false
   });
 
@@ -30,8 +29,7 @@ export function AppDataProvider({ children }) {
       setState({
         ...state,
         programs: all[0].data,
-        rooms: all[1].data,
-        tutorCourses: all[2].data
+        rooms: all[1].data
       })
     })
     .catch(error => {
@@ -45,7 +43,6 @@ export function AppDataProvider({ children }) {
   const value = {
     programs: state.programs,
     rooms: state.rooms,
-    tutorCourses: state.tutorCourses,
     error: state.error
   }
 
