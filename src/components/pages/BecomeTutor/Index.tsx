@@ -39,14 +39,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   text: {
     fontFamily: 'halcom',
     fontSize: '13pt',
-    margin: '0.5rem 0rem 0.5rem 0rem'
+    margin: '0.5rem 0rem 0.5rem 0rem',
+    textAlign: 'center',
   },
 
   thankYouHeaderText: {
     fontSize: '20pt',
     borderBottom: '2px solid #FF5A5F',
     color: '#454545',
-    marginBottom: '1.5rem'
+    marginBottom: '1.5rem',
   },
 
   courseSelectorContainer: {
@@ -70,6 +71,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 
   toggleYearContainer: {
     display: 'flex'
+  },
+
+  formContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    animation: '$fadeInSlide 0.4s ease-in-out',
   },
 
   loadingSpinner: {
@@ -131,7 +139,7 @@ export default function BecomeTutor() {
       {error && <Typography>There was an error</Typography>}
       <Paper className={classes.courseSelectorContainer}>
         {!loading ? (
-          <Fragment>
+          <div className={classes.formContainer}>
             <Typography className={`${classes.text} ${classes.courseSelectorHeaderText}`}>What courses would you like to assist with?</Typography>
             <Typography className={classes.text}>Select a year to view available courses</Typography>
             <div className={classes.toggleYearContainer}>
@@ -145,7 +153,7 @@ export default function BecomeTutor() {
                 )
               })}
             </div>
-          </Fragment>
+          </div>
         ) : <CircularProgress className={classes.loadingSpinner} size={100}/>}   
       </Paper>
     </div>
