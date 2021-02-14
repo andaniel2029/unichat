@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 // Components and Interfaces
+import YearItem from './YearItem';
 
 // Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';
@@ -68,16 +69,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 
   toggleYearContainer: {
-    display: 'flex',
-    '& > *': {
-      height: theme.spacing(6),
-      width: theme.spacing(16),
-      margin: theme.spacing(2),
-      background: '#F7F7F7',
-      boxShadow: 'none'
-    }
+    display: 'flex'
   },
-
 
   loadingSpinner: {
     marginTop: '4rem',
@@ -142,9 +135,9 @@ export default function BecomeTutor() {
             <Typography className={`${classes.text} ${classes.courseSelectorHeaderText}`}>What courses would you like to assist with?</Typography>
             <Typography className={classes.text}>Select a year to view available courses</Typography>
             <div className={classes.toggleYearContainer}>
-              <Paper/>
-              <Paper/>
-              <Paper/>
+              {['First Year', 'Second Year', 'Third Year'].map(year => {
+                return <YearItem year={year} setSelectedYear={setSelectedYear} selected={year === selectedYear}/>
+              })}
             </div>
           </>
         ) : <CircularProgress className={classes.loadingSpinner} size={100}/>}   
