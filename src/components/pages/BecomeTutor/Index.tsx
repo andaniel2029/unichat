@@ -1,5 +1,5 @@
 // React
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, Reducer } from 'react';
 
 // Components and Interfaces
 import YearItem from './YearItem';
@@ -113,13 +113,32 @@ export default function BecomeTutor() {
 
   // Will try to implement reducer soon
 
-  // function reducer(state, action) {
+  interface State {
 
-  // }
+  }
 
-  // const [state, dispatch] = useReducer<React.Reducer,>(reducer, {
+  type Action = 
+    | { type: 'SET_YEAR'}
+    | { type: 'SET_SUBJECT'}
 
-  // })
+  const reducer = (state: State, action: Action): State => {
+
+    switch(action.type) {
+      case 'SET_YEAR':
+      return {
+
+      }
+      case 'SET_SUBJECT':
+      return {
+
+      }
+    }
+
+  }
+
+  const [state, dispatch] = useReducer(reducer, {
+
+  })
 
   const [loading, setLoading] = useState(true);
   const [tutorCourses, setTutorCourses] = useState<any>([]); // will create tutorCourses interface
