@@ -15,10 +15,19 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
+    // display: 'flex',
+    // flexDirection: 'column',
+  },
+  
+  headerContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
+    height: '160px',
+    width: '100%',
     animation: '$fadeInSlide 0.4s ease-in-out',
+    background: '#F7F7F7'
   },
 
   text: {
@@ -69,12 +78,14 @@ export default function BecomeTutor() {
 
   return (
     <div className={classes.root}>
-      <Typography className={`${classes.text} ${classes.thankYouHeaderText}`}>
-        Thank you for your interest in becoming a Tutor, {currentUser.firstName}!
-      </Typography>
-      <Typography className={`${classes.text} ${classes.tutorMessageText}`}>
-        It’s our amazing tutors that make this platform so valuable to students, so we really appreciate it.
-      </Typography>
+      <div className={classes.headerContainer}>
+        <Typography className={`${classes.text} ${classes.thankYouHeaderText}`}>
+          Thank you for your interest in becoming a Tutor, {currentUser.firstName}!
+        </Typography>
+        <Typography className={`${classes.text} ${classes.tutorMessageText}`}>
+          It’s our amazing tutors that make this platform so valuable to students, so we really appreciate it.
+        </Typography>
+      </div>
       {error && <Typography>There was an error</Typography>}
     </div>
   )
