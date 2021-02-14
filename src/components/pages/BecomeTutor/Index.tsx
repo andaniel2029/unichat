@@ -1,5 +1,5 @@
 // React
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 
 // Components and Interfaces
 import YearItem from './YearItem';
@@ -108,23 +108,44 @@ export default function BecomeTutor() {
   // const { tutorCourses } = useAppData();
 
   // State
+  const SET_YEAR = "SET_YEAR";
+  const SET_SUBJECT = "SET_SUBJECT";
+
+  // Will try to implement reducer soon
+
+  // function reducer(state, action) {
+
+  // }
+
+  // const [state, dispatch] = useReducer<React.Reducer,>(reducer, {
+
+  // })
+
   const [loading, setLoading] = useState(true);
   const [tutorCourses, setTutorCourses] = useState<any>([]); // will create tutorCourses interface
   const [selectedYear, setSelectedYear] = useState('first_year');
+  const [courseData, setCourseData] = useState<any>([]); // will create courseData interface
   const [error, setError] = useState(false);
 
   // Retrieving all course data from the API
   useEffect(() => {
     axios.get('/api/courses/tutorcourses').then((res: AxiosResponse) => {
       setTutorCourses(res.data);
+      setCourseData(res.data['first_year']);
       setTimeout(() => {
         setLoading(false);
       }, 1000)
     })
     .catch((error:AxiosError) => setError(true));
   }, []);
+
+  const basicallyAReducer = (year:string) => {
+    setSelectedYear(year);
+    setCourseData(tutorCourses[year]);
+  }
   
-  console.log(tutorCourses);
+  console.log('full data', tutorCourses['first_year']);
+  console.log('selected data', courseData);
   
   return (
     <div className={classes.root}>
@@ -147,7 +168,7 @@ export default function BecomeTutor() {
                 return (
                   <YearItem 
                     year={year} 
-                    setSelectedYear={setSelectedYear} 
+                    basicallyAReducer={basicallyAReducer}
                     selected={year === selectedYear}
                   />
                 )
