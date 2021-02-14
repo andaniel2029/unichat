@@ -1,5 +1,5 @@
 // React
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 
 // Components and Interfaces
 import YearItem from './YearItem';
@@ -101,8 +101,8 @@ export default function BecomeTutor() {
 
   // State
   const [loading, setLoading] = useState(true);
-  const [tutorCourses, setTutorCourses] = useState([]);
-  const [selectedYear, setSelectedYear] = useState('First Year');
+  const [tutorCourses, setTutorCourses] = useState<any>([]); // will create tutorCourses interface
+  const [selectedYear, setSelectedYear] = useState('first_year');
   const [error, setError] = useState(false);
 
   // Retrieving all course data from the API
@@ -131,15 +131,21 @@ export default function BecomeTutor() {
       {error && <Typography>There was an error</Typography>}
       <Paper className={classes.courseSelectorContainer}>
         {!loading ? (
-          <>
+          <Fragment>
             <Typography className={`${classes.text} ${classes.courseSelectorHeaderText}`}>What courses would you like to assist with?</Typography>
             <Typography className={classes.text}>Select a year to view available courses</Typography>
             <div className={classes.toggleYearContainer}>
-              {['First Year', 'Second Year', 'Third Year'].map(year => {
-                return <YearItem year={year} setSelectedYear={setSelectedYear} selected={year === selectedYear}/>
+              {Object.keys(tutorCourses).map(year => {
+                return (
+                  <YearItem 
+                    year={year} 
+                    setSelectedYear={setSelectedYear} 
+                    selected={year === selectedYear}
+                  />
+                )
               })}
             </div>
-          </>
+          </Fragment>
         ) : <CircularProgress className={classes.loadingSpinner} size={100}/>}   
       </Paper>
     </div>
