@@ -1,12 +1,12 @@
 // React
-import React, { useState, useEffect, useReducer, Reducer } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 
 // Components and Interfaces
 import YearItem from './YearItem';
+import SubjectItem from './SubjectItem';
 
 // Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';
-// import { useAppData } from '../../../contexts/AppDataProvider';
 
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
@@ -73,6 +73,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex'
   },
 
+  subjectContainer: {
+    display: 'flex'
+  },
+
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -123,13 +127,14 @@ export default function BecomeTutor() {
 
   interface State {
     year: string;
-    subject: string;
     allCourses: any;
     selectedCourses: any;
+    subject: string;
+    subjects: string[];
   }
 
   type Action = 
-    | { type: 'SET_YEAR'; year: string}
+    | { type: 'SET_YEAR'; year: string, subjects: string[]}
     | { type: 'SET_SUBJECT'; subject: string}
     | { type: 'SET_COURSE_DATA'; courses: any}
 
@@ -140,11 +145,13 @@ export default function BecomeTutor() {
       return {
         ...state,
         year: action.year,
-        selectedCourses: state.allCourses[action.year]
+        selectedCourses: state.allCourses[action.year],
+        subjects: action.subjects
       }
       case 'SET_SUBJECT':
       return {
-        ...state
+        ...state,
+        subject: action.subject
       }
       case 'SET_COURSE_DATA':
       return {
@@ -158,9 +165,10 @@ export default function BecomeTutor() {
   // State
   const [state, dispatch] = useReducer(reducer, {
     year: '',
-    subject: '',
     allCourses: [],
-    selectedCourses: []
+    selectedCourses: [],
+    subject: '',
+    subjects: []
   })
 
   const [loading, setLoading] = useState(true);
@@ -170,7 +178,7 @@ export default function BecomeTutor() {
   useEffect(() => {
     axios.get('/api/courses/tutorcourses').then((res: AxiosResponse) => {
       dispatch({type: 'SET_COURSE_DATA', courses: res.data});
-      dispatch({type: 'SET_YEAR', year: 'first_year'});
+      dispatch({type: 'SET_YEAR', year: 'first_year', subjects: Object.keys(res.data['first_year'])});
       setTimeout(() => {
         setLoading(false);
       }, 1000);
@@ -179,12 +187,11 @@ export default function BecomeTutor() {
   }, []);
 
   const setYear = (year: string) => {
-    console.log('selected year', year);
-    dispatch({type: 'SET_YEAR', year})
+    dispatch({type: 'SET_YEAR', year, subjects: Object.keys(state.allCourses[year])})
   }
   
-  // console.log('full data', tutorCourses['first_year']);
   console.log('course data', state.selectedCourses);
+  console.log('subjects', state.subjects);
   
   return (
     <div className={classes.root}>
@@ -207,11 +214,15 @@ export default function BecomeTutor() {
                 return (
                   <YearItem 
                     year={year} 
-                    // basicallyAReducer={basicallyAReducer}
                     selected={year === state.year}
                     setYear={setYear}
                   />
                 )
+              })}
+            </div>
+            <div className={classes.subjectContainer}>
+              {state.subjects.map(subject => {
+                return <SubjectItem subject={subject}/>
               })}
             </div>
           </div>
