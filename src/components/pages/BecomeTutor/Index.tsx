@@ -98,8 +98,20 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-// Interfaces
+// Interfaces - will be implemented soon
+// export interface Course {
+//   id: number;
+//   name: string;
+//   subject: string;
+//   year: number;
+//   description: string;
+// }
 
+// interface Courses {
+//   items: {
+//     [subject: string]: Course[]
+//   }
+// }
 
 export default function BecomeTutor() {
 
