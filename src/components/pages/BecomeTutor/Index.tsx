@@ -75,8 +75,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 
   subjectContainer: {
     display: 'flex',
-    justifyContent: props => props.subjects.length === 1 ? 'center' : 'space-between',
-    marginTop: '1rem'
+    justifyContent: props => props.subjects.length === 1 ? 'center' : 'space-between'
   },
 
   formContainer: {
@@ -229,7 +228,12 @@ export default function BecomeTutor() {
             </div>
             <div className={classes.subjectContainer}>
               {state.subjects.map(subject => {
-                return <SubjectItem subject={subject}/>
+                return (
+                  <SubjectItem 
+                    subject={subject} 
+                    selected={false}
+                  />
+                )
               })}
             </div>
           </div>
