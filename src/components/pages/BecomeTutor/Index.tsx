@@ -1,5 +1,5 @@
 // React
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useCallback, useReducer } from 'react';
 
 // Components and Interfaces
 import YearItem from './YearItem';
@@ -11,6 +11,7 @@ import { useAuth } from '../../../hooks/useAuthContext';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Theme, Paper } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Other libraries
@@ -195,10 +196,20 @@ export default function BecomeTutor() {
   const setYear = (year: string) => {
     dispatch({type: 'SET_YEAR', year, subjects: Object.keys(state.allCourses[year])})
   }
-  
-  console.log('course data', state.selectedCourses);
-  console.log('subjects', state.subjects);
-  
+
+
+  // Currently not being used properly - will be implemented to add additional step for user to
+  // in which user will click 'View Courses'; then courseData will be fetched from the API instead
+  // of in above useEffect
+
+  const getCourseData = useCallback(() => {
+    console.log('calling the function');
+    axios.get('/api/courses/testendpoint').then((res: AxiosResponse) => {
+      console.log(res.data);
+    })
+  }, []);
+
+
   return (
     <div className={classes.root}>
       <div className={classes.headerContainer}>
@@ -236,6 +247,7 @@ export default function BecomeTutor() {
                 )
               })}
             </div>
+            <Button variant="contained" onClick={getCourseData}>Call API</Button>
           </div>
         ) : <CircularProgress className={classes.loadingSpinner} size={100}/>}   
       </Paper>
