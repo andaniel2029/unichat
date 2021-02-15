@@ -16,7 +16,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 // Other libraries
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 
   root: {
     display: 'flex',
@@ -74,7 +74,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 
   subjectContainer: {
-    display: 'flex'
+    display: 'flex',
+    justifyContent: props => props.subjects.length === 1 ? 'center' : 'space-between',
+    marginTop: '1rem'
   },
 
   formContainer: {
@@ -102,6 +104,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
+interface StyleProps {
+  subjects: string[]
+}
+
 // Interfaces - will be implemented soon
 // export interface Course {
 //   id: number;
@@ -120,7 +126,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function BecomeTutor() {
 
   // Style
-  const classes = useStyles();
 
   // Context variables
   const { currentUser } = useAuth();
@@ -169,7 +174,9 @@ export default function BecomeTutor() {
     selectedCourses: [],
     subject: '',
     subjects: []
-  })
+  });
+
+  const classes = useStyles({subjects: state.subjects});
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
