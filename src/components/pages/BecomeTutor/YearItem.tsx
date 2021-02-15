@@ -1,10 +1,10 @@
 // React
 import React from 'react';
 
+// Components and Interfaces
+
 // Material UI
 import { makeStyles, Typography, Paper, Theme } from '@material-ui/core';
-
-
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
   root: {
@@ -39,9 +39,7 @@ interface StyleProps {
 interface Props {
   year: string;
   selected: boolean;
-  basicallyAReducer: (year:string) => void;
-  // setSelectedYear: (year:string) => void;
-  // setCourseData: (data:Object) => void;
+  setYear: (year: string) => void;
 }
 
 export default function YearItem(props: Props) {
@@ -50,7 +48,7 @@ export default function YearItem(props: Props) {
   const classes = useStyles(props);
 
   return (
-    <Paper className={classes.root} onClick={() => props.basicallyAReducer(props.year)}>
+    <Paper className={classes.root} onClick={() => props.setYear(props.year)}>
       <Typography className={classes.text}>
         {props.year.split('_').map(year => year.charAt(0).toUpperCase() + year.slice(1)).join(' ')}
       </Typography>
