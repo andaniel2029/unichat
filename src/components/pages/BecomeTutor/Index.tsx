@@ -98,6 +98,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
+// Interfaces
+
+
 export default function BecomeTutor() {
 
   // Style
@@ -105,66 +108,71 @@ export default function BecomeTutor() {
 
   // Context variables
   const { currentUser } = useAuth();
-  // const { tutorCourses } = useAppData();
-
-  // State
-  const SET_YEAR = "SET_YEAR";
-  const SET_SUBJECT = "SET_SUBJECT";
-
-  // Will try to implement reducer soon
 
   interface State {
-
+    year: string;
+    subject: string;
+    allCourses: any;
+    selectedCourses: any;
   }
 
   type Action = 
-    | { type: 'SET_YEAR'}
-    | { type: 'SET_SUBJECT'}
+    | { type: 'SET_YEAR'; year: string}
+    | { type: 'SET_SUBJECT'; subject: string}
+    | { type: 'SET_COURSE_DATA'; courses: any}
 
   const reducer = (state: State, action: Action): State => {
 
     switch(action.type) {
       case 'SET_YEAR':
       return {
-
+        ...state,
+        year: action.year,
+        selectedCourses: state.allCourses[action.year]
       }
       case 'SET_SUBJECT':
       return {
-
+        ...state
+      }
+      case 'SET_COURSE_DATA':
+      return {
+        ...state,
+        allCourses: action.courses,
+        selectedCourses: state.allCourses['first_year']
       }
     }
-
   }
 
+  // State
   const [state, dispatch] = useReducer(reducer, {
-
+    year: '',
+    subject: '',
+    allCourses: [],
+    selectedCourses: []
   })
 
   const [loading, setLoading] = useState(true);
-  const [tutorCourses, setTutorCourses] = useState<any>([]); // will create tutorCourses interface
-  const [selectedYear, setSelectedYear] = useState('first_year');
-  const [courseData, setCourseData] = useState<any>([]); // will create courseData interface
   const [error, setError] = useState(false);
 
   // Retrieving all course data from the API
   useEffect(() => {
     axios.get('/api/courses/tutorcourses').then((res: AxiosResponse) => {
-      setTutorCourses(res.data);
-      setCourseData(res.data['first_year']);
+      dispatch({type: 'SET_COURSE_DATA', courses: res.data});
+      dispatch({type: 'SET_YEAR', year: 'first_year'});
       setTimeout(() => {
         setLoading(false);
-      }, 1000)
+      }, 1000);
     })
     .catch((error:AxiosError) => setError(true));
   }, []);
 
-  const basicallyAReducer = (year:string) => {
-    setSelectedYear(year);
-    setCourseData(tutorCourses[year]);
+  const setYear = (year: string) => {
+    console.log('selected year', year);
+    dispatch({type: 'SET_YEAR', year})
   }
   
-  console.log('full data', tutorCourses['first_year']);
-  console.log('selected data', courseData);
+  // console.log('full data', tutorCourses['first_year']);
+  console.log('course data', state.selectedCourses);
   
   return (
     <div className={classes.root}>
@@ -183,12 +191,13 @@ export default function BecomeTutor() {
             <Typography className={`${classes.text} ${classes.courseSelectorHeaderText}`}>What courses would you like to assist with?</Typography>
             <Typography className={classes.text}>Select a year to view available courses</Typography>
             <div className={classes.toggleYearContainer}>
-              {Object.keys(tutorCourses).map(year => {
+              {Object.keys(state.allCourses).map(year => {
                 return (
                   <YearItem 
                     year={year} 
-                    basicallyAReducer={basicallyAReducer}
-                    selected={year === selectedYear}
+                    // basicallyAReducer={basicallyAReducer}
+                    selected={year === state.year}
+                    setYear={setYear}
                   />
                 )
               })}
