@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback, useReducer } from 'react';
 
 // Components and Interfaces
-import YearItem from './YearItem';
+import { YearItem } from './YearItem';
 import SubjectItem from './SubjectItem';
 
 // Contexts and Hooks
