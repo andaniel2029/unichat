@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 // Components and Interfaces
 
@@ -42,15 +42,15 @@ interface Props {
   setYear: (year: string) => void;
 }
 
-export default function YearItem(props: Props) {
+export const YearItem: React.FC<Props> = ({ year, selected, setYear }) => {
 
   // Styles
-  const classes = useStyles(props);
+  const classes = useStyles({selected});
 
   return (
-    <Paper className={classes.root} onClick={() => props.setYear(props.year)}>
+    <Paper className={classes.root} onClick={() => setYear(year)}>
       <Typography className={classes.text}>
-        {props.year.split('_').map(year => year.charAt(0).toUpperCase() + year.slice(1)).join(' ')}
+        {year.split('_').map(year => year.charAt(0).toUpperCase() + year.slice(1)).join(' ')}
       </Typography>
     </Paper>
   )
