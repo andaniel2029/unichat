@@ -32,7 +32,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   tutorRoomsContainer: {
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    height: '300px',
   },
 
   noTutorsContainer: {
@@ -127,7 +129,7 @@ export default function Home() {
     <div className={classes.root}>
       <Grid container justify="center" className={classes.tutorRoomsContainer}>
         <Typography className={`${classes.text} ${classes.sectionTitle}`}>Available Tutors</Typography>
-        {loadingTutors && <CircularProgress className={classes.loadingSpinner}/>}
+        {loadingTutors && <CircularProgress size={200} className={classes.loadingSpinner}/>}
         {availableTutors.length === 0 && !loadingTutors && (
           <div className={classes.noTutorsContainer}>
             <Typography className={`${classes.text} ${classes.noTutorsText}`}>There are no available tutors right now!</Typography>
