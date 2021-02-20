@@ -45,7 +45,7 @@ interface Props {
 export const YearItem: React.FC<Props> = ({ year, selected, setYear }) => {
 
   // Styles
-  const classes = useStyles({selected});
+  const classes = useStyles({ selected });
 
   return (
     <Paper className={classes.root} onClick={() => setYear(year)}>

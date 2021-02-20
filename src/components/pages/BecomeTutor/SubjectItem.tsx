@@ -37,15 +37,16 @@ interface StyleProps {
 interface Props {
   subject: string;
   selected: boolean;
+  setSubject: (subject: string) => void;
 }
 
-export default function SubjectItem(props: Props) {
+export const SubjectItem: React.FC<Props> = ({ subject, selected, setSubject }) => {
 
-  const classes = useStyles(props);
+  const classes = useStyles({ selected });
 
   return (
-    <Paper className={classes.root}>
-      <Typography className={classes.text}>{props.subject}</Typography>
+    <Paper className={classes.root} onClick={() => setSubject(subject)}>
+      <Typography className={classes.text}>{subject}</Typography>
     </Paper>
   )
 }
