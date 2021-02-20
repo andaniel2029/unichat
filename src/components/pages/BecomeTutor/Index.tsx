@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback, useReducer } from 'react';
 
 // Components and Interfaces
 import { YearItem } from './YearItem';
-import SubjectItem from './SubjectItem';
+import { SubjectItem } from './SubjectItem';
 
 // Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';
@@ -197,6 +197,12 @@ export default function BecomeTutor() {
     dispatch({type: 'SET_YEAR', year, subjects: Object.keys(state.allCourses[year])})
   }
 
+  const setSubject = (subject: string) => {
+    console.log('being called', subject);
+    dispatch({type: 'SET_SUBJECT', subject });
+  }
+
+
 
   // Currently not being used properly - will be implemented to add additional step for user to
   // in which user will click 'View Courses'; then courseData will be fetched from the API instead
@@ -209,6 +215,7 @@ export default function BecomeTutor() {
     })
   }, []);
 
+  console.log(state.selectedCourses);
 
   return (
     <div className={classes.root}>
@@ -229,7 +236,8 @@ export default function BecomeTutor() {
             <div className={classes.toggleYearContainer}>
               {Object.keys(state.allCourses).map(year => {
                 return (
-                  <YearItem 
+                  <YearItem
+                    key={year}
                     year={year} 
                     selected={year === state.year}
                     setYear={setYear}
@@ -240,14 +248,16 @@ export default function BecomeTutor() {
             <div className={classes.subjectContainer}>
               {state.subjects.map(subject => {
                 return (
-                  <SubjectItem 
-                    subject={subject} 
-                    selected={false}
+                  <SubjectItem
+                    key={subject}
+                    subject={subject}
+                    selected={subject === state.subject}
+                    setSubject={setSubject}
                   />
                 )
               })}
             </div>
-            <Button variant="contained" onClick={getCourseData}>Call API</Button>
+            {/* <Button variant="contained" onClick={getCourseData}>Call API</Button> */}
           </div>
         ) : <CircularProgress className={classes.loadingSpinner} size={100}/>}   
       </Paper>
