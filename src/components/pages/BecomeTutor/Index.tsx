@@ -11,12 +11,10 @@ import { useAuth } from '../../../hooks/useAuthContext';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Theme, Paper } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Other libraries
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { StarRateTwoTone } from '@material-ui/icons';
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 
@@ -114,13 +112,13 @@ interface StyleProps {
 }
 
 // Interfaces - will be implemented soon
-// export interface Course {
-//   id: number;
-//   name: string;
-//   subject: string;
-//   year: number;
-//   description: string;
-// }
+export interface Course {
+  id: number;
+  name: string;
+  subject: string;
+  year: number;
+  description: string;
+}
 
 // interface Courses {
 //   items: {
@@ -277,7 +275,7 @@ export default function BecomeTutor() {
               })}
             </div>
             <div className={classes.coursesContainer}>
-              {state.selectedCoursesInSubject.map((course: any) => {
+              {state.selectedCoursesInSubject.map((course: Course) => {
                 return <Typography>{course.name}</Typography>
               })}
             </div>
