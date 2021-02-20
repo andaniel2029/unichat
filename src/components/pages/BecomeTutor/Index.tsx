@@ -86,6 +86,10 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     animation: '$fadeInSlide 0.4s ease-in-out',
   },
 
+  coursesContainer: {
+
+  },
+
   loadingSpinner: {
     marginTop: '4rem',
     fontSize: '4rem',
@@ -184,8 +188,10 @@ export default function BecomeTutor() {
   // Retrieving all course data from the API
   useEffect(() => {
     axios.get('/api/courses/tutorcourses').then((res: AxiosResponse) => {
-      dispatch({type: 'SET_COURSE_DATA', courses: res.data});
-      dispatch({type: 'SET_YEAR', year: 'first_year', subjects: Object.keys(res.data['first_year'])});
+      dispatch({ type: 'SET_COURSE_DATA', courses: res.data });
+      dispatch({ type: 'SET_YEAR', year: 'first_year', subjects: Object.keys(res.data['first_year']) });
+      dispatch({ type: 'SET_SUBJECT', subject: Object.keys(res.data['first_year'])[0] });
+
       setTimeout(() => {
         setLoading(false);
       }, 1000);
@@ -194,12 +200,13 @@ export default function BecomeTutor() {
   }, []);
 
   const setYear = (year: string) => {
-    dispatch({type: 'SET_YEAR', year, subjects: Object.keys(state.allCourses[year])})
+    dispatch({ type: 'SET_YEAR', year, subjects: Object.keys(state.allCourses[year]) })
+    dispatch({ type: 'SET_SUBJECT', subject: Object.keys(state.allCourses[year])[0]});
   }
 
   const setSubject = (subject: string) => {
     console.log('being called', subject);
-    dispatch({type: 'SET_SUBJECT', subject });
+    dispatch({ type: 'SET_SUBJECT', subject });
   }
 
 
@@ -227,7 +234,7 @@ export default function BecomeTutor() {
           It’s our amazing tutors that make this platform so valuable to students, so we really appreciate it.
         </Typography>
       </div>
-      {error && <Typography>There was an error</Typography>}
+      {error && <Typography>Whoops! There appears to have been an error.</Typography>}
       <Paper className={classes.courseSelectorContainer}>
         {!loading ? (
           <div className={classes.formContainer}>
@@ -257,6 +264,9 @@ export default function BecomeTutor() {
                 )
               })}
             </div>
+            {/* <div className={classes.coursesContainer}>
+
+            </div> */}
             {/* <Button variant="contained" onClick={getCourseData}>Call API</Button> */}
           </div>
         ) : <CircularProgress className={classes.loadingSpinner} size={100}/>}   
