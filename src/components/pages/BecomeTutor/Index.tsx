@@ -16,6 +16,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Other libraries
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import { StarRateTwoTone } from '@material-ui/icons';
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 
@@ -137,7 +138,8 @@ export default function BecomeTutor() {
   interface State {
     year: string;
     allCourses: any;
-    selectedCourses: any;
+    selectedCoursesInYear: any;
+    selectedCoursesInSubject: any[];
     subject: string;
     subjects: string[];
   }
@@ -146,6 +148,7 @@ export default function BecomeTutor() {
     | { type: 'SET_YEAR'; year: string, subjects: string[]}
     | { type: 'SET_SUBJECT'; subject: string}
     | { type: 'SET_COURSE_DATA'; courses: any}
+    | { type: 'SET_COURSES_IN_SUBJECT'; subject: string}
 
   const reducer = (state: State, action: Action): State => {
 
@@ -154,7 +157,7 @@ export default function BecomeTutor() {
       return {
         ...state,
         year: action.year,
-        selectedCourses: state.allCourses[action.year],
+        selectedCoursesInYear: state.allCourses[action.year],
         subjects: action.subjects
       }
       case 'SET_SUBJECT':
@@ -162,11 +165,16 @@ export default function BecomeTutor() {
         ...state,
         subject: action.subject
       }
+      case 'SET_COURSES_IN_SUBJECT':
+        return {
+          ...state,
+          selectedCoursesInSubject: state.selectedCoursesInYear[action.subject]
+        }
       case 'SET_COURSE_DATA':
       return {
         ...state,
         allCourses: action.courses,
-        selectedCourses: state.allCourses['first_year']
+        selectedCoursesInYear: action.courses['first_year']
       }
     }
   }
@@ -175,7 +183,8 @@ export default function BecomeTutor() {
   const [state, dispatch] = useReducer(reducer, {
     year: '',
     allCourses: [],
-    selectedCourses: [],
+    selectedCoursesInYear: [],
+    selectedCoursesInSubject: [],
     subject: '',
     subjects: []
   });
@@ -191,24 +200,27 @@ export default function BecomeTutor() {
       dispatch({ type: 'SET_COURSE_DATA', courses: res.data });
       dispatch({ type: 'SET_YEAR', year: 'first_year', subjects: Object.keys(res.data['first_year']) });
       dispatch({ type: 'SET_SUBJECT', subject: Object.keys(res.data['first_year'])[0] });
-
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+      dispatch({ type: 'SET_COURSES_IN_SUBJECT', subject: Object.keys(res.data['first_year'])[0] });
+    
+      setLoading(false);
+      // setTimeout(() => {
+      //   setLoading(false);
+      // }, 1000);
     })
     .catch((error:AxiosError) => setError(true));
   }, []);
 
   const setYear = (year: string) => {
     dispatch({ type: 'SET_YEAR', year, subjects: Object.keys(state.allCourses[year]) })
-    dispatch({ type: 'SET_SUBJECT', subject: Object.keys(state.allCourses[year])[0]});
+    dispatch({ type: 'SET_SUBJECT', subject: Object.keys(state.allCourses[year])[0] });
+    dispatch({ type: 'SET_COURSES_IN_SUBJECT', subject: Object.keys(state.allCourses[year])[0] });
   }
 
   const setSubject = (subject: string) => {
     console.log('being called', subject);
     dispatch({ type: 'SET_SUBJECT', subject });
+    dispatch({ type: 'SET_COURSES_IN_SUBJECT', subject });
   }
-
 
 
   // Currently not being used properly - will be implemented to add additional step for user to
@@ -222,7 +234,7 @@ export default function BecomeTutor() {
     })
   }, []);
 
-  console.log(state.selectedCourses);
+  console.log(state.selectedCoursesInSubject);
 
   return (
     <div className={classes.root}>
@@ -264,9 +276,11 @@ export default function BecomeTutor() {
                 )
               })}
             </div>
-            {/* <div className={classes.coursesContainer}>
-
-            </div> */}
+            <div className={classes.coursesContainer}>
+              {state.selectedCoursesInSubject.map((course: any) => {
+                return <Typography>{course.name}</Typography>
+              })}
+            </div>
             {/* <Button variant="contained" onClick={getCourseData}>Call API</Button> */}
           </div>
         ) : <CircularProgress className={classes.loadingSpinner} size={100}/>}   
