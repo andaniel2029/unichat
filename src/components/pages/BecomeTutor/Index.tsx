@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useReducer } from 'react';
 // Components and Interfaces
 import { YearItem } from './YearItem';
 import { SubjectItem } from './SubjectItem';
+import { CourseItem } from './CourseItem';
 
 // Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';
@@ -81,12 +82,18 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
+    width: '500px',
     justifyContent: 'center',
     animation: '$fadeInSlide 0.4s ease-in-out',
   },
 
-  coursesContainer: {
+  coursesRootContainer: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
 
+  courseItemsContainer: {
+    display: 'flex',
   },
 
   loadingSpinner: {
@@ -215,7 +222,6 @@ export default function BecomeTutor() {
   }
 
   const setSubject = (subject: string) => {
-    console.log('being called', subject);
     dispatch({ type: 'SET_SUBJECT', subject });
     dispatch({ type: 'SET_COURSES_IN_SUBJECT', subject });
   }
@@ -231,8 +237,6 @@ export default function BecomeTutor() {
       console.log(res.data);
     })
   }, []);
-
-  console.log(state.selectedCoursesInSubject);
 
   return (
     <div className={classes.root}>
@@ -274,10 +278,17 @@ export default function BecomeTutor() {
                 )
               })}
             </div>
-            <div className={classes.coursesContainer}>
-              {state.selectedCoursesInSubject.map((course: Course) => {
-                return <Typography>{course.name}</Typography>
-              })}
+            <div className={classes.coursesRootContainer}>
+              <Typography className={classes.text}>{state.subject} Courses</Typography>
+              <div className={classes.courseItemsContainer}>
+                {state.selectedCoursesInSubject.map((course: Course) => {
+                  return (
+                    <CourseItem 
+                    courseName={course.name} 
+                    selected={false}
+                    />)
+                })}
+              </div>
             </div>
             {/* <Button variant="contained" onClick={getCourseData}>Call API</Button> */}
           </div>
