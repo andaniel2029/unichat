@@ -5,6 +5,7 @@ import React from 'react';
 import { makeStyles, Theme, Typography, Paper, Grid } from '@material-ui/core';
 
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { Course } from './Index';
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
   root: {
@@ -37,11 +38,11 @@ interface StyleProps {
 }
 
 interface Props {
-  courseName: string;
+  course: Course
   selected: boolean;
 }
 
-export const CourseItem: React.FC<Props> = ({ selected, courseName }) => {
+export const CourseItem: React.FC<Props> = ({ course, selected}) => {
 
   const classes = useStyles({ selected });
 
@@ -49,7 +50,7 @@ export const CourseItem: React.FC<Props> = ({ selected, courseName }) => {
     <Grid item xs={4}>
       <Paper className={classes.root}>
         <AddCircleIcon />
-        <Typography className={classes.text}>{courseName}</Typography>
+        <Typography className={classes.text}>{course.name}</Typography>
       </Paper>
     </Grid>
   )
