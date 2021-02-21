@@ -4,7 +4,7 @@ import React from 'react';
 // Components and Interfaces
 import { CourseCatalogueItem } from './CourseCatalogueItem';
 import { SelectedCourseItem } from './SelectedCourseItem';
-import { Course } from '../../../hooks/useTutorCourses';
+import { useTutorCourses } from '../../../hooks/useTutorCourses';
 
 // Material UI
 import { makeStyles, Theme, Grid, Typography } from '@material-ui/core';
@@ -20,20 +20,13 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
   selectedCoursesTitleContainer: {
     display: 'flex',
     justifyContent: 'space-between',
-    // '& > *': {
-    //   padding: '5px'
-    // }
   }
 }));
 
+export const CourseSelect: React.FC = React.memo(() => {
 
-interface Props {
-  courses: Course[];
-  selectedTutorCourses: Course[];
-  addOrRemoveTutorCourse: (course: Course, add: boolean) => void;
-}
-
-export const CourseSelect: React.FC<Props> = React.memo(({ courses, selectedTutorCourses, addOrRemoveTutorCourse }) => {
+  // Context variables
+  const { state: { selectedCoursesInSubject, selectedTutorCourses }, addOrRemoveTutorCourse } = useTutorCourses();
 
   // Styles
   const classes = useStyles();
@@ -41,7 +34,7 @@ export const CourseSelect: React.FC<Props> = React.memo(({ courses, selectedTuto
   return (
     <Grid container justify="center" className={classes.root}>
       <Grid container>
-        {courses.map(course => {
+        {selectedCoursesInSubject.map(course => {
           let selected = false;
           selectedTutorCourses.forEach(courseItem => {
             if(courseItem.name === course.name) selected = true;
