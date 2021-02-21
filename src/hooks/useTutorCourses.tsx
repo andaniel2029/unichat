@@ -44,6 +44,7 @@ export const useTutorCourses = () => {
     selectedCoursesInSubject: any[];
     subject: string;
     subjects: string[];
+    selectedTutorCourses: Course[];
   }
 
   type Action = 
@@ -51,6 +52,8 @@ export const useTutorCourses = () => {
     | { type: 'SET_SUBJECT'; subject: string}
     | { type: 'SET_COURSE_DATA'; courses: any}
     | { type: 'SET_COURSES_IN_SUBJECT'; subject: string}
+    | { type: 'ADD_TUTOR_COURSE'; course: Course}
+    | { type: 'REMOVE_TUTOR_COURSE'; course: Course}
 
   const reducer = (state: State, action: Action): State => {
 
@@ -78,6 +81,14 @@ export const useTutorCourses = () => {
         allCourses: action.courses,
         selectedCoursesInYear: action.courses['first_year']
       }
+      case 'ADD_TUTOR_COURSE':
+      return {
+        ...state
+      }
+      case 'REMOVE_TUTOR_COURSE':
+      return {
+        ...state
+      }
     }
   }
 
@@ -87,26 +98,30 @@ export const useTutorCourses = () => {
     selectedCoursesInYear: [],
     selectedCoursesInSubject: [],
     subject: '',
-    subjects: []
+    subjects: [],
+    selectedTutorCourses: []
   });
 
-  const setYear = useCallback((year: string) => {
+  const setYear = useCallback((year: string): void => {
     dispatch({ type: 'SET_YEAR', year, subjects: Object.keys(state.allCourses[year]) })
     dispatch({ type: 'SET_SUBJECT', subject: Object.keys(state.allCourses[year])[0] });
     dispatch({ type: 'SET_COURSES_IN_SUBJECT', subject: Object.keys(state.allCourses[year])[0] });
   }, [state.allCourses]);
 
-  const setSubject = useCallback((subject: string) => {
+  const setSubject = useCallback((subject: string): void => {
     dispatch({ type: 'SET_SUBJECT', subject });
     dispatch({ type: 'SET_COURSES_IN_SUBJECT', subject });
-  }, [])
-  
+  }, []);
 
+  const addOrRemoveSelectedTutorCourse = useCallback((course: Course, add: boolean): void => {
+
+  }, []);
 
   return {
     state,
     setYear,
     setSubject,
+    addOrRemoveSelectedTutorCourse,
     loading,
     error
   };
