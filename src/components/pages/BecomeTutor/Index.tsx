@@ -12,6 +12,7 @@ import { useAuth } from '../../../hooks/useAuthContext';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Theme, Paper } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Other libraries
@@ -34,7 +35,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     width: '100%',
     animation: '$fadeInSlide 0.4s ease-in-out',
     background: '#F7F7F7',
-    marginBottom: '2rem'
+    marginBottom: '2rem',
   },
 
   text: {
@@ -71,7 +72,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
   },
 
   toggleYearContainer: {
-    display: 'flex'
+    // display: 'flex'
   },
 
   subjectContainer: {
@@ -239,22 +240,22 @@ export default function BecomeTutor() {
   }, []);
 
   return (
-    <div className={classes.root}>
-      <div className={classes.headerContainer}>
+    <Grid container className={classes.root}>
+      <Grid item className={classes.headerContainer}>
         <Typography className={`${classes.text} ${classes.thankYouHeaderText}`}>
           Thank you for your interest in becoming a Tutor, {currentUser.firstName}!
         </Typography>
         <Typography className={classes.text}>
           It’s our amazing tutors that make this platform so valuable to students, so we really appreciate it.
         </Typography>
-      </div>
+      </Grid>
       {error && <Typography>Whoops! There appears to have been an error.</Typography>}
       <Paper className={classes.courseSelectorContainer}>
         {!loading ? (
-          <div className={classes.formContainer}>
+          <Grid container className={classes.formContainer}>
             <Typography className={`${classes.text} ${classes.courseSelectorHeaderText}`}>What courses would you like to assist with?</Typography>
             <Typography className={classes.text}>Select a year to view available courses</Typography>
-            <div className={classes.toggleYearContainer}>
+            <Grid container justify="center" className={classes.toggleYearContainer}>
               {Object.keys(state.allCourses).map(year => {
                 return (
                   <YearItem
@@ -265,8 +266,8 @@ export default function BecomeTutor() {
                   />
                 )
               })}
-            </div>
-            <div className={classes.subjectContainer}>
+            </Grid>
+            <Grid container justify="center" className={classes.subjectContainer}>
               {state.subjects.map(subject => {
                 return (
                   <SubjectItem
@@ -277,10 +278,10 @@ export default function BecomeTutor() {
                   />
                 )
               })}
-            </div>
-            <div className={classes.coursesRootContainer}>
+            </Grid>
+            <Grid container className={classes.coursesRootContainer}>
               <Typography className={classes.text}>{state.subject} Courses</Typography>
-              <div className={classes.courseItemsContainer}>
+              <Grid className={classes.courseItemsContainer}>
                 {state.selectedCoursesInSubject.map((course: Course) => {
                   return (
                     <CourseItem 
@@ -288,13 +289,13 @@ export default function BecomeTutor() {
                     selected={false}
                     />)
                 })}
-              </div>
-            </div>
+              </Grid>
+            </Grid>
             {/* <Button variant="contained" onClick={getCourseData}>Call API</Button> */}
-          </div>
+          </Grid>
         ) : <CircularProgress className={classes.loadingSpinner} size={100}/>}   
       </Paper>
-    </div>
+    </Grid>
   )
 }
 
