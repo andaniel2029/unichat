@@ -1,10 +1,11 @@
 // React
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 // Components and Interfaces
 
 // Material UI
 import { makeStyles, Typography, Paper, Theme } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
   root: {
@@ -12,7 +13,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     height: theme.spacing(6),
-    width: theme.spacing(16),
+    // width: theme.spacing(16),
     margin: theme.spacing(2),
     background: props => props.selected ? '#FF5A5F' : '#F7F7F7',
     color: props => props.selected ? 'white' : '#454545',
@@ -48,10 +49,12 @@ export const YearItem: React.FC<Props> = ({ year, selected, setYear }) => {
   const classes = useStyles({ selected });
 
   return (
-    <Paper className={classes.root} onClick={() => setYear(year)}>
-      <Typography className={classes.text}>
-        {year.split('_').map(year => year.charAt(0).toUpperCase() + year.slice(1)).join(' ')}
-      </Typography>
-    </Paper>
+    <Grid item xs={8} sm={4}>
+      <Paper className={classes.root} onClick={() => setYear(year)}>
+        <Typography className={classes.text}>
+          {year.split('_').map(year => year.charAt(0).toUpperCase() + year.slice(1)).join(' ')}
+        </Typography>
+      </Paper>
+    </Grid>
   )
 }
