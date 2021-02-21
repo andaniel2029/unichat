@@ -1,5 +1,5 @@
 // React
-import React, { useState, useEffect, useCallback, useReducer } from 'react';
+import React from 'react';
 
 // Components and Interfaces
 import { YearItem } from './YearItem';
@@ -8,15 +8,13 @@ import { CourseItem } from './CourseItem';
 
 // Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';
+import { useTutorCourses } from '../../../hooks/useTutorCourses';
 
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Theme, Paper } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-// Other libraries
-import axios, { AxiosError, AxiosResponse } from 'axios';
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 
@@ -136,108 +134,28 @@ export interface Course {
 
 export default function BecomeTutor() {
 
+  const {
+    state,
+    setYear,
+    setSubject,
+    loading,
+    error
+  } = useTutorCourses();
+
+
+
   // Style
+  const classes = useStyles({subjects: state.subjects});
 
   // Context variables
   const { currentUser } = useAuth();
 
-  interface State {
-    year: string;
-    allCourses: any;
-    selectedCoursesInYear: any;
-    selectedCoursesInSubject: any[];
-    subject: string;
-    subjects: string[];
-  }
-
-  type Action = 
-    | { type: 'SET_YEAR'; year: string, subjects: string[]}
-    | { type: 'SET_SUBJECT'; subject: string}
-    | { type: 'SET_COURSE_DATA'; courses: any}
-    | { type: 'SET_COURSES_IN_SUBJECT'; subject: string}
-
-  const reducer = (state: State, action: Action): State => {
-
-    switch(action.type) {
-      case 'SET_YEAR':
-      return {
-        ...state,
-        year: action.year,
-        selectedCoursesInYear: state.allCourses[action.year],
-        subjects: action.subjects
-      }
-      case 'SET_SUBJECT':
-      return {
-        ...state,
-        subject: action.subject
-      }
-      case 'SET_COURSES_IN_SUBJECT':
-        return {
-          ...state,
-          selectedCoursesInSubject: state.selectedCoursesInYear[action.subject]
-        }
-      case 'SET_COURSE_DATA':
-      return {
-        ...state,
-        allCourses: action.courses,
-        selectedCoursesInYear: action.courses['first_year']
-      }
-    }
-  }
-
-  // State
-  const [state, dispatch] = useReducer(reducer, {
-    year: '',
-    allCourses: [],
-    selectedCoursesInYear: [],
-    selectedCoursesInSubject: [],
-    subject: '',
-    subjects: []
-  });
-
-  const classes = useStyles({subjects: state.subjects});
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  // Retrieving all course data from the API
-  useEffect(() => {
-    axios.get('/api/courses/tutorcourses').then((res: AxiosResponse) => {
-      dispatch({ type: 'SET_COURSE_DATA', courses: res.data });
-      dispatch({ type: 'SET_YEAR', year: 'first_year', subjects: Object.keys(res.data['first_year']) });
-      dispatch({ type: 'SET_SUBJECT', subject: Object.keys(res.data['first_year'])[0] });
-      dispatch({ type: 'SET_COURSES_IN_SUBJECT', subject: Object.keys(res.data['first_year'])[0] });
-    
-      setLoading(false);
-      // setTimeout(() => {
-      //   setLoading(false);
-      // }, 1000);
-    })
-    .catch((error:AxiosError) => setError(true));
-  }, []);
-
-  const setYear = (year: string) => {
-    dispatch({ type: 'SET_YEAR', year, subjects: Object.keys(state.allCourses[year]) })
-    dispatch({ type: 'SET_SUBJECT', subject: Object.keys(state.allCourses[year])[0] });
-    dispatch({ type: 'SET_COURSES_IN_SUBJECT', subject: Object.keys(state.allCourses[year])[0] });
-  }
-
-  const setSubject = (subject: string) => {
-    dispatch({ type: 'SET_SUBJECT', subject });
-    dispatch({ type: 'SET_COURSES_IN_SUBJECT', subject });
-  }
-
-
-  // Currently not being used properly - will be implemented to add additional step for user to
-  // in which user will click 'View Courses'; then courseData will be fetched from the API instead
-  // of in above useEffect
-
-  const getCourseData = useCallback(() => {
-    console.log('calling the function');
-    axios.get('/api/courses/testendpoint').then((res: AxiosResponse) => {
-      console.log(res.data);
-    })
-  }, []);
+  // const getCourseData = useCallback(() => {
+  //   console.log('calling the function');
+  //   axios.get('/api/courses/testendpoint').then((res: AxiosResponse) => {
+  //     console.log(res.data);
+  //   })
+  // }, []);
 
   return (
     <Grid container className={classes.root}>
@@ -284,10 +202,12 @@ export default function BecomeTutor() {
               <Grid className={classes.courseItemsContainer}>
                 {state.selectedCoursesInSubject.map((course: Course) => {
                   return (
-                    <CourseItem 
-                    courseName={course.name} 
-                    selected={false}
-                    />)
+                    <CourseItem
+                      key={course.name}
+                      courseName={course.name} 
+                      selected={false}
+                    />
+                  )
                 })}
               </Grid>
             </Grid>
