@@ -4,6 +4,7 @@ import React from 'react';
 // Components and Interfaces
 import { YearSelect } from './YearSelect';
 import { SubjectSelect } from './SubjectSelect';
+import { CourseSelect } from './CourseSelect';
 import { CourseItem } from './CourseItem';
 
 // Contexts and Hooks
@@ -87,9 +88,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     flexDirection: 'column'
   },
 
-  courseItemsContainer: {
-    display: 'flex',
-  },
 
   loadingSpinner: {
     marginTop: '4rem',
@@ -138,20 +136,11 @@ export default function BecomeTutor() {
     error
   } = useTutorCourses();
 
-
-
   // Style
   const classes = useStyles({subjects: state.subjects});
 
   // Context variables
   const { currentUser } = useAuth();
-
-  // const getCourseData = useCallback(() => {
-  //   console.log('calling the function');
-  //   axios.get('/api/courses/testendpoint').then((res: AxiosResponse) => {
-  //     console.log(res.data);
-  //   })
-  // }, []);
 
   return (
     <Grid container className={classes.root}>
@@ -181,19 +170,8 @@ export default function BecomeTutor() {
             />
             <Grid container className={classes.coursesRootContainer}>
               <Typography className={classes.text}>{state.subject} Courses</Typography>
-              <Grid className={classes.courseItemsContainer}>
-                {state.selectedCoursesInSubject.map((course: Course) => {
-                  return (
-                    <CourseItem
-                      key={course.name}
-                      courseName={course.name} 
-                      selected={false}
-                    />
-                  )
-                })}
-              </Grid>
+              <CourseSelect courses={state.selectedCoursesInSubject} />
             </Grid>
-            {/* <Button variant="contained" onClick={getCourseData}>Call API</Button> */}
           </Grid>
         ) : <CircularProgress className={classes.loadingSpinner} size={100}/>}   
       </Paper>
