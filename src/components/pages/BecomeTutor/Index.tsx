@@ -3,7 +3,7 @@ import React from 'react';
 
 // Components and Interfaces
 import { YearSelect } from './YearSelect';
-import { SubjectItem } from './SubjectItem';
+import { SubjectSelect } from './SubjectSelect';
 import { CourseItem } from './CourseItem';
 
 // Contexts and Hooks
@@ -174,18 +174,11 @@ export default function BecomeTutor() {
               selectedYear={state.year} 
               setYear={setYear}
             />
-            <Grid container justify="center" className={classes.subjectContainer}>
-              {state.subjects.map(subject => {
-                return (
-                  <SubjectItem
-                    key={subject}
-                    subject={subject}
-                    selected={subject === state.subject}
-                    setSubject={setSubject}
-                  />
-                )
-              })}
-            </Grid>
+            <SubjectSelect
+              subjects={state.subjects}
+              selectedSubject={state.subject}
+              setSubject={setSubject}
+            />
             <Grid container className={classes.coursesRootContainer}>
               <Typography className={classes.text}>{state.subject} Courses</Typography>
               <Grid className={classes.courseItemsContainer}>

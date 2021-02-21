@@ -1,5 +1,5 @@
 // React
-import React, { useState, useEffect, useCallback, useReducer } from 'react';
+import { useState, useEffect, useCallback, useReducer } from 'react';
 
 // Other libraries
 import axios, { AxiosResponse, AxiosError } from 'axios';
