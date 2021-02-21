@@ -43,7 +43,10 @@ interface Props {
   setYear: (year: string) => void;
 }
 
-export const YearItem: React.FC<Props> = ({ year, selected, setYear }) => {
+export const YearItem: React.FC<Props> = React.memo(({ year, selected, setYear }) => {
+
+  console.log('rendering');
+
 
   // Styles
   const classes = useStyles({ selected });
@@ -57,4 +60,4 @@ export const YearItem: React.FC<Props> = ({ year, selected, setYear }) => {
       </Paper>
     </Grid>
   )
-}
+});
