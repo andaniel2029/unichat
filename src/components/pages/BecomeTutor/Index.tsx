@@ -6,21 +6,14 @@ import { TutorForm } from './TutorForm';
 
 // Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';
-import { TutorCourseProvider, useTutorCourses } from '../../../hooks/useTutorCourses';
+import { TutorCourseProvider } from '../../../hooks/useTutorCourses';
 
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
-const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
-
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  
+const useStyles = makeStyles<Theme>((theme: Theme) => ({
   headerContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -57,27 +50,19 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
       transform: 'translateX(0px)',
     }
   }
-
 }));
-
-interface StyleProps {
-  subjects: string[]
-}
 
 export default function BecomeTutor() {
 
-  // Context variables
-  const { state } = useTutorCourses();
-
   // Style
-  const classes = useStyles({subjects: state.subjects});
+  const classes = useStyles();
 
   // Context variables
   const { currentUser } = useAuth();
 
   return (
     <TutorCourseProvider>
-      <Grid container className={classes.root}>
+      <Grid container justify="center">
         <Grid item className={classes.headerContainer}>
           <Typography className={`${classes.text} ${classes.thankYouHeaderText}`}>
             Thank you for your interest in becoming a Tutor, {currentUser.firstName}!
