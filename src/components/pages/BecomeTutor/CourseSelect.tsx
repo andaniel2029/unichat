@@ -31,7 +31,7 @@ export const CourseSelect: React.FC<Props> = React.memo(({ courses }) => {
         return (
           <CourseItem 
             key={course.name}
-            courseName={course.name}
+            course={course}
             selected={false}
           />
         )
