@@ -178,6 +178,7 @@ export default function BecomeTutor() {
               <Typography className={`${classes.text} ${classes.coursesSubjectTitle}`}>{state.subject} Courses</Typography>
               <CourseSelect 
                 courses={state.selectedCoursesInSubject}
+                selectedTutorCourses={state.selectedTutorCourses}
                 addOrRemoveTutorCourse={addOrRemoveTutorCourse} 
               />
             </Grid>
