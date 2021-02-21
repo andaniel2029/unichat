@@ -83,7 +83,8 @@ export const useTutorCourses = () => {
       }
       case 'ADD_TUTOR_COURSE':
       return {
-        ...state
+        ...state,
+        selectedTutorCourses: [...state.selectedTutorCourses, action.course]
       }
       case 'REMOVE_TUTOR_COURSE':
       return {
@@ -92,6 +93,7 @@ export const useTutorCourses = () => {
     }
   }
 
+  
   const [state, dispatch] = useReducer(reducer, {
     year: '',
     allCourses: [],
@@ -101,27 +103,38 @@ export const useTutorCourses = () => {
     subjects: [],
     selectedTutorCourses: []
   });
-
+  
   const setYear = useCallback((year: string): void => {
     dispatch({ type: 'SET_YEAR', year, subjects: Object.keys(state.allCourses[year]) })
     dispatch({ type: 'SET_SUBJECT', subject: Object.keys(state.allCourses[year])[0] });
     dispatch({ type: 'SET_COURSES_IN_SUBJECT', subject: Object.keys(state.allCourses[year])[0] });
   }, [state.allCourses]);
-
+  
   const setSubject = useCallback((subject: string): void => {
     dispatch({ type: 'SET_SUBJECT', subject });
     dispatch({ type: 'SET_COURSES_IN_SUBJECT', subject });
   }, []);
+  
+  const addOrRemoveTutorCourse = useCallback((course: Course, add: boolean): void => {
 
-  const addOrRemoveSelectedTutorCourse = useCallback((course: Course, add: boolean): void => {
+    let alreadyAdded: boolean = false;
+    state.selectedTutorCourses.forEach(item => {
+      if(item.name === course.name) alreadyAdded = true;
+    });
 
-  }, []);
+    if(alreadyAdded) return;
+
+    dispatch({ type: 'ADD_TUTOR_COURSE', course });
+    
+  }, [state.selectedTutorCourses]);
+  
+  console.log(state.selectedTutorCourses);
 
   return {
     state,
     setYear,
     setSubject,
-    addOrRemoveSelectedTutorCourse,
+    addOrRemoveTutorCourse,
     loading,
     error
   };
