@@ -2,16 +2,27 @@
 import React from 'react';
 
 // Components and Interfaces
-import { CourseItem } from './CourseItem'
+import { CourseCatalogueItem } from './CourseCatalogueItem';
+import { SelectedCourseItem } from './SelectedCourseItem';
 import { Course } from '../../../hooks/useTutorCourses';
 
 // Material UI
-import { makeStyles, Theme, Grid } from '@material-ui/core';
-// import Grid from '@material-ui/core/Grid';
-// import Typography from '@material-ui/core/Typography';
+import { makeStyles, Theme, Grid, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles<Theme>((theme: Theme) => ({
   root: {
+  },
+
+  selectedTutorCoursesContainer: {
+    marginTop: '2rem'
+  },
+
+  selectedCoursesTitleContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    // '& > *': {
+    //   padding: '5px'
+    // }
   }
 }));
 
@@ -29,20 +40,37 @@ export const CourseSelect: React.FC<Props> = React.memo(({ courses, selectedTuto
 
   return (
     <Grid container justify="center" className={classes.root}>
-      {courses.map(course => {
-        let selected = false;
-        selectedTutorCourses.forEach(courseItem => {
-          if(courseItem.name === course.name) selected = true;
-        })
-        return (
-          <CourseItem 
-            key={course.name}
-            course={course}
-            selected={selected}
-            addOrRemoveTutorCourse={addOrRemoveTutorCourse}
-          />
-        )
-      })}
+      <Grid container>
+        {courses.map(course => {
+          let selected = false;
+          selectedTutorCourses.forEach(courseItem => {
+            if(courseItem.name === course.name) selected = true;
+          })
+          return (
+            <CourseCatalogueItem
+              key={course.name}
+              course={course}
+              selected={selected}
+              addOrRemoveTutorCourse={addOrRemoveTutorCourse}
+            />
+          )
+        })}
+      </Grid>
+      <Grid container className={classes.selectedTutorCoursesContainer}>
+        <Grid item xs={12} className={classes.selectedCoursesTitleContainer}>
+          <Typography>Selected Courses</Typography>
+          <Typography>{selectedTutorCourses.length}</Typography>
+        </Grid>
+        {selectedTutorCourses.map(course => {
+          return (
+            <SelectedCourseItem
+              key={course.name}
+              course={course}
+              addOrRemoveTutorCourse={addOrRemoveTutorCourse}
+            />
+          )
+        })}
+      </Grid>
     </Grid>
   )
 });
