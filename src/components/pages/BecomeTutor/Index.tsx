@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Components and Interfaces
-import { YearItem } from './YearItem';
+import { YearSelect } from './YearSelect';
 import { SubjectItem } from './SubjectItem';
 import { CourseItem } from './CourseItem';
 
@@ -56,7 +56,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     alignItems: 'center',
     padding: '1rem 0rem 1rem',
     width: '320px',
-    height: '300px',
+    // height: '300px',
     borderRadius: '20px',
     boxShadow: "1px 4px 5px 2px #EDEDED",
     [theme.breakpoints.up('sm')]: {
@@ -67,10 +67,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
   courseSelectorHeaderText: {
     fontSize: '14pt',
     borderBottom: '2px solid #FF5A5F',
-  },
-
-  toggleYearContainer: {
-    // display: 'flex'
   },
 
   subjectContainer: {
@@ -173,18 +169,11 @@ export default function BecomeTutor() {
           <Grid container className={classes.formContainer}>
             <Typography className={`${classes.text} ${classes.courseSelectorHeaderText}`}>What courses would you like to assist with?</Typography>
             <Typography className={classes.text}>Select a year to view available courses</Typography>
-            <Grid container justify="center" className={classes.toggleYearContainer}>
-              {Object.keys(state.allCourses).map(year => {
-                return (
-                  <YearItem
-                    key={year}
-                    year={year} 
-                    selected={year === state.year}
-                    setYear={setYear}
-                  />
-                )
-              })}
-            </Grid>
+            <YearSelect 
+              years={Object.keys(state.allCourses)} 
+              selectedYear={state.year} 
+              setYear={setYear}
+            />
             <Grid container justify="center" className={classes.subjectContainer}>
               {state.subjects.map(subject => {
                 return (

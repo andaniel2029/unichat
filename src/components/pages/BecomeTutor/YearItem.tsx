@@ -45,9 +45,6 @@ interface Props {
 
 export const YearItem: React.FC<Props> = React.memo(({ year, selected, setYear }) => {
 
-  console.log('rendering');
-
-
   // Styles
   const classes = useStyles({ selected });
 
