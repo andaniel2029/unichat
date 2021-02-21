@@ -11,6 +11,7 @@ export interface Course {
   subject: string;
   year: number;
   description: string;
+  title: string;
 }
 
 export const useTutorCourses = () => {
@@ -88,7 +89,8 @@ export const useTutorCourses = () => {
       }
       case 'REMOVE_TUTOR_COURSE':
       return {
-        ...state
+        ...state,
+        selectedTutorCourses: state.selectedTutorCourses.filter(course => course.name !== action.course.name)
       }
     }
   }
@@ -117,18 +119,10 @@ export const useTutorCourses = () => {
   
   const addOrRemoveTutorCourse = useCallback((course: Course, add: boolean): void => {
 
-    let alreadyAdded: boolean = false;
-    state.selectedTutorCourses.forEach(item => {
-      if(item.name === course.name) alreadyAdded = true;
-    });
-
-    if(alreadyAdded) return;
-
-    dispatch({ type: 'ADD_TUTOR_COURSE', course });
+    add ? dispatch({ type: 'ADD_TUTOR_COURSE', course }) 
+        : dispatch({ type: 'REMOVE_TUTOR_COURSE', course })
     
-  }, [state.selectedTutorCourses]);
-  
-  console.log(state.selectedTutorCourses);
+  }, []);
 
   return {
     state,
