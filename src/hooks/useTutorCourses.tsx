@@ -4,6 +4,15 @@ import { useState, useEffect, useCallback, useReducer } from 'react';
 // Other libraries
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
+// Interfaces
+export interface Course {
+  id: number;
+  name: string;
+  subject: string;
+  year: number;
+  description: string;
+}
+
 export const useTutorCourses = () => {
 
   // State
