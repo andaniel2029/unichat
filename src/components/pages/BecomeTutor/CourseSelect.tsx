@@ -18,10 +18,11 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
 
 interface Props {
   courses: Course[];
+  selectedTutorCourses: Course[];
   addOrRemoveTutorCourse: (course: Course, add: boolean) => void;
 }
 
-export const CourseSelect: React.FC<Props> = React.memo(({ courses, addOrRemoveTutorCourse }) => {
+export const CourseSelect: React.FC<Props> = React.memo(({ courses, selectedTutorCourses, addOrRemoveTutorCourse }) => {
 
   // Styles
   const classes = useStyles();
@@ -29,11 +30,15 @@ export const CourseSelect: React.FC<Props> = React.memo(({ courses, addOrRemoveT
   return (
     <Grid container justify="center" className={classes.root}>
       {courses.map(course => {
+        let selected = false;
+        selectedTutorCourses.forEach(courseItem => {
+          if(courseItem.name === course.name) selected = true;
+        })
         return (
           <CourseItem 
             key={course.name}
             course={course}
-            selected={false}
+            selected={selected}
             addOrRemoveTutorCourse={addOrRemoveTutorCourse}
           />
         )
