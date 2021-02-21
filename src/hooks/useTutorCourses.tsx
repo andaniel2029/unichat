@@ -1,8 +1,29 @@
 // React
-import { useState, useEffect, useCallback, useReducer } from 'react';
+import React, { useState, useEffect, useCallback, useReducer, useContext, ReactNode } from 'react';
 
 // Other libraries
 import axios, { AxiosResponse, AxiosError } from 'axios';
+
+const TutorCourseContext = React.createContext<TutorCourseContextInterface>({
+  state: {
+    year: '',
+    allCourses: [],
+    selectedCoursesInYear: [],
+    selectedCoursesInSubject: [],
+    subject: '',
+    subjects: [],
+    selectedTutorCourses: []
+  },
+  setYear: (year: string) => '',
+  setSubject: (subject:string) => '',
+  addOrRemoveTutorCourse: (course: Course, add: boolean) => '',
+  loading: true,
+  error: false
+});
+
+export function useTutorCourses() {
+  return useContext(TutorCourseContext);
+}
 
 // Interfaces
 export interface Course {
@@ -14,7 +35,31 @@ export interface Course {
   title: string;
 }
 
-export const useTutorCourses = () => {
+interface TutorCourseContextInterface {
+  state: State,
+  setYear: (year: string) => void,
+  setSubject: (subject: string) => void,
+  addOrRemoveTutorCourse: (course: Course, add: boolean) => void,
+  loading: boolean,
+  error: boolean
+}
+
+// Declared global to be used in context as well as in reducer
+interface State {
+  year: string;
+  allCourses: any;
+  selectedCoursesInYear: any;
+  selectedCoursesInSubject: any[];
+  subject: string;
+  subjects: string[];
+  selectedTutorCourses: Course[];
+}
+
+interface Props {
+  children: ReactNode
+}
+
+export const TutorCourseProvider = ({ children }: Props) => {
 
   // State
   const [loading, setLoading] = useState(true);
@@ -27,7 +72,7 @@ export const useTutorCourses = () => {
       dispatch({ type: 'SET_YEAR', year: 'first_year', subjects: Object.keys(res.data['first_year']) });
       dispatch({ type: 'SET_SUBJECT', subject: Object.keys(res.data['first_year'])[0] });
       dispatch({ type: 'SET_COURSES_IN_SUBJECT', subject: Object.keys(res.data['first_year'])[0] });
-    
+      
       // setLoading(false);
       setTimeout(() => {
         setLoading(false);
@@ -35,18 +80,6 @@ export const useTutorCourses = () => {
     })
     .catch((error:AxiosError) => setError(true));
   }, []);
-
-  
-  // Reducer logic
-  interface State {
-    year: string;
-    allCourses: any;
-    selectedCoursesInYear: any;
-    selectedCoursesInSubject: any[];
-    subject: string;
-    subjects: string[];
-    selectedTutorCourses: Course[];
-  }
 
   type Action = 
     | { type: 'SET_YEAR'; year: string, subjects: string[]}
@@ -124,12 +157,18 @@ export const useTutorCourses = () => {
     
   }, []);
 
-  return {
+  const value: TutorCourseContextInterface = {
     state,
     setYear,
     setSubject,
     addOrRemoveTutorCourse,
     loading,
     error
-  };
+  }
+
+  return (
+    <TutorCourseContext.Provider value={value}>
+      { children }
+    </TutorCourseContext.Provider>
+  )
 }
