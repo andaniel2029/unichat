@@ -1,12 +1,9 @@
 // React
 import React from 'react';
 
-// Components and Interfaces
-import { Course } from './Index';
-
 // Material UI
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Paper, Typography } from '@material-ui/core';
+import { makeStyles, Theme, Typography, Paper, Grid } from '@material-ui/core';
+
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
@@ -15,7 +12,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     height: theme.spacing(4),
-    width: theme.spacing(14),
+    // width: theme.spacing(14),
     padding: '10px',
     margin: theme.spacing(2),
     background: props => props.selected ? '#FF5A5F' : '#F7F7F7',
@@ -49,9 +46,11 @@ export const CourseItem: React.FC<Props> = ({ selected, courseName }) => {
   const classes = useStyles({ selected });
 
   return (
-    <Paper className={classes.root}>
-      <AddCircleIcon />
-      <Typography className={classes.text}>{courseName}</Typography>
-    </Paper>
+    <Grid item xs={4}>
+      <Paper className={classes.root}>
+        <AddCircleIcon />
+        <Typography className={classes.text}>{courseName}</Typography>
+      </Paper>
+    </Grid>
   )
 }

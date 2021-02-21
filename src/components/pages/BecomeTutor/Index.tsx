@@ -85,7 +85,13 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 
   coursesRootContainer: {
     display: 'flex',
-    flexDirection: 'column'
+  },
+
+  coursesSubjectTitle: {
+    display: 'inline-block',
+    marginTop: '1rem',
+    // width: '30%',
+    borderBottom: '2px solid #FF5A5F'
   },
 
 
@@ -168,8 +174,8 @@ export default function BecomeTutor() {
               selectedSubject={state.subject}
               setSubject={setSubject}
             />
-            <Grid container className={classes.coursesRootContainer}>
-              <Typography className={classes.text}>{state.subject} Courses</Typography>
+            <Grid container justify="center" className={classes.coursesRootContainer}>
+              <Typography className={`${classes.text} ${classes.coursesSubjectTitle}`}>{state.subject} Courses</Typography>
               <CourseSelect courses={state.selectedCoursesInSubject} />
             </Grid>
           </Grid>
