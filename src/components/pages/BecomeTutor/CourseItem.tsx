@@ -14,7 +14,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     justifyContent: 'space-between',
     height: theme.spacing(4),
     // width: theme.spacing(14),
-    padding: '10px',
+    padding: '5px',
     margin: theme.spacing(2),
     background: props => props.selected ? '#FF5A5F' : '#F7F7F7',
     color: props => props.selected ? 'white' : '#454545',
@@ -22,15 +22,26 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     transition: '0.2s ease-in-out',
     '&:hover': {
       cursor: 'pointer',
-      color: 'white',
-      background: '#FF5A5F'
+      // color: 'white',
+      // background: '#FF5A5F',
+      '& $addIcon': {
+      color: '#FF5A5F',
+      }
     }
   },
 
   text: {
     fontFamily: 'halcom'
-  }
+  },
 
+  addIcon: {
+    transition: '0.2s ease-in-out',
+    fontSize: '22pt',
+    color: '#C7C7C7',
+    '&:hover': {
+      cursor: 'pointer'
+    }
+  }
 }));
 
 interface StyleProps {
@@ -40,16 +51,17 @@ interface StyleProps {
 interface Props {
   course: Course
   selected: boolean;
+  addOrRemoveTutorCourse: (course: Course, add: boolean) => void;
 }
 
-export const CourseItem: React.FC<Props> = ({ course, selected}) => {
+export const CourseItem: React.FC<Props> = ({ course, selected, addOrRemoveTutorCourse }) => {
 
   const classes = useStyles({ selected });
 
   return (
     <Grid item xs={4}>
       <Paper className={classes.root}>
-        <AddCircleIcon />
+        <AddCircleIcon className={classes.addIcon} onClick={() => addOrRemoveTutorCourse(course, true)}/>
         <Typography className={classes.text}>{course.name}</Typography>
       </Paper>
     </Grid>

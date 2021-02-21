@@ -5,7 +5,6 @@ import React from 'react';
 import { YearSelect } from './YearSelect';
 import { SubjectSelect } from './SubjectSelect';
 import { CourseSelect } from './CourseSelect';
-import { CourseItem } from './CourseItem';
 
 // Contexts and Hooks
 import { useAuth } from '../../../hooks/useAuthContext';
@@ -138,6 +137,7 @@ export default function BecomeTutor() {
     state,
     setYear,
     setSubject,
+    addOrRemoveTutorCourse,
     loading,
     error
   } = useTutorCourses();
@@ -176,7 +176,10 @@ export default function BecomeTutor() {
             />
             <Grid container justify="center" className={classes.coursesRootContainer}>
               <Typography className={`${classes.text} ${classes.coursesSubjectTitle}`}>{state.subject} Courses</Typography>
-              <CourseSelect courses={state.selectedCoursesInSubject} />
+              <CourseSelect 
+                courses={state.selectedCoursesInSubject}
+                addOrRemoveTutorCourse={addOrRemoveTutorCourse} 
+              />
             </Grid>
           </Grid>
         ) : <CircularProgress className={classes.loadingSpinner} size={100}/>}   

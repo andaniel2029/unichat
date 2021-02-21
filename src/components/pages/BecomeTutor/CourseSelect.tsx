@@ -18,9 +18,10 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
 
 interface Props {
   courses: Course[];
+  addOrRemoveTutorCourse: (course: Course, add: boolean) => void;
 }
 
-export const CourseSelect: React.FC<Props> = React.memo(({ courses }) => {
+export const CourseSelect: React.FC<Props> = React.memo(({ courses, addOrRemoveTutorCourse }) => {
 
   // Styles
   const classes = useStyles();
@@ -33,6 +34,7 @@ export const CourseSelect: React.FC<Props> = React.memo(({ courses }) => {
             key={course.name}
             course={course}
             selected={false}
+            addOrRemoveTutorCourse={addOrRemoveTutorCourse}
           />
         )
       })}
