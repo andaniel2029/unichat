@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Material UI
-import { makeStyles, Theme, Typography, Paper, Grid } from '@material-ui/core';
+import { makeStyles, Theme, Paper, Grid } from '@material-ui/core';
 
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import { Course } from '../../../hooks/useTutorCourses';
@@ -26,9 +26,9 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
       // cursor: props => props.selected ? 'auto' : 'pointer',
       // color: 'white',
       // background: '#FF5A5F',
-      '& $addIcon': {
-      color: '#FF5A5F',
-      }
+      // '& $addIcon': {
+      // color: '#FF5A5F',
+      // }
     }
   },
 
